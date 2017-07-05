@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- 	Caso o usuário NÃO informar título para página será definido o título abaixo por default -->
+	<title><ui:insert name="titulo">AATP  -  Sistema Gerenciador de Associados</ui:insert></title>
+	<!-- 	Importar classe CSS -->
+	<h:outputStylesheet library="css" name="style.css" />
+	<!--   Importar classe JavaScript  -->
+	<h:outputScript library="js" name="jquery.maskMoney.js"/>
+	<h:outputScript library="js" name="scriptDate.js"/>
+</h:head>
+
+<h:body>
+	<!--  Adicionando o componente AjaxStatus  -->
+	<p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+		<f:facet name="start">
+			<h:graphicImage library="images" name="carregando.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	
+	<!-- 	Cabeçalho da Página -->
+	<header>
+		<div style="float: left;">
+			<h:link outcome="/Home">
+				<h:graphicImage library="images" name="logo_gota.jpg" />
+			</h:link>
+		</div>
+		<div id="tituloCabecalho"></div>
+		
+		<!-- 	MenuBar  -->
+		<div style="float: right; margin-right: 70px; margin-top: 40px;">
+			<span style="float: left; height: 50px; line-height: 30px; margin-right: 60px;">Olá, seja bem-vindo !!</span>
+			<h:form style="display: inline-block;">
+				<p:menubar styleClass="menu-sistema">
+					<p:menuitem value="Home" icon="ui-icon-home"/>					
+					<p:submenu label="Cadastros">
+									
+					</p:submenu>
+					<p:submenu label="Financeiro" >
+						
+					</p:submenu>
+					<p:submenu label="Configurações" >
+					
+					</p:submenu>
+					<p:menuitem value="Sair" icon="ui-icon-close" action="#{loginBean.sairLogin}" />
+				</p:menubar>
+			</h:form>
+		</div>
+		<div style="clear: both;"></div>
+	</header>
+
+	<!-- 	Conteúdo da Página -->
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+
+	<!-- 	Rodapé da Página -->
+	<p:separator style="margin-top: 20px" />
+	<footer> 
+		Sistema de gerenciamento de informações laboratoriais - SigLabor - <a href="http://www.aatp.com.br" target="_blank">www.siglabor.com.br</a> 
+	</footer>
+	
+	<!-- 	Função para implementar a máscara do campo que contém valores de Moeda -->
+	<script>
+		function configurarMoeda() {
+			$(".moeda").maskMoney({
+				decimal : ",",
+				thousands : ".",
+				allowZero : true
+			});
+		}
+
+		$(document).ready(function() {
+			configurarMoeda();
+		});
+	</script>
+	
+</h:body>
+</html>
