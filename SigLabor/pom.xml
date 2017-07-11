@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>br.com.siglabor</groupId>
-  <artifactId>SigLabor</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
-  
-  <!-- Codificação dos caracteres -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.siglabor</groupId>
+	<artifactId>SigLabor</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<!-- Codificação dos caracteres -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-  
-  
-  	<!-- Parâmetros de execução -->
+
+
+	<!-- Parâmetros de execução -->
 	<build>
 		<!-- Nome do projeto empacotado -->
 		<finalName>Sistema</finalName>
@@ -30,7 +31,7 @@
 			</plugin>
 		</plugins>
 	</build>
-		<!-- Dependências -->
+	<!-- Dependências -->
 	<dependencies>
 		<!-- Hibernate Core -->
 		<dependency>
@@ -38,8 +39,8 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.11.Final</version>
 		</dependency>
-		
-			<!-- JDBC do PostgreSQL -->
+
+		<!-- JDBC do PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -53,7 +54,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-		
+
 		<!-- JSF -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
@@ -67,7 +68,7 @@
 			<artifactId>primefaces</artifactId>
 			<version>6.0</version>
 		</dependency>
-			
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -80,7 +81,14 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.8</version>
 		</dependency>
+		<!-- OmniFaces - Utilitarios para JSF -->
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
-	
+
 </project>

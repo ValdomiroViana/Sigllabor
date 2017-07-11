@@ -24,8 +24,68 @@
 <h:body>
 
 	<header class="aw-topbar">
+		<div style="float: left;">
 		<h:graphicImage library="images" name="logo_gota1.jpg" />
-		<a href="#" class="aw-toggle js-toggle"><i class="fa  fa-bars"></i></a>
+		</div>
+			<a href="#"  style="float:left;" class="aw-toggle js-toggle"><i class="fa  fa-angle-double-left"></i></a>
+		<div class="menu-right">
+		<span class="span-usuario">Olá, seja bem-vindo !!</span>
+		<h:form styleClass="menu-form  js-menu-form">
+			<p:panelGrid >
+			<p:menubar styleClass="menu-sistema">					
+					<p:submenu label="Farelo">
+						<p:menuitem value="Umidade"  />	
+						<p:menuitem value="% de óleo"  />
+						<p:menuitem value="Proteína Total"  />
+						<p:menuitem value="Proteína Solúvel"  />
+						<p:menuitem value="Urease"  />
+						<p:menuitem value="Fibras"  />
+						<p:menuitem value="Cinzas"  />
+						<p:menuitem value="Silica"  />												
+					</p:submenu>
+					<p:submenu label="Óleo" >
+						<p:menuitem value="Umidade"  />
+						<p:menuitem value="Acidez"  />
+						<p:menuitem value="Clorofila"  />
+						<p:menuitem value="Sabões"  />
+						<p:menuitem value="Ins. em Acetona"  />
+					</p:submenu>
+					<p:submenu label="Soja" >
+						<p:menuitem value="Umidade" />
+						<p:menuitem value="% de óleo" />
+						<p:menuitem value="Acidez" />
+						<p:menuitem value="Proteína" />
+					</p:submenu>
+					<p:submenu label="Lex" >
+						<p:menuitem value="Umidade" />
+						<p:menuitem value="% de óleo" />
+						<p:menuitem value="Retenção" />
+					</p:submenu>
+					<p:submenu label="Goma" >
+						<p:menuitem value="Umidade" />
+						<p:menuitem value="% de óleo" />
+					</p:submenu>
+					<p:submenu label="Cavaco" >
+						<p:menuitem value="Umidade" />
+					</p:submenu>
+					<p:submenu label="Banhos" >
+						<p:menuitem value="Umidade" />
+					</p:submenu>
+					<p:submenu label="Médias" >
+						<p:menuitem value="Umidade" />
+					</p:submenu>
+					<p:submenu label="Água" >
+						<p:menuitem value="PH" />
+					</p:submenu>
+					<p:menuitem value="Sair" icon="ui-icon-close" />
+					
+				</p:menubar>
+			</p:panelGrid>
+			
+		</h:form>
+		<a href="#"  class="topbar-menu-botton  js-topbar-menu-botton"><i class="fa  fa-bars"></i></a>
+		</div>
+		
 	</header>
 	<aside class="aw-sidebar js-sidebar">
 		<nav class="aw-menu">
@@ -42,7 +102,7 @@
 		</nav>
 	</aside>
 	<section class="aw-content js-content">
-		<ui:insert name="content"/>
+		<ui:insert name="content" />
 	</section>
 </h:body>
 

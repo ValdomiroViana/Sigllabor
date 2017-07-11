@@ -1,10 +1,20 @@
 @charset "utf-8";
-body{
-	background: rgb(255,255,255); /* Old browsers */
-background: -moz-linear-gradient(-45deg, rgba(255,255,255,1) 0%, rgba(243,243,243,1) 50%, rgba(237,237,237,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg, rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg, rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+body {
+	background: rgb(255, 255, 255); /* Old browsers */
+	background: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%,
+		rgba(243, 243, 243, 1) 50%, rgba(237, 237, 237, 1) 51%,
+		rgba(255, 255, 255, 1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 1) 0%,
+		rgba(243, 243, 243, 1) 50%, rgba(237, 237, 237, 1) 51%,
+		rgba(255, 255, 255, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%,
+		rgba(243, 243, 243, 1) 50%, rgba(237, 237, 237, 1) 51%,
+		rgba(255, 255, 255, 1) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',
+		endColorstr='#ffffff', GradientType=1);
+	/* IE6-9 fallback on horizontal gradient */
 }
 
 /*TOPBAR*/
@@ -15,11 +25,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	left: 0;
 	min-height: 50px;
 	z-index: 9999;
-	background: rgb(35,83,138); /* Old browsers */
-background: -moz-linear-gradient(left, rgba(35,83,138,1) 0%, rgba(167,207,223,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left, rgba(35,83,138,1) 0%,rgba(167,207,223,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right, rgba(35,83,138,1) 0%,rgba(167,207,223,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23538a', endColorstr='#a7cfdf',GradientType=1 ); /* IE6-9 */
+	background: rgb(35, 83, 138); /* Old browsers */
+	background: -moz-linear-gradient(left, rgba(35, 83, 138, 1) 0%,
+		rgba(167, 207, 223, 1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, rgba(35, 83, 138, 1) 0%,
+		rgba(167, 207, 223, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, rgba(35, 83, 138, 1) 0%,
+		rgba(167, 207, 223, 1) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23538a',
+		endColorstr='#a7cfdf', GradientType=1); /* IE6-9 */
 }
 
 .aw-topbar>img {
@@ -37,11 +52,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#23538a', end
 	z-index: 9998;
 	transition: margin-left 0.5s;
 	overflow-y: auto;
-	background: rgb(121,155,200); /* Old browsers */
-background: -moz-linear-gradient(top, rgba(121,155,200,1) 0%, rgba(153,181,219,1) 12%, rgba(186,208,239,1) 25%, rgba(175,199,232,1) 38%, rgba(166,192,227,1) 49%, rgba(190,208,234,1) 49%, rgba(200,215,235,1) 74%, rgba(210,223,237,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, rgba(121,155,200,1) 0%,rgba(153,181,219,1) 12%,rgba(186,208,239,1) 25%,rgba(175,199,232,1) 38%,rgba(166,192,227,1) 49%,rgba(190,208,234,1) 49%,rgba(200,215,235,1) 74%,rgba(210,223,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, rgba(121,155,200,1) 0%,rgba(153,181,219,1) 12%,rgba(186,208,239,1) 25%,rgba(175,199,232,1) 38%,rgba(166,192,227,1) 49%,rgba(190,208,234,1) 49%,rgba(200,215,235,1) 74%,rgba(210,223,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#799bc8', endColorstr='#d2dfed',GradientType=0 ); /* IE6-9 */
+	background: rgb(121, 155, 200); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(121, 155, 200, 1) 0%,
+		rgba(153, 181, 219, 1) 12%, rgba(186, 208, 239, 1) 25%,
+		rgba(175, 199, 232, 1) 38%, rgba(166, 192, 227, 1) 49%,
+		rgba(190, 208, 234, 1) 49%, rgba(200, 215, 235, 1) 74%,
+		rgba(210, 223, 237, 1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba(121, 155, 200, 1) 0%,
+		rgba(153, 181, 219, 1) 12%, rgba(186, 208, 239, 1) 25%,
+		rgba(175, 199, 232, 1) 38%, rgba(166, 192, 227, 1) 49%,
+		rgba(190, 208, 234, 1) 49%, rgba(200, 215, 235, 1) 74%,
+		rgba(210, 223, 237, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, rgba(121, 155, 200, 1) 0%,
+		rgba(153, 181, 219, 1) 12%, rgba(186, 208, 239, 1) 25%,
+		rgba(175, 199, 232, 1) 38%, rgba(166, 192, 227, 1) 49%,
+		rgba(190, 208, 234, 1) 49%, rgba(200, 215, 235, 1) 74%,
+		rgba(210, 223, 237, 1) 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#799bc8',
+		endColorstr='#d2dfed', GradientType=0); /* IE6-9 */
 	border-right: 1px solid #c0c0c0;
 }
 
@@ -49,21 +78,68 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#799bc8', end
 	margin-left: 0px;
 }
 
-@media (min-width: 960px) {
+@media ( min-width : 960px) {
 	.aw-sidebar {
 		margin-left: 0px;
 	}
-	
 	.aw-sidebar.is-toggled {
 		margin-left: -211px;
+	}
 }
+/*Menu superior direita*/
+.menu-right {
+	float: right;
+	margin-right: 70px;
+	margin-top: 10px;
+	color: #f24f00 !important;
 }
+
+.menu-sistema {
+	border: 0px !important;
+	padding: 0px !important;
+	background: none !important;
+}
+
+.menu-sistema .ui-menu-parent>a .ui-menuitem-text, .menu-sistema>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
+	{
+	color: #f24f00 !important;
+}
+
+.menu-form {
+	display: inline-block;
+	font-size: 14px;
+}
+
+.menu-form.is-toggled{
+	display: inline;
+	float: right;
+}
+
+@media ( max-width : 960px) {
+	.menu-form {
+		display: none;
+	}
+
+	/*SPAN COM O NOME DO USUÁRIO*/
+	.span-usuario {
+		float: left;
+		padding: 10px; margin-bottom : 30px;
+		margin-right: 60px;
+		margin-bottom: 30px;
+	}
+	@media ( max-width : 960px) {
+		.span-usuario {
+			display: none;
+		}
+	}
+}
+
+
 /*Conteúdo*/
 .aw-content {
 	padding: 0 15px;
 	margin-top: 102px;
 	transition: margin-left 0.5s;
-	
 }
 
 @media ( min-width : 960px) {

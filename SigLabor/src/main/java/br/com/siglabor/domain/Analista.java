@@ -2,15 +2,20 @@ package br.com.siglabor.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-@SuppressWarnings("serial")
+
 @Entity
 public class Analista extends GenericDomain{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Column(length = 20, nullable = false)
 	private String nome;
 	
 	@Column(length = 30, nullable = false)
 	private String sobrenome;
+	
+	@Column(length = 10, nullable = false)
+	private String status;
 
 	public String getNome() {
 		return nome;
