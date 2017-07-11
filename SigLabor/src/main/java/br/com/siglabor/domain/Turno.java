@@ -9,9 +9,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Turno extends GenericDomain {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Column(length = 20, nullable = false)

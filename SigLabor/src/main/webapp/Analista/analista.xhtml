@@ -7,7 +7,7 @@
 
 	<ui:define name="content">
 		<h1 class="aw-page-title">Pesquisa de Analistas</h1>
-			<p:growl id="mensagem" />
+			<p:growl id="mensagem"/>
 
 		<h:form id="formListagem">
 
@@ -50,15 +50,17 @@
 
 				<p:outputLabel value="Nome:" />
 				<p:inputText maxlength="50" size="30"
-					value="#{analistaBean.analista.nome}" />
+					value="#{analistaBean.analista.nome}" required="true"/>
 				<p:outputLabel value="Sobrenome:" />
 				<p:inputText maxlength="50" size="30"
-					value="#{analistaBean.analista.sobrenome}" />
+					value="#{analistaBean.analista.sobrenome}" required="true"/>
 			
 
 				<p:outputLabel value="Status:" />
-				<p:inputText maxlength="50" size="30"
-					value="#{analistaBean.analista.status}" />
+				<p:selectOneRadio id="status" value="#{analistaBean.analista.status}" required="true">
+					<f:selectItem itemLabel="Ativo" itemValue="Ativo" />
+					<f:selectItem itemLabel="Inativo" itemValue="Inativo" />
+				</p:selectOneRadio>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:commandButton value="Salvar" actionListener="#{analistaBean.salvar}"
