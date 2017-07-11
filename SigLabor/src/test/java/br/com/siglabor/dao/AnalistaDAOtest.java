@@ -9,11 +9,12 @@ import br.com.siglabor.domain.Analista;
 
 public class AnalistaDAOtest {
 	@Test
-	@Ignore
+	//@Ignore
 	public void salvar(){
 		Analista analista = new Analista();
-		analista.setNome("Antônio C.");
-		analista.setSobrenome("Arruda");
+		analista.setNome("Natalino");
+		analista.setSobrenome("Teixeira de Freitas");
+		analista.setStatus("Ativo");
 		AnalistaDAO analistaDAO = new AnalistaDAO();
 		analistaDAO.salvar(analista);
 	}
@@ -46,6 +47,7 @@ public class AnalistaDAOtest {
 	}
 	
 	@Test
+	@Ignore
 	public void excluir(){
 		Long codigo = 3L;
 		AnalistaDAO analistaDAO = new AnalistaDAO();

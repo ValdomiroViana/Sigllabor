@@ -1,10 +1,12 @@
 package br.com.siglabor.bean;
+
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -64,6 +66,12 @@ public class AnalistaBean implements Serializable{
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os Analistas");
 		}
+	}
+	
+	//Edição Analista
+	public void editar(ActionEvent evento){
+		analista = (Analista) evento.getComponent().getAttributes().get("analistaSelecionado");
+		
 	}
 
 }

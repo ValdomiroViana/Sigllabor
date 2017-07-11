@@ -33,5 +33,15 @@ public class Analista extends GenericDomain{
 		this.sobrenome = sobrenome;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+
 	
 }
