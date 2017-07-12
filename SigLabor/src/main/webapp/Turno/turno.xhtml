@@ -7,30 +7,29 @@
 
 	<ui:define name="content">
 		<h1 class="aw-page-title">Pesquisa de Turnos</h1>
-			<p:growl id="mensagem" />
-
+		<p:growl id="growl" showSummary="true" life="5000" />
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{turnoBean.turnos}" var="turno" 
-				 reflow="true" style="margin-top: 20px">
-				 <!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+			<p:dataTable id="tabela" value="#{turnoBean.turnos}" var="turno"
+				reflow="true" style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{turnoBean.novo}" update=":formCadastro:painel" />
 				</f:facet>
-				<p:column headerText="Descrição:" priority="1">
-					<h:outputText value="#{turno.descricao}"/>
+				<p:column headerText="Descrição" priority="1">
+					<h:outputText value="#{turno.descricao}" />
 				</p:column>
 				<p:column headerText="Início" priority="3">
 					<h:outputText value="#{turno.horaInicio}">
-							<f:convertDateTime pattern=" HH:mm:ss" locale="pt_BR"
-						timeZone="America/Sao_Paulo" />
+						<f:convertDateTime pattern=" HH:mm:ss" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-					<p:column headerText="Fim" priority="6">
+				<p:column headerText="Fim" priority="6">
 					<h:outputText value="#{turno.horaFim}">
-							<f:convertDateTime pattern=" HH:mm:ss" locale="pt_BR"
-						timeZone="America/Sao_Paulo" />
+						<f:convertDateTime pattern=" HH:mm:ss" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Opções">
@@ -43,40 +42,46 @@
 			</p:dataTable>
 
 		</h:form>
-		
-	<p:dialog header="Cadastro Turno" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true" closable="false" responsive="true">
-		<h:form id="formCadastro">
-		<h:panelGroup id="novoEnderecoPanel" layout="block"
+
+		<p:dialog header="Cadastro Turno" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
-					<p:messages autoUpdate="false" />
-			<h:panelGrid id="painel" columns="2" layout="grid"
+					<h:panelGrid id="painel" columns="2" layout="grid"
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 
-				<p:outputLabel value="Descrição:" />
-					<p:inputText maxlength="50" size="30"
-					value="#{turnoBean.turno.descricao}" />
-				
-				<p:outputLabel value="Hora de início:" />
-				<p:inputMask mask="99:99"  value="#{turnoBean.turno.horaInicio}">
-					<f:convertDateTime pattern="HH:mm" locale="pt_BR"
-						timeZone="America/Sao_Paulo" />
-				</p:inputMask>
-				<p:outputLabel value="Hora de término:" />
-			<p:inputMask mask="99:99"  value="#{turnoBean.turno.horaFim}">
-					<f:convertDateTime pattern="HH:mm" locale="pt_BR"
-						timeZone="America/Sao_Paulo" />
-				</p:inputMask>
-			</h:panelGrid>
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar" actionListener="#{turnoBean.salvar}"
-					update=":mensagem :formCadastro:painel formListagem:tabela" oncomplete="PF('dialogo').hide();"/>
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
-			</h:panelGrid>
-			</h:panelGroup>
-		</h:form>
-	</p:dialog>
+						<p:outputLabel value="Descrição:" />
+						<p:inputText maxlength="50" size="30"
+							value="#{turnoBean.turno.descricao}" required="true"
+							requiredMessage="Preencha o campo descrição" />
+
+						<p:outputLabel value="Hora de início:" />
+						<p:inputMask mask="99:99" value="#{turnoBean.turno.horaInicio}"
+							required="true" requiredMessage="Preencha  a hora de início">
+							<f:convertDateTime pattern="HH:mm" locale="pt_BR"
+								timeZone="America/Sao_Paulo" />
+						</p:inputMask>
+						<p:outputLabel value="Hora de término:" />
+						<p:inputMask mask="99:99" value="#{turnoBean.turno.horaFim}"
+							required="true" requiredMessage="Preencha a hora de término">
+							<f:convertDateTime pattern="HH:mm" locale="pt_BR"
+								timeZone="America/Sao_Paulo" />
+						</p:inputMask>
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton icon="fa fa-w fa-save" value="Salvar"
+							actionListener="#{turnoBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela" />
+
+						<p:commandButton icon="fa fa-w fa-times-circle-o" value="Cancelar"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

@@ -150,3 +150,16 @@ body {
 		margin-left: 0;
 	}
 }
+
+/* Configuração do componente AjaxStatus */
+.ajax-status {
+	position: absolute;
+	top: 110px;
+	right: 33px;
+	width: 40px;
+	height: 35px;
+}
+
+.ui-growl {
+	margin-top: 75px;
+}

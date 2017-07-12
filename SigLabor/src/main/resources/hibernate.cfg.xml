@@ -36,6 +36,7 @@
 		<mapping class="br.com.siglabor.domain.Analista"/>
 		<mapping class="br.com.siglabor.domain.Produto"/>
 		<mapping class="br.com.siglabor.domain.Turno"/>
+		<mapping class="br.com.siglabor.domain.TipoProduto"/>
 		
 		
 	</session-factory>

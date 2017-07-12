@@ -102,6 +102,14 @@
 		</nav>
 	</aside>
 	<section class="aw-content js-content">
+				<p:ajaxStatus styleClass="ajax-status">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="carregando.gif" />
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value=""/>
+			</f:facet>
+		</p:ajaxStatus>
 		<ui:insert name="content" />
 	</section>
 </h:body>

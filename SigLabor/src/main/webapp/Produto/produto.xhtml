@@ -6,41 +6,35 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Pesquisa de Analistas</h1>
+		<h1 class="aw-page-title">Pesquisa de Produtos</h1>
 			<p:growl id="growl" showSummary="true" life="5000" />
 		
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{analistaBean.analistas}"
-				var="analista" reflow="true" style="margin-top: 20px">
+			<p:dataTable id="tabela" value="#{produtoBean.produtos}"
+				var="produto" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{analistaBean.novo}"
+						actionListener="#{produtoBean.novo}"
 						update=":formCadastro:painel" />
 				</f:facet>
-				<p:column headerText="Nome" priority="1">
-					<h:outputText value="#{analista.nome}" />
-				</p:column>
-				<p:column headerText="Sobrenome" priority="3">
-					<h:outputText value="#{analista.sobrenome}" />
-				</p:column>
-				<p:column headerText="Situação" priority="6">
-					<h:outputText value="#{analista.status}" />
+				<p:column headerText="Descrição" priority="1">
+					<h:outputText value="#{produto.descricao}" />
 				</p:column>
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-penci"
-						actionListener="#{analistaBean.editar}"
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{produtoBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-						<f:attribute name="analistaSelecionado" value="#{analista}" />
+						<f:attribute name="produtoSelecionado" value="#{produto}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
 		</h:form>
 
-		<p:dialog header="Cadastro Analista" widgetVar="dialogo"
+		<p:dialog header="Cadastro de produtos" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
 			responsive="true">
 			<h:form id="formCadastro">
@@ -50,24 +44,13 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 
-						<p:outputLabel value="Nome:" />
+						<p:outputLabel value="Descrição:" />
 						<p:inputText maxlength="50" size="30"
-							value="#{analistaBean.analista.nome}" required="true" />
-						<p:outputLabel value="Sobrenome:" />
-						<p:inputText maxlength="50" size="30"
-							value="#{analistaBean.analista.sobrenome}" required="true" />
-
-
-						<p:outputLabel value="Status:" />
-						<p:selectOneRadio id="status"
-							value="#{analistaBean.analista.status}" required="true">
-							<f:selectItem itemLabel="Ativo" itemValue="Ativo" />
-							<f:selectItem itemLabel="Inativo" itemValue="Inativo" />
-						</p:selectOneRadio>
+							value="#{produtoBean.produto.descricao}" required="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{analistaBean.salvar}"
+							actionListener="#{produtoBean.salvar}"
 							update=":growl :formCadastro:painel formListagem:tabela" />
 						<p:commandButton value="Cancelar" icon="fa fa-w fa-times-circle-o"
 							oncomplete="PF('dialogo').hide();" />
