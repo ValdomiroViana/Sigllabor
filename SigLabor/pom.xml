@@ -15,7 +15,7 @@
 	<!-- Parâmetros de execução -->
 	<build>
 		<!-- Nome do projeto empacotado -->
-		<finalName>Sistema</finalName>
+		<finalName>SigLabor</finalName>
 
 		<!-- Plugins -->
 		<plugins>

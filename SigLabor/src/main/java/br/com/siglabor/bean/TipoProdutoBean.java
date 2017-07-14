@@ -2,6 +2,7 @@ package br.com.siglabor.bean;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -84,19 +85,19 @@ public class TipoProdutoBean implements Serializable {
 		}
 	}
 
-	// a anotation @post construct serve para quando abrie a janela, carregar a
+	// a anotation @post construct serve para carregar a
 	// listagem
 	@PostConstruct
 	public void listarOrdenado() {
 		try {
 			TipoProdutoDAO tipoProdutoDAO = new TipoProdutoDAO();
-			tipoProdutoDAO.listarOrdenado("descricaoTipo");
+			tiposProduto = tipoProdutoDAO.listarOrdenado("descricaoTipo");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os tipos de produto");
 		}
 	}
 
-	// Edição Analista
+	// Edição Tipo de produto
 	public void editar(ActionEvent evento) {
 		tipoProduto = (TipoProduto) evento.getComponent().getAttributes().get("tipoSelecionado");
 

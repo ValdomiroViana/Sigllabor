@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de checklists</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{checkListBean.checkLists}" rows="5" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
+				widgetVar="tabelaCheck" var="checkList" reflow="true"
+				style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{checkListBean.novo}"
+						update=":formCadastro:painel" />
+				</f:facet>
+				<p:column filterBy="#{checkList.dataCheckList}" headerText="Data"
+					priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaCheck').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{checkListBean.checkLists}" var="checkLists"
+								itemValue="#{checkList}" itemLabel="#{checkLists.dataCheckList}"/>
+								
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{checkList.dataCheckList}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{checkList.analista}" headerText="Analista"
+					priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaCheck').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{analistaBean.analistas}" var="analistas"
+								itemValue="#{analista}" itemLabel="#{analistas.nome}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{checkList.analista.nome}" />
+				</p:column>
+				<p:column filterBy="#{checkList.turno}" headerText="Turno"
+					priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaCheck').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{turnoBean.turnos}" var="turnos"
+								itemValue="#{turno}" itemLabel="#{turnos.descricao}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{checkList.turno.descricao}" />
+				</p:column>
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{checkListBean.editar}"
+						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+						<f:attribute name="checkListSelecionado" value="#{checkList}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de Check List" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+						<p:outputLabel value="Data" for="data" />
+						<p:calendar id="data" size="10" placeholder="Dia/Mês/Ano"
+							mask="true" pattern="dd/MM/yyyy"
+							value="#{checkListBean.checkList.dataCheckList}" />
+
+						<p:outputLabel value="Analista" for="analista" />
+						<p:selectOneMenu id="analista" required="true" style="width: 200px;"
+							requiredMessage="Selecione Um analista"
+							value="#{checkListBean.checkList.analista}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um analista"
+								noSelectionOption="true" />
+							<f:selectItems value="#{analistaBean.analistas}" var="analistas"
+								itemValue="#{analista}" itemLabel="#{analistas.nome}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Turno" for="turno" />
+						<p:selectOneMenu id="turno" required="true" style="width: 200px;"
+							requiredMessage="Selecione Um turno"
+							value="#{checkListBean.checkList.turno}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um turno"
+								noSelectionOption="true" />
+							<f:selectItems value="#{turnoBean.turnos}" var="turnos"
+								itemValue="#{turno}" itemLabel="#{turnos.descricao}" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{checkListBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

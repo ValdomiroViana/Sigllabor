@@ -70,10 +70,20 @@ public class TurnoBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os Turnos");
 		}
 	}
-	
-	//Método para a edição
-	public void editar(ActionEvent evento){
+
+	// Método para a edição
+	public void editar(ActionEvent evento) {
 		turno = (Turno) evento.getComponent().getAttributes().get("turnoSelecionado");
+	}
+
+	@PostConstruct
+	public void iniciar() {
+		try {
+			TurnoDAO turnoDAO = new TurnoDAO();
+			turnos = turnoDAO.listar();
+		} catch (RuntimeException runtimeException) {
+			Messages.addGlobalError(runtimeException.getMessage());
+		}
 	}
 
 }

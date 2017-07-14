@@ -37,6 +37,7 @@
 		<mapping class="br.com.siglabor.domain.Produto"/>
 		<mapping class="br.com.siglabor.domain.Turno"/>
 		<mapping class="br.com.siglabor.domain.TipoProduto"/>
+		<mapping class="br.com.siglabor.domain.CheckList"/>
 		
 		
 	</session-factory>
