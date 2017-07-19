@@ -16,7 +16,7 @@ public class Produto extends GenericDomain{
 	
 	@OneToMany(mappedBy = "produto")
 	private List<TipoProduto> tiposProduto = new ArrayList<>();
-
+	
 	public String getDescricao() {
 		return descricao;
 	}

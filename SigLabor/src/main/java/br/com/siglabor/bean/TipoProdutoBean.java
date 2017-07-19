@@ -1,6 +1,7 @@
 package br.com.siglabor.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -103,7 +104,8 @@ public class TipoProdutoBean implements Serializable {
 
 	}
 
-	// método iniciar serve para preencher a lista quando for construída a página
+	// método iniciar serve para preencher a lista quando for construída a
+	// página
 	@PostConstruct
 	public void iniciar() {
 		try {
@@ -115,4 +117,24 @@ public class TipoProdutoBean implements Serializable {
 		}
 	}
 
+	public void popular() {
+		try {
+			if (produto != null) {
+				TipoProdutoDAO tipoProdutoDAO = new TipoProdutoDAO();
+				tiposProduto = tipoProdutoDAO.buscarPorProduto(produto.getCodigo());
+				for (TipoProduto tipoProduto : tiposProduto) {
+					System.out.println("Produto Tipo: " + tipoProduto.getDescricaoTipo());
+				}
+			} else {
+				tiposProduto = new ArrayList<>();
+			}
+			for (TipoProduto tipoProduto : tiposProduto) {
+				System.out.println("Produto tipo: " + tipoProduto.getDescricaoTipo());
+			}
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Erro ao tentar listar os tipos de produtos");
+			erro.printStackTrace();
+		}
+
+	}
 }

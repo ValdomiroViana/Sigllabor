@@ -87,7 +87,7 @@ public class CheckListBean implements Serializable {
 			checkList = new CheckList();
 			// preencher a lista de analistas
 			AnalistaDAO analistaDAO = new AnalistaDAO();
-			analistas = analistaDAO.listarOrdenado("dataCheckList");
+			analistas = analistaDAO.listarOrdenado("nome");
 
 			// preencher a lista de turnos
 			TurnoDAO turnoDAO = new TurnoDAO();

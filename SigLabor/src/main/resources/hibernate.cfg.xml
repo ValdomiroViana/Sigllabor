@@ -8,7 +8,7 @@
 	<session-factory>
 		<!-- Configurações de Conexão com o Banco de Dados -->
 		<property name="connection.driver_class">org.postgresql.Driver</property>
-		<property name="connection.url">jdbc:postgresql://localhost:5432/siglabor_teste</property>
+		<property name="connection.url">jdbc:postgresql://localhost:5432/siglaborTeste</property>
 		<property name="connection.username">postgres</property>
 		<property name="connection.password">V@ldomiroVi@na</property>
 
@@ -38,6 +38,7 @@
 		<mapping class="br.com.siglabor.domain.Turno"/>
 		<mapping class="br.com.siglabor.domain.TipoProduto"/>
 		<mapping class="br.com.siglabor.domain.CheckList"/>
+		<mapping class="br.com.siglabor.domain.Amostra"/>
 		
 		
 	</session-factory>

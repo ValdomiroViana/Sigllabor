@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de Amostras</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{amostraBean.amostras}" rows="5"
+				paginator="true" paginatorPosition="bottom"
+				paginatorAlwaysVisible="false" widgetVar="tabelaAmostra"
+				var="amostra" reflow="true" style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{amostraBean.novo}" update=":formCadastro:painel" />
+				</f:facet>
+				<p:column 
+					headerText="Código" priority="1" filterMatchMode="exact" filterBy="#{amostra.codigo}">
+					<f:facet name="filter">
+						<h:inputText onchange="PF('tabelaAmostra').filter()"/>
+					</f:facet>
+					<h:outputText value="#{amostra.codigo}" />
+				</p:column>
+				<p:column filterBy="#{amostra.produto}"
+					headerText="Produto" priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{amostra.produto.descricao}" />
+				</p:column>
+
+				<p:column filterBy="#{amostra.tipoProduto}"
+					headerText="Tipo" priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+								var="tiposProduto" itemValue="#{tipoProduto}"
+								itemLabel="#{tiposProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{amostra.tipoProduto.descricaoTipo}">
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{amostra.dataColeta}" headerText="Data"
+					priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostra.dataColeta}" var="amostras"
+								itemValue="#{amostra}" itemLabel="#{amostra.dataColeta}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{amostra.dataColeta}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+					<p:column
+					headerText="Turno" priority="1" >
+					<h:outputText value="#{amostra.turnoColeta.descricao}">
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{amostraBean.editar}"
+						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+						<f:attribute name="amostraSesecionada" value="#{amostra}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de Amostra" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+						<p:outputLabel value="Data" for="data" />
+						<p:calendar id="data" size="10" placeholder="Dia/Mês/Ano"
+							mask="true" pattern="dd/MM/yyyy"
+							value="#{amostraBean.amostra.dataColeta}" />
+						<p:outputLabel value="Turno" for="turno" />
+						<p:selectOneMenu id="turno" required="true"
+							style="width: 200px;" requiredMessage="Selecione Um turno"
+							value="#{amostraBean.amostra.turnoColeta}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um turno"
+								noSelectionOption="true" />
+							<f:selectItems value="#{turnoBean.turnos}" var="turnos"
+								itemValue="#{turnos}" itemLabel="#{turnos.descricao}" />
+						</p:selectOneMenu>
+								<p:outputLabel value="Check List" for="checklist" />
+						<p:selectOneMenu id="checklist" required="true"
+							style="width: 200px;" requiredMessage="Selecione Um Check List"
+							value="#{amostraBean.amostra.checkList}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um Check list"
+								noSelectionOption="true" />
+							<f:selectItems value="#{checkListBean.checkLists}" var="checkLists"
+								itemValue="#{checkList}" itemLabel="#{checkLists.dataCheckList} - #{checkLists.turno.descricao}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Produto" for="produto" />
+						<p:selectOneMenu id="produto" required="true"
+							style="width: 200px;" requiredMessage="Selecione Um produto"
+							value="#{amostraBean.amostra.produto}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um produto"
+								noSelectionOption="true" />
+							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+								itemValue="#{produtos}" itemLabel="#{produtos.descricao}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Tipo" for="tipo" />
+						<p:selectOneMenu id="tipo" required="true" style="width: 200px;"
+							requiredMessage="Selecione Um tipo"
+							value="#{amostraBean.amostra.tipoProduto}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione um tipo"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+								var="tiposProduto" itemValue="#{tiposProduto}"
+								itemLabel="#{tiposProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{amostraBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
