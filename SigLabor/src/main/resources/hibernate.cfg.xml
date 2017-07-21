@@ -3,7 +3,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-        
+
 <hibernate-configuration>
 	<session-factory>
 		<!-- Configurações de Conexão com o Banco de Dados -->
@@ -33,14 +33,16 @@
 		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das entidades -->
-		<mapping class="br.com.siglabor.domain.Analista"/>
-		<mapping class="br.com.siglabor.domain.Produto"/>
-		<mapping class="br.com.siglabor.domain.Turno"/>
-		<mapping class="br.com.siglabor.domain.TipoProduto"/>
-		<mapping class="br.com.siglabor.domain.CheckList"/>
-		<mapping class="br.com.siglabor.domain.Amostra"/>
-		
-		
+		<mapping class="br.com.siglabor.domain.Analista" />
+		<mapping class="br.com.siglabor.domain.Produto" />
+		<mapping class="br.com.siglabor.domain.Turno" />
+		<mapping class="br.com.siglabor.domain.TipoProduto" />
+		<mapping class="br.com.siglabor.domain.CheckList" />
+		<mapping class="br.com.siglabor.domain.Amostra" />
+		<mapping class="br.com.siglabor.domain.Umidade" />
+
+
+
 	</session-factory>
 </hibernate-configuration>
         

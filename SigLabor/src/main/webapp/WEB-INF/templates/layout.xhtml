@@ -17,6 +17,7 @@
 	<h:outputStylesheet library="css" name="components.css" />
 	<h:outputStylesheet library="css" name="custom.css" />
 	<h:outputScript library="js" name="scriptDate.js"/>
+	<h:outputScript library="js" name="mask.js"/>
 	<h:outputScript target="body" library="primefaces"
 		name="jquery/jquery.js" />
 	<h:outputScript target="body" library="js" name="app.js" />
@@ -113,6 +114,11 @@
 		</p:ajaxStatus>
 		<ui:insert name="content" />
 	</section>
+	<script>
+	$(document).ready(function(){
+		  $('.peso2').mask('00.0000');
+		});
+	</script>
 </h:body>
 
 </html>
