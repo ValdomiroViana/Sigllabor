@@ -119,15 +119,29 @@ public class UmidadeBean implements Serializable {
 		}
 	}
 	
-	
-	public void calcularUmidade(){
+	//Método para excluir umidade
+	public void excluir(ActionEvent evento){
 		try{
+			umidade = (Umidade) evento.getComponent().getAttributes().get("umidadeSelecionada");
+			UmidadeDAO umidadeDAO = new UmidadeDAO();
+			umidadeDAO.excluir(umidade);
+			umidades = umidadeDAO.listar();
+			Messages.addGlobalInfo("Umidade excluída com sucesso!");
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Erro ao tentar excluir a umidade");
+			erro.printStackTrace();
+		}
+	}
+	
+// Método para realizar o cálculo de umidade
+	public void calcularUmidade() {
+		try {
 			UmidadeDAO umidadeDAO = new UmidadeDAO();
 			umidade = umidadeDAO.calcularUmidade(umidade);
-		}catch(RuntimeException erro){
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro");
 			erro.printStackTrace();
 		}
-	
+
 	}
 }

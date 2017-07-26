@@ -26,16 +26,16 @@
 <h:body>
 
 	<header class="aw-topbar">
-		<div style="float: left;">
+		<div style="float: left; padding-left: 10px;">
 		<h:graphicImage library="images" name="logo_gota1.jpg" />
 		</div>
 			<a href="#"  style="float:left;" class="aw-toggle js-toggle"><i class="fa  fa-angle-double-left"></i></a>
 		<div class="menu-right">
 		<span class="span-usuario">Olá, seja bem-vindo !!</span>
 		<h:form styleClass="menu-form  js-menu-form">
-			<p:panelGrid >
-			<p:menubar styleClass="menu-sistema">					
-					<p:submenu label="Farelo">
+			<p:panelGrid>
+			<p:menubar styleClass="menu-sistema js-menu-sistema">					
+					<p:submenu label="Farelo" >
 						<p:menuitem value="Umidade"  />	
 						<p:menuitem value="% de óleo"  />
 						<p:menuitem value="Proteína Total"  />
@@ -45,6 +45,7 @@
 						<p:menuitem value="Cinzas"  />
 						<p:menuitem value="Silica"  />												
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Óleo" >
 						<p:menuitem value="Umidade"  />
 						<p:menuitem value="Acidez"  />
@@ -52,34 +53,42 @@
 						<p:menuitem value="Sabões"  />
 						<p:menuitem value="Ins. em Acetona"  />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Soja" >
 						<p:menuitem value="Umidade" />
 						<p:menuitem value="% de óleo" />
 						<p:menuitem value="Acidez" />
 						<p:menuitem value="Proteína" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Lex" >
 						<p:menuitem value="Umidade" />
 						<p:menuitem value="% de óleo" />
 						<p:menuitem value="Retenção" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Goma" >
 						<p:menuitem value="Umidade" />
 						<p:menuitem value="% de óleo" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Cavaco" >
 						<p:menuitem value="Umidade" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Banhos" >
 						<p:menuitem value="Umidade" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Médias" >
 						<p:menuitem value="Umidade" />
 					</p:submenu>
+					<p:separator styleClass="menu-separator js-menu-separator"/>
 					<p:submenu label="Água" >
 						<p:menuitem value="PH" />
 					</p:submenu>
-					<p:menuitem value="Sair" icon="ui-icon-close" />
+					<p:separator styleClass="menu-separator js-menu-separator"/>
+					<p:menuitem value="Sair"/>
 					
 				</p:menubar>
 			</p:panelGrid>
@@ -115,8 +124,11 @@
 		<ui:insert name="content" />
 	</section>
 	<script>
+	function configurarPeso(){
+		 $('.peso2').mask("##.####", {reverse: true});
+	}
 	$(document).ready(function(){
-		  $('.peso2').mask('00.0000');
+		configurarPeso();
 		});
 	</script>
 </h:body>

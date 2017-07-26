@@ -15,13 +15,13 @@
 			<p:dataTable id="tabela" value="#{umidadeBean.umidades}" rows="5"
 				paginator="true" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false" widgetVar="tabelaUmidade"
-				var="umidade" reflow="true" style="margin-top: 20px">
+				var="umidade" reflow="true" style="margin-top: 20px" rowStyleClass="#{umidade.umidade > 12.50 ? 'umidade' : null}">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel" />
 				</f:facet>
-				<p:column headerText="Nº" priority="1">
+				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{umidade.identificacao}" />
 				</p:column>
 				<p:column headerText="Data">
@@ -31,7 +31,7 @@
 					</h:outputText>
 				</p:column>
 				<p:column filterBy="#{umidade.amostra.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact">
+					priority="1" filterMatchMode="exact" width="18%">
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
@@ -46,7 +46,7 @@
 				<p:column filterBy="#{umidade.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -57,7 +57,7 @@
 					<h:outputText value="#{umidade.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Pa" priority="1">
+				<p:column  headerText="Pa" priority="1">
 					<h:outputText value="#{umidade.pa}" />
 				</p:column>
 				<p:column headerText="Pa + b" priority="1">
@@ -66,9 +66,9 @@
 				<p:column headerText="Pf" priority="1">
 					<h:outputText value="#{umidade.pf}" />
 				</p:column>
-				<p:column headerText="Umidade" priority="1">
+				<p:column headerText="Umidade" priority="1" width="10%">
 					<h:outputText value="#{umidade.umidade}">
-					<f:convertNumber locale="pt_BR" minFractionDigits="2" maxFractionDigits="2"/>
+						<f:convertNumber locale="en_US" pattern="#0.00" />
 					</h:outputText>
 				</p:column>
 
@@ -77,10 +77,26 @@
 						actionListener="#{umidadeBean.editar}"
 						update=":formCadastroEditar:painelEditar"
 						oncomplete="PF('dialogoEditar').show();">
-						<f:setPropertyActionListener target="#{umidadeBean.umidade}" value="#{umidade}"/>
+						<f:setPropertyActionListener target="#{umidadeBean.umidade}"
+							value="#{umidade}" />
 					</p:commandButton>
+					
+				<p:commandButton style="background-color:red; float: right;" icon="ui-icon-trash"
+				actionListener="#{umidadeBean.excluir}"
+				update=":growl :formCadastro:painel formListagem:tabela">
+					<p:confirm header="Confirmação" message="Deseja realmente Excluir a umidade?"
+						icon="ui-icon-alert"/>
+				<f:attribute name="umidadeSelecionada" value="#{umidade}"/>
+					
+				</p:commandButton>
 				</p:column>
 			</p:dataTable>
+				<p:confirmDialog global="true" >
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 
 		</h:form>
 
@@ -113,14 +129,14 @@
 						</p:selectOneRadio>
 
 						<p:outputLabel value="Número:" for="num" />
-						<p:inputText style="width:100px;" id="num" maxlength="4" size="10" required="true"
-							requiredMessage="Campo obrigatório"
+						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
+							required="true" requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.identificacao}" />
 
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa}" styleClass="peso2"/>
+							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
 
 						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
 						<p:inputText id="pa_mais_b" maxlength="8" size="10"
@@ -174,28 +190,28 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa}" />
+							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
 
 						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
 						<p:inputText id="pa_mais_b" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa_Mais_b}" />
+							value="#{umidadeBean.umidade.pa_Mais_b}" styleClass="peso2" />
 
 						<p:outputLabel value="Peso final:" for="pf" />
 						<p:inputText id="pf" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pf}" />
+							value="#{umidadeBean.umidade.pf}" styleClass="peso2" />
 						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{umidadeBean.calcularUmidade}"
 							update=":formCadastroEditar:painelEditar">
-							</p:commandButton>
+						</p:commandButton>
 
 						<p:outputLabel value="Umidade:" for="umidade" />
 						<p:inputText id="umidade" maxlength="8" size="10" required="false"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.umidade}" >
-							<f:convertNumber locale="pt_BR" minFractionDigits="2" maxFractionDigits="2"/>
+							value="#{umidadeBean.umidade.umidade}">
+							<f:convertNumber locale="en_US" pattern="#0.00" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">

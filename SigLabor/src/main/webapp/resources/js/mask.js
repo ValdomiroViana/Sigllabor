@@ -105,6 +105,7 @@
                    }
                 });
             },
+            
             getRegexMask: function() {
                 var maskChunks = [], translation, pattern, optional, recursive, oRecursive, r;
 

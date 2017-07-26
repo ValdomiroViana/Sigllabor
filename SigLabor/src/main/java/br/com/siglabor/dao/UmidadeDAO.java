@@ -9,7 +9,7 @@ public class UmidadeDAO extends GenericDAO<Umidade>{
 	
 	public Umidade calcularUmidade(Umidade umidade){
 		umidade.setUmidade(BigDecimal.ZERO);
-		umidade.setUmidade((((umidade.getPa_Mais_b().subtract(umidade.getPf()).multiply(new BigDecimal("100"))).divide(umidade.getPa(), MathContext.DECIMAL128))));
+		umidade.setUmidade((((umidade.getPa_Mais_b().subtract(umidade.getPf()).divide(umidade.getPa(), MathContext.DECIMAL128).multiply(new BigDecimal("100"))))));
 		System.out.println("Umidade" + umidade.getUmidade());
 		return umidade;
 		

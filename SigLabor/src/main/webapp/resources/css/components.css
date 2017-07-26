@@ -5,7 +5,7 @@
 	line-height: 0px;
 	margin-top: 20px;
 	margin-left: 30px;
-	color: #fa6105;
+	color: #ffffff!important;
 	font-size: 30px;
 	-webkit-transform: rotate(180deg); /* para webkit */
 	-moz-transform: rotate(180deg); /* para gecko */
@@ -41,7 +41,7 @@
 	line-height: 0px;
 	margin-top: 10px;
 	margin-left: 30px;
-	color: #fa6105;
+	color: #ffffff!important;
 	font-size: 20px;
 	
 }
