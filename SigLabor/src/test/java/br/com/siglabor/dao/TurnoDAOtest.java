@@ -1,8 +1,6 @@
 package br.com.siglabor.dao;
 
 import java.sql.Time;
-import java.util.Date;
-
 import org.junit.Test;
 
 import br.com.siglabor.domain.Turno;

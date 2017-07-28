@@ -15,7 +15,7 @@
 			<p:dataTable id="tabela" value="#{amostraBean.amostras}" rows="5"
 				paginator="true" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false" widgetVar="tabelaAmostra"
-				var="amostra" reflow="true" style="margin-top: 20px">
+				var="amostra" reflow="true" style="margin-top: 20px" emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -80,7 +80,7 @@
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{amostraBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
-						<f:attribute name="amostraSesecionada" value="#{amostra}" />
+						<f:attribute name="amostraSelecionada" value="#{amostra}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -130,6 +130,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produtos}" itemLabel="#{produtos.descricao}" />
+						
 						</p:selectOneMenu>
 						<p:outputLabel value="Tipo" for="tipo" />
 						<p:selectOneMenu id="tipo" required="true" style="width: 200px;"

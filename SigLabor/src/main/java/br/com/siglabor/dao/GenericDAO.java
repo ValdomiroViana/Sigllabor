@@ -72,13 +72,14 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public List<Entidade> listarOrdenadoPorData(String campoOrdenacao) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
 			Criteria consulta = sessao.createCriteria(classe);
 			// critério de ordenaçao criteria do Hibernate
+			consulta.createAlias("amostra.checkList", "c");
 			consulta.addOrder(Order.desc(campoOrdenacao));
 			List<Entidade> resultado = consulta.list();
 			return resultado;
@@ -88,6 +89,9 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
+
+
+
 
 	@SuppressWarnings("unchecked")
 	public Entidade buscar(Long codigo) {

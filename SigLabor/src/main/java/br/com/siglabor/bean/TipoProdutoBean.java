@@ -9,15 +9,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
-import br.com.siglabor.dao.ProdutoDAO;
 import br.com.siglabor.dao.TipoProdutoDAO;
 import br.com.siglabor.domain.Produto;
 import br.com.siglabor.domain.TipoProduto;
 
-@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
 public class TipoProdutoBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	// instancia um novo objeto
 	private TipoProduto tipoProduto;
 	// criar uma lista para preencher a listagem
@@ -25,6 +25,12 @@ public class TipoProdutoBean implements Serializable {
 	// instanciar um objeto produto
 	private Produto produto;
 	private List<Produto> produtos;
+	
+	public TipoProdutoBean(){
+		produto = new Produto();
+		tipoProduto = new TipoProduto();
+		
+	}
 
 	// getters and setters
 	public TipoProduto getTipoProduto() {
@@ -51,24 +57,11 @@ public class TipoProdutoBean implements Serializable {
 		this.produto = produto;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
 
 	// método para criar um novo
 	public void novo() {
-		try {
-			tipoProduto = new TipoProduto();
-			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar();
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Erro ao gerar um novo tipo de produto");
-			erro.printStackTrace();
-		}
+		tipoProduto = new TipoProduto();
 	}
 
 	// Método salvar
@@ -117,24 +110,33 @@ public class TipoProdutoBean implements Serializable {
 		}
 	}
 
-	public void popular() {
-		try {
-			if (produto != null) {
+	public void popular(){
+		try{
+			if(produto != null){
 				TipoProdutoDAO tipoProdutoDAO = new TipoProdutoDAO();
 				tiposProduto = tipoProdutoDAO.buscarPorProduto(produto.getCodigo());
-				for (TipoProduto tipoProduto : tiposProduto) {
-					System.out.println("Produto Tipo: " + tipoProduto.getDescricaoTipo());
+				System.out.println("Produto ID: " + produto.getCodigo());
+				for(TipoProduto tipoProduto : tiposProduto) {
+					System.out.println("Tipo Produto: " + tipoProduto.getDescricaoTipo());
 				}
-			} else {
+				
+			}else{
 				tiposProduto = new ArrayList<>();
 			}
-			for (TipoProduto tipoProduto : tiposProduto) {
-				System.out.println("Produto tipo: " + tipoProduto.getDescricaoTipo());
+			for(TipoProduto tipoProduto : tiposProduto){
+				System.out.println("Tipo Produto: " + tipoProduto.getDescricaoTipo());
 			}
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Erro ao tentar listar os tipos de produtos");
+		}catch(RuntimeException erro){
+			Messages.addGlobalInfo("Erro ao tentar listar os tipos de produto");
 			erro.printStackTrace();
 		}
+	}
 
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 }

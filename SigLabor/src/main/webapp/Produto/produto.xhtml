@@ -13,7 +13,7 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela" value="#{produtoBean.produtos}"
-				var="produto" reflow="true" style="margin-top: 20px">
+				var="produto" reflow="true" style="margin-top: 20px" emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"

@@ -38,6 +38,10 @@ public class AmostraBean implements Serializable{
 	private TipoProduto tipoProduto;
 	//criar uma lista de tipos de produto
 	private List<TipoProduto> tiposProduto;
+	public AmostraBean(){
+		amostra = new Amostra();
+		produto = new Produto();
+	}
 	//Getters and setters
 	public Amostra getAmostra() {
 		return amostra;
@@ -116,6 +120,9 @@ public class AmostraBean implements Serializable{
 			//criar uma nova amostra
 			amostra = new Amostra();
 			amostras = amostraDAO.listar();
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			produtos = produtoDAO.listarOrdenado("descricao");
+			tiposProduto = new ArrayList<>();
 			Messages.addGlobalInfo("Amostra salva com sucesso!");
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a amostra.");
@@ -129,7 +136,7 @@ public class AmostraBean implements Serializable{
 	public void listarOrdenado(){
 		try{
 			AmostraDAO amostrDAO =  new AmostraDAO();
-			amostras = amostrDAO.listarOrdenadoPorData("dataColeta");
+			amostras = amostrDAO.listar();
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as amostras.");
 			erro.printStackTrace();
@@ -148,12 +155,14 @@ public class AmostraBean implements Serializable{
 	public void iniciar(){
 		try{
 			AmostraDAO amostraDAO = new AmostraDAO();
-			amostras = amostraDAO.listarOrdenadoPorData("dataColeta");
+			amostras = amostraDAO.listar();
 		}catch(RuntimeException runtimeException){
 			
 			Messages.addGlobalError(runtimeException.getMessage());
 		
 		}
 	}
+	
+	
 	
 }

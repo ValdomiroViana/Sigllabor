@@ -5,6 +5,7 @@ import java.math.MathContext;
 
 import br.com.siglabor.domain.Umidade;
 
+
 public class UmidadeDAO extends GenericDAO<Umidade>{
 	
 	public Umidade calcularUmidade(Umidade umidade){
@@ -16,4 +17,7 @@ public class UmidadeDAO extends GenericDAO<Umidade>{
 		
 	}
 
+
 }
+
+

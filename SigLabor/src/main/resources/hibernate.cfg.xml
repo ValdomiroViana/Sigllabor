@@ -40,6 +40,11 @@
 		<mapping class="br.com.siglabor.domain.CheckList" />
 		<mapping class="br.com.siglabor.domain.Amostra" />
 		<mapping class="br.com.siglabor.domain.Umidade" />
+		<mapping class="br.com.siglabor.domain.PercentualOleo" />
+		<mapping class="br.com.siglabor.domain.Acidez" />
+		<mapping class="br.com.siglabor.domain.Clorofila" />
+		<mapping class="br.com.siglabor.domain.Saboes" />
+		<mapping class="br.com.siglabor.domain.Urease" />
 
 
 

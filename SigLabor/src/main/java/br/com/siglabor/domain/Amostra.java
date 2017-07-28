@@ -20,19 +20,19 @@ public class Amostra extends GenericDomain {
 	private Date dataColeta;
 
 	@ManyToOne
-	@JoinColumn(name = "produto_id", nullable = false)
+	@JoinColumn(nullable = false)
 	private Produto produto;
 
 	@ManyToOne
-	@JoinColumn(name = "tipoProduto_id", nullable = false)
+	@JoinColumn(nullable = false)
 	private TipoProduto tipoProduto;
 
 	@OneToOne
-	@JoinColumn(name = "checkList_id", nullable = false)
+	@JoinColumn( nullable = false)
 	private CheckList checkList;
 
 	@OneToOne
-	@JoinColumn(name = "turno_id", nullable = false)
+	@JoinColumn(nullable = false)
 	private Turno turnoColeta;
 
 	public Turno getTurnoColeta() {

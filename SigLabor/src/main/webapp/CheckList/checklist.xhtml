@@ -14,7 +14,7 @@
 
 			<p:dataTable id="tabela" value="#{checkListBean.checkLists}" rows="5" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
 				widgetVar="tabelaCheck" var="checkList" reflow="true"
-				style="margin-top: 20px">
+				style="margin-top: 20px" emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"

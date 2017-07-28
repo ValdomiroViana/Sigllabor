@@ -66,7 +66,7 @@ public class UmidadeBean implements Serializable {
 			umidade = new Umidade();
 			// prencher a lista de amostras
 			AmostraDAO amostraDAO = new AmostraDAO();
-			amostras = amostraDAO.listarOrdenadoPorData("dataColeta");
+			amostras = amostraDAO.listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao gerar uma nova umidade");
 			erro.printStackTrace();
@@ -80,7 +80,7 @@ public class UmidadeBean implements Serializable {
 			umidadeDAO.salvar(umidade);
 			// criar uma nova umidade
 			umidade = new Umidade();
-			umidades = umidadeDAO.listar();
+			umidades = umidadeDAO.listarOrdenadoPorData("c.dataCheckList");
 			Messages.addGlobalInfo("Umidade salva com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a umidade");
@@ -94,7 +94,7 @@ public class UmidadeBean implements Serializable {
 	public void listarordenado() {
 		try {
 			UmidadeDAO umidadeDAO = new UmidadeDAO();
-			umidades = umidadeDAO.listarOrdenadoPorData("amostra.dataColeta");
+			umidades = umidadeDAO.listarOrdenadoPorData("c.dataCheckList");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar as umidades");
 			erro.printStackTrace();
@@ -112,7 +112,7 @@ public class UmidadeBean implements Serializable {
 	public void iniciar() {
 		try {
 			UmidadeDAO umidadeDAO = new UmidadeDAO();
-			umidades = umidadeDAO.listar();
+			umidades = umidadeDAO.listarOrdenadoPorData("c.dataCheckList");
 		} catch (RuntimeException runtimeException) {
 			Messages.addGlobalError("Erro");
 			runtimeException.printStackTrace();
