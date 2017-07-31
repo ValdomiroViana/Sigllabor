@@ -130,7 +130,6 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produtos}" itemLabel="#{produtos.descricao}" />
-						<p:ajax listener="#{tipoProdutoBean.popular}" update="tipo"/>
 						</p:selectOneMenu>
 						<p:outputLabel value="Tipo" for="tipo" />
 						<p:selectOneMenu id="tipo" required="true" style="width: 200px;"

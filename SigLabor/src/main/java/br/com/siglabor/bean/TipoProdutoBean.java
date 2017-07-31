@@ -27,7 +27,6 @@ public class TipoProdutoBean implements Serializable {
 	private List<Produto> produtos;
 	
 	public TipoProdutoBean(){
-		produto = new Produto();
 		tipoProduto = new TipoProduto();
 		
 	}

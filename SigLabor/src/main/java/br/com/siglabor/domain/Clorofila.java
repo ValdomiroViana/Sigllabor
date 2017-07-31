@@ -12,13 +12,13 @@ public class Clorofila extends GenericDomain {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 3)
 	private BigDecimal nm630;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 3)
 	private BigDecimal nm670;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 3)
 	private BigDecimal nm710;
 
 	@Column(precision = 7, scale = 4)
