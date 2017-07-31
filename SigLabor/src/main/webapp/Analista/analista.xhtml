@@ -30,7 +30,7 @@
 					<h:outputText value="#{analista.status}" />
 				</p:column>
 				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-penci"
+					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{analistaBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="analistaSelecionado" value="#{analista}" />

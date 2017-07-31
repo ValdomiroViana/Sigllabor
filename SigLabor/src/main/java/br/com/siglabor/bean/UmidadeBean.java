@@ -66,7 +66,7 @@ public class UmidadeBean implements Serializable {
 			umidade = new Umidade();
 			// prencher a lista de amostras
 			AmostraDAO amostraDAO = new AmostraDAO();
-			amostras = amostraDAO.listar();
+			amostras = amostraDAO.listarOrdenadoPorDataAmostra("dataColeta");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao gerar uma nova umidade");
 			erro.printStackTrace();

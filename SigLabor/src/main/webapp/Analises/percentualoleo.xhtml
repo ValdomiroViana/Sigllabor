@@ -6,48 +6,48 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Pesquisa de Acidezes</h1>
+		<h1 class="aw-page-title">Pesquisa de Percentuais de óleo</h1>
 		<p:growl id="growl" showSummary="true" life="5000" />
 
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{acidezBean.acidezes}" rows="5"
+			<p:dataTable id="tabela" value="#{percentualOleoBean.percentuaisOleo}" rows="5"
 				paginator="true" paginatorPosition="bottom"
 				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaAcidez" var="acidez"
-				reflow="true" style="margin-top: 20px">
+				paginatorAlwaysVisible="false" widgetVar="tabelaOleo"
+				var="percentualOleo" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{acidezBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{percentualOleoBean.novo}" update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
-					<h:outputText value="#{acidez.identificacao}" />
+					<h:outputText value="#{percentualOleo.identificacao}" />
 				</p:column>
 				<p:column headerText="Data Check List">
-					<h:outputText value="#{acidez.amostra.checkList.dataCheckList}">
+					<h:outputText value="#{percentualOleo.amostra.checkList.dataCheckList}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{acidez.amostra.produto}" headerText="Produto"
+				<p:column filterBy="#{percentualOleo.amostra.produto}" headerText="Produto"
 					priority="1" filterMatchMode="exact" width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAcidez').filter()">
+						<p:selectOneMenu onchange="PF('tabelaOleo').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{acidez.amostra.produto.descricao}" />
+					<h:outputText value="#{percentualOleo.amostra.produto.descricao}" />
 				</p:column>
 
-				<p:column filterBy="#{acidez.amostra.tipoProduto}" headerText="Tipo"
-					priority="1" filterMatchMode="exact" width="18%">
+				<p:column filterBy="#{percentualOleo.amostra.tipoProduto}"
+					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAcidez').filter()">
+						<p:selectOneMenu onchange="PF('tabelaOleo').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -55,39 +55,40 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{acidez.amostra.tipoProduto.descricaoTipo}">
+					<h:outputText value="#{percentualOleo.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Pa" priority="1" width="10%">
-					<h:outputText value="#{acidez.pa}" />
+				<p:column headerText="Pa" priority="1">
+					<h:outputText value="#{percentualOleo.pa}" />
 				</p:column>
-
-				<p:column headerText="Valor gasto" priority="1">
-					<h:outputText value="#{acidez.valorGasto}" />
+				<p:column headerText="Pb" priority="1">
+					<h:outputText value="#{percentualOleo.pb}" />
 				</p:column>
-
-				<p:column headerText="Acidez" priority="1">
-					<h:outputText value="#{acidez.acidez}">
+				<p:column headerText="Pf" priority="1">
+					<h:outputText value="#{percentualOleo.pf}" />
+				</p:column>
+				<p:column headerText="% de Óleo" priority="1" width="10%">
+					<h:outputText value="#{percentualOleo.percentualOleo}">
 						<f:convertNumber locale="en_US" pattern="#0.00" />
 					</h:outputText>
 				</p:column>
 
-
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{acidezBean.editar}"
+						actionListener="#{percentualOleoBean.editar}"
 						update=":formCadastroEditar:painelEditar"
 						oncomplete="PF('dialogoEditar').show();">
-						<f:setPropertyActionListener target="#{acidezBean.acidez}"
-							value="#{acidez}" />
+						<f:setPropertyActionListener target="#{percentualOleoBean.percentualOleo}"
+							value="#{percentualOleo}" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"
-						icon="ui-icon-trash" actionListener="#{acidezBean.excluir}"
+						icon="ui-icon-trash" actionListener="#{percentualOleoBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
 						<p:confirm header="Confirmação"
-							message="Deseja realmente Excluir a acidez?" icon="ui-icon-alert" />
-						<f:attribute name="acidezSelecionada" value="#{acidez}" />
+							message="Deseja realmente Excluir o percentual de óleo?"
+							icon="ui-icon-alert" />
+						<f:attribute name="percentualOleoSelecionado" value="#{percentualOleo}" />
 
 					</p:commandButton>
 				</p:column>
@@ -101,19 +102,19 @@
 
 		</h:form>
 
-		<p:dialog header="Cadastro de acidez" widgetVar="dialogo"
+		<p:dialog header="Cadastro de Percentual de óleo" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
-			responsive="true" >
+			responsive="true">
 			<h:form id="formCadastro">
 				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
 					<h:panelGrid id="painel" columns="2" layout="grid"
 						styleClass="panelgrid-noborder"
-						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" />
 						<p:selectOneMenu id="Amostra" required="true"
 							style="width: 100%;" requiredMessage="Selecione Uma amostra"
-							value="#{acidezBean.acidez.amostra}"
+							value="#{percentualOleoBean.percentualOleo.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
@@ -122,19 +123,26 @@
 								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
+
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.identificacao}" />
+							value="#{percentualOleoBean.percentualOleo.identificacao}" />
 
-						<p:outputLabel value="Pa:" for="pa" />
+						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.pa}" styleClass="peso2" />
+							value="#{percentualOleoBean.percentualOleo.pa}" styleClass="peso2" />
+
+						<p:outputLabel value="Pb:" for="pb" />
+						<p:inputText id="pb" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{percentualOleoBean.percentualOleo.pb}" styleClass="peso2" />
+
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{acidezBean.salvar}"
+							actionListener="#{percentualOleoBean.salvar}"
 							update=":growl :formCadastro:painel formListagem:tabela"
 							oncomplete="PF('dialogo').hide();" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
@@ -143,7 +151,7 @@
 				</h:panelGroup>
 			</h:form>
 		</p:dialog>
-		<p:dialog header="Edição de Acidez" widgetVar="dialogoEditar"
+		<p:dialog header="Cadastro de Percentual de óleo" widgetVar="dialogoEditar"
 			draggable="false" resizable="false" modal="true" closable="false"
 			responsive="true">
 			<h:form id="formCadastroEditar">
@@ -151,11 +159,11 @@
 					styleClass="ui-fluid">
 					<h:panelGrid id="painelEditar" columns="2" layout="grid"
 						styleClass="panelgrid-noborder"
-						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" for="amostra" />
 						<p:selectOneMenu id="amostra" required="true"
-							style="width: 200px;" requiredMessage="Selecione Uma amostra"
-							value="#{acidezBean.acidez.amostra}"
+							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+							value="#{percentualOleoBean.percentualOleo.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
@@ -167,33 +175,38 @@
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.identificacao}" />
+							value="#{percentualOleoBean.percentualOleo.identificacao}" />
 
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.pa}" styleClass="peso2" />
+							value="#{percentualOleoBean.percentualOleo.pa}" styleClass="peso2" />
 
-						<p:outputLabel value="Valor Gasto:" for="vg" />
-						<p:inputText id="vg" maxlength="8" size="10" required="true"
+						<p:outputLabel value="Pb:" for="pb" />
+						<p:inputText id="pb" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{percentualOleoBean.percentualOleo.pb}" styleClass="peso2" />
+
+						<p:outputLabel value="Peso final:" for="pf" />
+						<p:inputText id="pf" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.valorGasto}" styleClass="peso1" />
+							value="#{percentualOleoBean.percentualOleo.pf}" styleClass="peso2" />
 						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
-							actionListener="#{acidezBean.calcularAcidez}"
+							actionListener="#{percentualOleoBean.calcularPercentualOleo}"
 							update=":formCadastroEditar:painelEditar">
 						</p:commandButton>
 
-						<p:outputLabel value="Acidez:" for="acidez" />
-						<p:inputText id="acidez" maxlength="8" size="10" required="false"
+						<p:outputLabel value="% de óleo:" for="oleo" />
+						<p:inputText id="oleo" maxlength="8" size="10" required="false"
 							requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.acidez}">
+							value="#{percentualOleoBean.percentualOleo.percentualOleo}">
 							<f:convertNumber locale="en_US" pattern="#0.00" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{acidezBean.salvar}"
+							actionListener="#{percentualOleoBean.salvar}"
 							update=":growl :formCadastroEditar:painelEditar formListagem:tabela"
 							oncomplete="PF('dialogoEditar').hide();" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"

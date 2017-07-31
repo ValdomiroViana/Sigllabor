@@ -16,8 +16,8 @@
 	<h:outputStylesheet library="css" name="layout.css" />
 	<h:outputStylesheet library="css" name="components.css" />
 	<h:outputStylesheet library="css" name="custom.css" />
-	<h:outputScript library="js" name="scriptDate.js"/>
-	<h:outputScript library="js" name="mask.js"/>
+	<h:outputScript library="js" name="scriptDate.js" />
+	<h:outputScript library="js" name="mask.js" />
 	<h:outputScript target="body" library="primefaces"
 		name="jquery/jquery.js" />
 	<h:outputScript target="body" library="js" name="app.js" />
@@ -27,108 +27,121 @@
 
 	<header class="aw-topbar">
 		<div style="float: left; padding-left: 10px;">
-		<h:graphicImage library="images" name="logo_gota1.jpg" />
+			<h:graphicImage library="images" name="logo_gota1.jpg" />
 		</div>
-			<a href="#"  style="float:left;" class="aw-toggle js-toggle"><i class="fa  fa-angle-double-left"></i></a>
+		<a href="#" style="float: left;" class="aw-toggle js-toggle"><i
+			class="fa  fa-angle-double-left"></i></a>
 		<div class="menu-right">
-		<span class="span-usuario">Olá, seja bem-vindo !!</span>
-		<h:form styleClass="menu-form  js-menu-form">
-			<p:panelGrid>
-			<p:menubar styleClass="menu-sistema js-menu-sistema">					
-					<p:submenu label="Farelo" >
-						<p:menuitem value="Umidade"  />	
-						<p:menuitem value="% de óleo"  />
-						<p:menuitem value="Proteína Total"  />
-						<p:menuitem value="Proteína Solúvel"  />
-						<p:menuitem value="Urease"  />
-						<p:menuitem value="Fibras"  />
-						<p:menuitem value="Cinzas"  />
-						<p:menuitem value="Silica"  />												
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Óleo" >
-						<p:menuitem value="Umidade"  />
-						<p:menuitem value="Acidez"  />
-						<p:menuitem value="Clorofila"  />
-						<p:menuitem value="Sabões"  />
-						<p:menuitem value="Ins. em Acetona"  />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Soja" >
-						<p:menuitem value="Umidade" />
-						<p:menuitem value="% de óleo" />
-						<p:menuitem value="Acidez" />
-						<p:menuitem value="Proteína" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Lex" >
-						<p:menuitem value="Umidade" />
-						<p:menuitem value="% de óleo" />
-						<p:menuitem value="Retenção" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Goma" >
-						<p:menuitem value="Umidade" />
-						<p:menuitem value="% de óleo" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Cavaco" >
-						<p:menuitem value="Umidade" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Banhos" >
-						<p:menuitem value="Umidade" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Médias" >
-						<p:menuitem value="Umidade" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:submenu label="Água" >
-						<p:menuitem value="PH" />
-					</p:submenu>
-					<p:separator styleClass="menu-separator js-menu-separator"/>
-					<p:menuitem value="Sair"/>
-					
-				</p:menubar>
-			</p:panelGrid>
-			
-		</h:form>
-		<a href="#"  class="topbar-menu-botton  js-topbar-menu-botton"><i class="fa  fa-bars"></i></a>
+			<span class="span-usuario">Olá, seja bem-vindo !!</span>
+			<h:form styleClass="menu-form  js-menu-form">
+				<p:panelGrid>
+					<p:menubar styleClass="menu-sistema js-menu-sistema">
+						<p:submenu label="Farelo">
+							<p:menuitem value="Umidade" />
+							<p:menuitem value="% de óleo" />
+							<p:menuitem value="Proteína Total" />
+							<p:menuitem value="Proteína Solúvel" />
+							<p:menuitem value="Urease" />
+							<p:menuitem value="Fibras" />
+							<p:menuitem value="Cinzas" />
+							<p:menuitem value="Silica" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Óleo">
+							<p:menuitem value="Umidade" />
+							<p:menuitem value="Acidez" />
+							<p:menuitem value="Clorofila" />
+							<p:menuitem value="Sabões" />
+							<p:menuitem value="Ins. em Acetona" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Soja">
+							<p:menuitem value="Umidade" />
+							<p:menuitem value="% de óleo" />
+							<p:menuitem value="Acidez" />
+							<p:menuitem value="Proteína" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Lex">
+							<p:menuitem value="Umidade" />
+							<p:menuitem value="% de óleo" />
+							<p:menuitem value="Retenção" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Goma">
+							<p:menuitem value="Umidade" />
+							<p:menuitem value="% de óleo" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Cavaco">
+							<p:menuitem value="Umidade" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Banhos">
+							<p:menuitem value="Umidade" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Médias">
+							<p:menuitem value="Umidade" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:submenu label="Água">
+							<p:menuitem value="PH" />
+						</p:submenu>
+						<p:separator styleClass="menu-separator js-menu-separator" />
+						<p:menuitem value="Sair" />
+
+					</p:menubar>
+				</p:panelGrid>
+
+			</h:form>
+			<a href="#" class="topbar-menu-botton  js-topbar-menu-botton"><i
+				class="fa  fa-bars"></i></a>
 		</div>
-		
+
 	</header>
 	<aside class="aw-sidebar js-sidebar">
 		<nav class="aw-menu">
 			<ul>
-				<li><h:link>
+				<li><h:link > 
 						<i class="fa  fa-fw  fa-home"></i>Dashboard</h:link></li>
-				<li class="is-selected"><h:link>
-						<i class="fa  fa-fw  fa-user"></i>Clientes</h:link></li>
+				<li><h:link outcome="/Amostra/amostra">
+						<i class="fa  fa-fw  fa-circle-thin"></i>Amostras</h:link></li>
+				<li><h:link outcome="/CheckList/checklist">
+						<i class="fa  fa-fw  fa-list-alt"></i>Check List</h:link></li>
 				<li><h:link>
 						<i class="fa  fa-fw  fa-file-text"></i>Relatórios</h:link></li>
+				<li><h:link outcome="/Analista/analista">
+						<i class="fa  fa-fw  fa-user"></i>Analista</h:link></li>
+				<li><h:link outcome="/Turno/turno">
+						<i class="fa  fa-fw fa-suitcase"></i>Turno</h:link></li>
 				<li><h:link>
-						<i class="fa  fa-fw  fa-cog"></i>Configurações</h:link></li>
+						<i class="fa  fa-fw  fa-users"></i>Usuários</h:link></li>
 			</ul>
 		</nav>
 	</aside>
 	<section class="aw-content js-content">
-				<p:ajaxStatus styleClass="ajax-status">
+		<p:ajaxStatus styleClass="ajax-status">
 			<f:facet name="start">
 				<h:graphicImage library="images" name="carregando.gif" />
 			</f:facet>
 			<f:facet name="complete">
-				<h:outputText value=""/>
+				<h:outputText value="" />
 			</f:facet>
 		</p:ajaxStatus>
 		<ui:insert name="content" />
 	</section>
 	<script>
-	function configurarPeso(){
-		 $('.peso2').mask("##.####", {reverse: true});
-	}
-	$(document).ready(function(){
-		configurarPeso();
+		function configurarPeso() {
+			$('.peso2').mask("##.####", {
+				reverse : true
+			});
+			$('.peso1').mask("#.##", {
+				reverse : true
+			});
+		}
+		$(document).ready(function() {
+			configurarPeso();
 		});
 	</script>
 </h:body>
