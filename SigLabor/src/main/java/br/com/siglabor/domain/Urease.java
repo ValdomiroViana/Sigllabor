@@ -15,13 +15,13 @@ public class Urease extends GenericDomain {
 	@Column(nullable = false, precision = 7, scale = 2)
 	private BigDecimal pHa;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 2)
 	private BigDecimal pHs;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 2)
 	private BigDecimal diferenca;
 
-	@Column(precision = 7, scale = 4)
+	@Column(precision = 7, scale = 2)
 	private BigDecimal urease;
 
 	@ManyToOne

@@ -24,11 +24,9 @@ public class TipoProdutoBean implements Serializable {
 	private List<TipoProduto> tiposProduto;
 	// instanciar um objeto produto
 	private Produto produto;
-	private List<Produto> produtos;
 	
 	public TipoProdutoBean(){
 		tipoProduto = new TipoProduto();
-		
 	}
 
 	// getters and setters
@@ -131,11 +129,4 @@ public class TipoProdutoBean implements Serializable {
 		}
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
 }

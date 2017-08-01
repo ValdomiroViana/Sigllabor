@@ -1,0 +1,207 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de sabões</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{saboesBean.saboes}" rows="5"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum registro encontrado!"
+				paginatorAlwaysVisible="false" widgetVar="tabelaSaboes" var="sabao"
+				reflow="true" style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{saboesBean.novo}" update=":formCadastro:painel" />
+				</f:facet>
+				<p:column headerText="Nº" priority="1" width="5%">
+					<h:outputText value="#{sabao.identificacao}" />
+				</p:column>
+				<p:column headerText="Data Check List">
+					<h:outputText value="#{sabao.amostra.checkList.dataCheckList}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column filterBy="#{sabao.amostra.produto}" headerText="Produto"
+					priority="1" filterMatchMode="exact" width="18%">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaSaboes').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{sabao.amostra.produto.descricao}" />
+				</p:column>
+
+				<p:column filterBy="#{sabao.amostra.tipoProduto}" headerText="Tipo"
+					priority="1" filterMatchMode="exact" width="18%">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaSaboes').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+								var="tiposProduto" itemValue="#{tipoProduto}"
+								itemLabel="#{tiposProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{sabao.amostra.tipoProduto.descricaoTipo}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Pa" priority="1" width="10%">
+					<h:outputText value="#{sabao.pa}" />
+				</p:column>
+
+				<p:column headerText="Valor gasto" priority="1">
+					<h:outputText value="#{sabao.valorGasto}" />
+				</p:column>
+
+				<p:column headerText="Acidez" priority="1">
+					<h:outputText value="#{sabao.sabao}">
+						<f:convertNumber locale="en_US" pattern="#0.00" />
+					</h:outputText>
+				</p:column>
+
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{saboesBean.editar}"
+						update=":formCadastroEditar:painelEditar"
+						oncomplete="PF('dialogoEditar').show();">
+						<f:setPropertyActionListener target="#{saboesBean.sabao}"
+							value="#{sabao}" />
+					</p:commandButton>
+
+					<p:commandButton style="background-color:red; float: right;"
+						icon="ui-icon-trash" actionListener="#{saboesBean.excluir}"
+						update=":growl :formCadastro:painel formListagem:tabela">
+						<p:confirm header="Confirmação"
+							message="Deseja realmente Excluir a análise de sabões?" icon="ui-icon-alert" />
+						<f:attribute name="saboesSelecionada" value="#{sabao}" />
+
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de sabões" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true" >
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
+						<p:outputLabel value="Amostra" />
+						<p:selectOneMenu id="Amostra" required="true"
+							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+							value="#{saboesBean.sabao.amostra}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione uma amostra"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
+								itemValue="#{amostras}"
+								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Número:" for="num" />
+						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.identificacao}" />
+
+						<p:outputLabel value="Pa:" for="pa" />
+						<p:inputText id="pa" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.pa}" styleClass="peso1" />
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{saboesBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela"
+							oncomplete="PF('dialogo').hide();" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Edição de Sabões" widgetVar="dialogoEditar"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastroEditar">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painelEditar" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
+						<p:outputLabel value="Amostra" for="amostra" />
+						<p:selectOneMenu id="amostra" required="true"
+							style="width: 200px;" requiredMessage="Selecione Uma amostra"
+							value="#{saboesBean.sabao.amostra}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione uma amostra"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
+								itemValue="#{amostras}"
+								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Número:" for="num" />
+						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.identificacao}" />
+
+						<p:outputLabel value="Peso Amostra:" for="pa" />
+						<p:inputText id="pa" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.pa}" styleClass="peso2" />
+
+						<p:outputLabel value="Valor Gasto:" for="vg" />
+						<p:inputText id="vg" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.valorGasto}" styleClass="peso1" />
+						<p:outputLabel value="" />
+						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
+							actionListener="#{saboesBean.calcularSaboes}"
+							update=":formCadastroEditar:painelEditar">
+						</p:commandButton>
+
+						<p:outputLabel value="Sabões:" for="saboes" />
+						<p:inputText id="saboes" maxlength="8" size="10" required="false"
+							requiredMessage="Campo obrigatório"
+							value="#{saboesBean.sabao.sabao}">
+							<f:convertNumber locale="en_US" pattern="#0.00" />
+						</p:inputText>
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{saboesBean.salvar}"
+							update=":growl :formCadastroEditar:painelEditar formListagem:tabela"
+							oncomplete="PF('dialogoEditar').hide();" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogoEditar').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

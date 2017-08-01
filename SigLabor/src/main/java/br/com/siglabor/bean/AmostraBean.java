@@ -31,16 +31,11 @@ public class AmostraBean implements Serializable{
 	//criar uma lista de checklists
 	private List<CheckList> checkLists;
 	//Instanciar um produto
-	private Produto produto;
-	//Criar uma lista de produtos
 	private List<Produto> produtos;
-	//instanciar um novo tipo de produto
-	private TipoProduto tipoProduto;
 	//criar uma lista de tipos de produto
 	private List<TipoProduto> tiposProduto;
 	public AmostraBean(){
 		amostra = new Amostra();
-		produto = new Produto();
 	}
 	//Getters and setters
 	public Amostra getAmostra() {
@@ -67,24 +62,14 @@ public class AmostraBean implements Serializable{
 	public void setCheckLists(List<CheckList> checkLists) {
 		this.checkLists = checkLists;
 	}
-	public Produto getProduto() {
-		return produto;
-	}
-	public void setProduto(Produto produto) {
-		this.produto = produto;
-	}
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-	public TipoProduto getTipoProduto() {
-		return tipoProduto;
-	}
-	public void setTipoProduto(TipoProduto tipoProduto) {
-		this.tipoProduto = tipoProduto;
-	}
+	
 	public List<TipoProduto> getTiposProduto() {
 		return tiposProduto;
 	}
@@ -96,15 +81,14 @@ public class AmostraBean implements Serializable{
 	public void novo(){
 		try{
 			amostra = new Amostra();
-			//preencher a lista de Checklists
-			CheckListDAO checkListDAO = new CheckListDAO();
-			checkLists = checkListDAO.listarOrdenado("dataCheckList");
 			//preencher a lista de produtos para preencher a combobox
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listarOrdenado("descricao");
 			//O combobox de tipos de produto fica vazio
 			tiposProduto = new ArrayList<>();
-			
+			//preencher a lista de Checklists
+			CheckListDAO checkListDAO = new CheckListDAO();
+			checkLists = checkListDAO.listarOrdenado("dataCheckList");
 			
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Erro ao gerar uma nova amostra");

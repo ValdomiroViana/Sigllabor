@@ -15,21 +15,22 @@
 			<p:dataTable id="tabela" value="#{amostraBean.amostras}" rows="5"
 				paginator="true" paginatorPosition="bottom"
 				paginatorAlwaysVisible="false" widgetVar="tabelaAmostra"
-				var="amostra" reflow="true" style="margin-top: 20px" emptyMessage="Nenhum registro encontrado!">
+				var="amostra" reflow="true" style="margin-top: 20px"
+				emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{amostraBean.novo}" update=":formCadastro:painel" />
 				</f:facet>
-				<p:column 
-					headerText="Código" priority="1" filterMatchMode="exact" filterBy="#{amostra.codigo}">
+				<p:column headerText="Código" priority="1" filterMatchMode="exact"
+					filterBy="#{amostra.codigo}">
 					<f:facet name="filter">
-						<h:inputText onchange="PF('tabelaAmostra').filter()"/>
+						<h:inputText onchange="PF('tabelaAmostra').filter()" />
 					</f:facet>
 					<h:outputText value="#{amostra.codigo}" />
 				</p:column>
-				<p:column filterBy="#{amostra.produto}"
-					headerText="Produto" priority="1" filterMatchMode="exact">
+				<p:column filterBy="#{amostra.produto}" headerText="Produto"
+					priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
@@ -41,8 +42,8 @@
 					<h:outputText value="#{amostra.produto.descricao}" />
 				</p:column>
 
-				<p:column filterBy="#{amostra.tipoProduto}"
-					headerText="Tipo" priority="1" filterMatchMode="exact">
+				<p:column filterBy="#{amostra.tipoProduto}" headerText="Tipo"
+					priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
@@ -70,8 +71,7 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-					<p:column
-					headerText="Turno" priority="1" >
+				<p:column headerText="Turno" priority="1">
 					<h:outputText value="#{amostra.turnoColeta.descricao}">
 					</h:outputText>
 				</p:column>
@@ -101,8 +101,8 @@
 							mask="true" pattern="dd/MM/yyyy"
 							value="#{amostraBean.amostra.dataColeta}" />
 						<p:outputLabel value="Turno" for="turno" />
-						<p:selectOneMenu id="turno" required="true"
-							style="width: 200px;" requiredMessage="Selecione Um turno"
+						<p:selectOneMenu id="turno" required="true" style="width: 200px;"
+							requiredMessage="Selecione Um turno"
 							value="#{amostraBean.amostra.turnoColeta}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione um turno"
@@ -110,26 +110,28 @@
 							<f:selectItems value="#{turnoBean.turnos}" var="turnos"
 								itemValue="#{turnos}" itemLabel="#{turnos.descricao}" />
 						</p:selectOneMenu>
-								<p:outputLabel value="Check List" for="checklist" />
+						<p:outputLabel value="Check List" for="checklist" />
 						<p:selectOneMenu id="checklist" required="true"
 							style="width: 200px;" requiredMessage="Selecione Um Check List"
 							value="#{amostraBean.amostra.checkList}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione um Check list"
 								noSelectionOption="true" />
-							<f:selectItems value="#{checkListBean.checkLists}" var="checkLists"
-								itemValue="#{checkList}" itemLabel="#{checkLists.dataCheckList} - #{checkLists.turno.descricao}" />
+							<f:selectItems value="#{checkListBean.checkLists}"
+								var="checkLists" itemValue="#{checkList}"
+								itemLabel="#{checkLists.dataCheckList} - #{checkLists.turno.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Produto" for="produto" />
 						<p:selectOneMenu id="produto" required="true"
 							style="width: 200px;" requiredMessage="Selecione Um produto"
-							value="#{amostraBean.amostra.produto}"
+							value="#{tipoProdutoBean.produto}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione um produto"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produtos}" itemLabel="#{produtos.descricao}" />
+							<p:ajax listener="#{tipoProdutoBean.popular}" update="tipo" />
 						</p:selectOneMenu>
 						<p:outputLabel value="Tipo" for="tipo" />
 						<p:selectOneMenu id="tipo" required="true" style="width: 200px;"

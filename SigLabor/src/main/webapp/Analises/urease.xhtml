@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de Atividade Ureática</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{ureaseBean.ureases}" rows="5"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum registro encontrado!"
+				paginatorAlwaysVisible="false" widgetVar="tabelaUrease"
+				var="urease" reflow="true" style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Nova" oncomplete="PF('dialogo').show();"
+						actionListener="#{ureaseBean.novo}" update=":formCadastro:painel" />
+				</f:facet>
+				<p:column headerText="Data Check List">
+					<h:outputText value="#{urease.amostra.checkList.dataCheckList}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column  headerText="Produto"
+					priority="1" filterMatchMode="exact" width="18%">
+					<h:outputText value="#{urease.amostra.produto.descricao}" />
+				</p:column>
+
+				<p:column filterBy="#{urease.amostra.tipoProduto}"
+					headerText="Tipo" priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaUrease').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+								var="tiposProduto" itemValue="#{tipoProduto}"
+								itemLabel="#{tiposProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{urease.amostra.tipoProduto.descricaoTipo}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Diferença" priority="1">
+					<h:outputText value="#{urease.diferenca}" />
+				</p:column>
+				<p:column headerText="pH a" priority="1">
+					<h:outputText value="#{urease.pHa}" />
+				</p:column>
+				<p:column headerText="pH s" priority="1">
+					<h:outputText value="#{urease.pHs}" />
+				</p:column>
+				<p:column headerText="Urease" priority="1" width="10%">
+					<h:outputText value="#{urease.urease}">
+						<f:convertNumber locale="en_US" pattern="#0.00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{ureaseBean.editar}"
+						update=":formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:setPropertyActionListener target="#{ureaseBean.urease}"
+							value="#{urease}" />
+					</p:commandButton>
+
+					<p:commandButton style="background-color:red; float: right;"
+						icon="ui-icon-trash" actionListener="#{ureaseBean.excluir}"
+						update=":growl :formCadastro:painel formListagem:tabela">
+						<p:confirm header="Confirmação"
+							message="Deseja realmente Excluir a urease?"
+							icon="ui-icon-alert" />
+						<f:attribute name="ureaseSelecionada" value="#{urease}" />
+
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de Urease" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+						<p:outputLabel value="Amostra" />
+						<p:selectOneMenu id="Amostra" required="true"
+							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+							value="#{ureaseBean.urease.amostra}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione uma amostra"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
+								itemValue="#{amostras}"
+								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+
+
+						<p:outputLabel value="Diferença:" for="diferenca" />
+						<p:inputText id="diferenca" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{ureaseBean.urease.diferenca}" styleClass="peso1" />
+
+						<p:outputLabel value="pH a:" for="pha" />
+						<p:inputText id="pha" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{ureaseBean.urease.pHa}" styleClass="peso1" />
+						
+						
+						<p:outputLabel value="pH s:" for="phs" />
+						<p:inputText id="phs" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{ureaseBean.urease.pHs}" styleClass="peso1" />
+							
+							<p:outputLabel value="" />
+						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
+							actionListener="#{ureaseBean.calcularUrease}"
+							update=":formCadastro:painel">
+						</p:commandButton>
+						
+						<p:outputLabel value="Urease:" for="urease" />
+						<p:inputText id="urease" maxlength="8" size="10" required="false"
+							requiredMessage="Campo obrigatório"
+							value="#{ureaseBean.urease.urease}">
+							<f:convertNumber locale="en_US" pattern="#0.00" />
+						</p:inputText>
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{ureaseBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela"
+							oncomplete="PF('dialogo').hide();" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
