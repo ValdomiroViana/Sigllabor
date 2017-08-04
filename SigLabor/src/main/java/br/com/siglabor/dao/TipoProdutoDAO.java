@@ -31,4 +31,5 @@ public class TipoProdutoDAO extends GenericDAO<TipoProduto> {
 		
 		
 	}
+	
 }

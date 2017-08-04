@@ -128,5 +128,7 @@ public class TipoProdutoBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+	
+	
 
 }
