@@ -125,13 +125,13 @@
 						<p:outputLabel value="Produto" for="produto" />
 						<p:selectOneMenu id="produto" required="true"
 							style="width: 200px;" requiredMessage="Selecione Um produto"
-							value="#{tipoProdutoBean.produto}"
+							value="#{amostraBean.amostra.produto}"
 							converter="omnifaces.SelectItemsConverter" >
 							<f:selectItem itemLabel="Selecione um produto"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produtos}" itemLabel="#{produtos.descricao}"/>
-							<p:ajax  listener="#{tipoProdutoBean.popular}"  update="tipo"/>
+							
 						</p:selectOneMenu>
 						<p:outputLabel value="Tipo" for="tipo" />
 						<p:selectOneMenu id="tipo" required="true" style="width: 200px;"

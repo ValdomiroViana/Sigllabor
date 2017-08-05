@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de pH</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{phBean.phs}" rows="5"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum registro encontrado!"
+				paginatorAlwaysVisible="false" widgetVar="tabelaPh"
+				var="ph" reflow="true" style="margin-top: 20px">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{phBean.novo}" update=":formCadastro:painel" />
+				</f:facet>
+				<p:column headerText="Data Check List">
+					<h:outputText value="#{ph.amostra.checkList.dataCheckList}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column  headerText="Produto"
+					priority="1" filterMatchMode="exact" width="18%">
+					<h:outputText value="#{ph.amostra.produto.descricao}" />
+				</p:column>
+
+				<p:column filterBy="#{ph.amostra.tipoProduto}"
+					headerText="Tipo" priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaPh').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+								var="tiposProduto" itemValue="#{tipoProduto}"
+								itemLabel="#{tiposProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{ph.amostra.tipoProduto.descricaoTipo}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="pH" priority="1">
+					<h:outputText value="#{ph.ph}" />
+				</p:column>
+					
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{phBean.editar}"
+						update=":formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:setPropertyActionListener target="#{phBean.ph}"
+							value="#{ph}" />
+					</p:commandButton>
+
+					<p:commandButton style="background-color:red; float: right;"
+						icon="ui-icon-trash" actionListener="#{phBean.excluir}"
+						update=":growl :formCadastro:painel formListagem:tabela">
+						<p:confirm header="Confirmação"
+							message="Deseja realmente Excluir o pH?"
+							icon="ui-icon-alert" />
+						<f:attribute name="phSelecionado" value="#{ph}" />
+
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de pH" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+						<p:outputLabel value="Amostra" />
+						<p:selectOneMenu id="Amostra" required="true"
+							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+							value="#{phBean.ph.amostra}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione uma amostra"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
+								itemValue="#{amostras}"
+								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+						</p:selectOneMenu>
+
+
+						<p:outputLabel value="pH:" for="ph" />
+						<p:inputText id="ph" maxlength="4" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{phBean.ph.ph}" styleClass="peso1" />
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{phBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela"
+							oncomplete="PF('dialogo').hide();" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

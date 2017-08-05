@@ -59,7 +59,7 @@ public class AcidezBean implements Serializable{
 			acidez = new Acidez();
 			//prencher a listagem d eamostras
 			AmostraDAO amostraDAO = new AmostraDAO();
-			amostras = amostraDAO.listar();
+			amostras = amostraDAO.listarOrdenadoPorDataAmostra("dataColeta");
 			
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao gerar uma noca acidez");

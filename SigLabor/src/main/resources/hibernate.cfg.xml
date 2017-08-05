@@ -45,6 +45,11 @@
 		<mapping class="br.com.siglabor.domain.Clorofila" />
 		<mapping class="br.com.siglabor.domain.Saboes" />
 		<mapping class="br.com.siglabor.domain.Urease" />
+		<mapping class="br.com.siglabor.domain.Ph" />
+		<mapping class="br.com.siglabor.domain.FatorSolucao" />
+		<mapping class="br.com.siglabor.domain.ProteinaTotal" />
+		<mapping class="br.com.siglabor.domain.ProteinaSoluvel" />
+		
 
 
 
