@@ -18,7 +18,7 @@ public class Acidez extends GenericDomain{
 	@Column(nullable = false, precision = 7, scale = 4)
 	private BigDecimal pa;
 	
-	@Column( precision = 7, scale = 4)
+	@Column( precision = 7, scale = 1)
 	private BigDecimal valorGasto;
 	
 	@Column( precision = 7, scale = 4)

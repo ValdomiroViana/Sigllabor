@@ -28,17 +28,9 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{clorofila.amostra.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaClorofila').filter()">
-							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
-								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText value="#{clorofila.amostra.produto.descricao}" />
+				<p:column  headerText="Produto"
+					priority="1" width="18%">
+					<h:outputText value="#{clorofila.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{clorofila.amostra.tipoProduto}"
@@ -117,25 +109,25 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 
 						<p:outputLabel value="630 nm:" for="nm" />
 						<p:inputText id="nm" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{clorofilaBean.clorofila.nm630}" styleClass="peso1" />
+							value="#{clorofilaBean.clorofila.nm630}" styleClass="peso4" />
 
 						<p:outputLabel value="670 nm:" for="nmm" />
 						<p:inputText id="nmm" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{clorofilaBean.clorofila.nm670}" styleClass="peso1" />
+							value="#{clorofilaBean.clorofila.nm670}" styleClass="peso4" />
 						
 						
 						<p:outputLabel value="710 nm:" for="nmn" />
 						<p:inputText id="nmn" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{clorofilaBean.clorofila.nm710}" styleClass="peso1" />
+							value="#{clorofilaBean.clorofila.nm710}" styleClass="peso4" />
 							
 							<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"

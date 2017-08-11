@@ -32,23 +32,29 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{umidade.amostra.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
+				<p:column filterBy="#{umidade.amostra.tipoProduto.produto}"
+					headerText="Produto" priority="1" filterMatchMode="exact"
+					width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()">
+						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()"
+							value="#{tipoProdutoBean.produto}"
+							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+							<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+								update="tipo" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{umidade.amostra.produto.descricao}" />
+					<h:outputText
+						value="#{umidade.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{umidade.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()">
+						<p:selectOneMenu id="tipo" onchange="PF('tabelaUmidade').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -113,15 +119,15 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" />
-						<p:selectOneMenu id="Amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{umidadeBean.umidade.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Tipo:" for="tipo" />
@@ -168,15 +174,15 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" for="amostra" />
-						<p:selectOneMenu id="amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{umidadeBean.umidade.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Tipo:" for="tipo" />

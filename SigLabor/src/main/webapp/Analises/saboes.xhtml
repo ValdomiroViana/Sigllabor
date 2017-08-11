@@ -31,17 +31,10 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{sabao.amostra.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaSaboes').filter()">
-							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
-								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText value="#{sabao.amostra.produto.descricao}" />
+				<p:column headerText="Produto"
+					priority="1" width="18%">
+						
+					<h:outputText value="#{sabao.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{sabao.amostra.tipoProduto}" headerText="Tipo"
@@ -119,7 +112,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -130,7 +123,7 @@
 						<p:outputLabel value="Pa:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{saboesBean.sabao.pa}" styleClass="peso1" />
+							value="#{saboesBean.sabao.pa}" styleClass="peso5" />
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
@@ -161,7 +154,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -172,12 +165,12 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{saboesBean.sabao.pa}" styleClass="peso2" />
+							value="#{saboesBean.sabao.pa}" styleClass="peso5" />
 
 						<p:outputLabel value="Valor Gasto:" for="vg" />
 						<p:inputText id="vg" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{saboesBean.sabao.valorGasto}" styleClass="peso1" />
+							value="#{saboesBean.sabao.valorGasto}" styleClass="peso3" />
 						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{saboesBean.calcularSaboes}"

@@ -29,7 +29,7 @@
 					</f:facet>
 					<h:outputText value="#{amostra.codigo}" />
 				</p:column>
-				<p:column filterBy="#{amostra.produto}" headerText="Produto"
+				<p:column filterBy="#{amostra.tipoProduto.produto}" headerText="Produto"
 					priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
@@ -39,7 +39,7 @@
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{amostra.produto.descricao}" />
+					<h:outputText value="#{amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{amostra.tipoProduto}" headerText="Tipo"
@@ -125,12 +125,13 @@
 						<p:outputLabel value="Produto" for="produto" />
 						<p:selectOneMenu id="produto" required="true"
 							style="width: 200px;" requiredMessage="Selecione Um produto"
-							value="#{amostraBean.amostra.produto}"
+							value="#{tipoProdutoBean.produto}"
 							converter="omnifaces.SelectItemsConverter" >
 							<f:selectItem itemLabel="Selecione um produto"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produtos}" itemLabel="#{produtos.descricao}"/>
+						<p:ajax listener="#{tipoProdutoBean.popular}" update="tipo"/>
 							
 						</p:selectOneMenu>
 						<p:outputLabel value="Tipo" for="tipo" />

@@ -31,23 +31,29 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{acidez.amostra.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
+				<p:column filterBy="#{acidez.amostra.tipoProduto.produto}"
+					headerText="Produto" priority="1" filterMatchMode="exact"
+					width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAcidez').filter()">
+						<p:selectOneMenu onchange="PF('tabelaAcidez').filter()"
+							value="#{tipoProdutoBean.produto}"
+							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+							<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+								update="tipo" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{acidez.amostra.produto.descricao}" />
+					<h:outputText
+						value="#{acidez.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{acidez.amostra.tipoProduto}" headerText="Tipo"
 					priority="1" filterMatchMode="exact" width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAcidez').filter()">
+						<p:selectOneMenu id="tipo" onchange="PF('tabelaAcidez').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -103,7 +109,7 @@
 
 		<p:dialog header="Cadastro de acidez" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
-			responsive="true" >
+			responsive="true">
 			<h:form id="formCadastro">
 				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
@@ -111,15 +117,15 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
 						<p:outputLabel value="Amostra" />
-						<p:selectOneMenu id="Amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{acidezBean.acidez.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -161,7 +167,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -177,7 +183,7 @@
 						<p:outputLabel value="Valor Gasto:" for="vg" />
 						<p:inputText id="vg" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{acidezBean.acidez.valorGasto}" styleClass="peso1" />
+							value="#{acidezBean.acidez.valorGasto}" styleClass="peso3" />
 						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{acidezBean.calcularAcidez}"

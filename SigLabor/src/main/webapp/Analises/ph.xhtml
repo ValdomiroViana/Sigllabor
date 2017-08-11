@@ -29,8 +29,8 @@
 					</h:outputText>
 				</p:column>
 				<p:column  headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
-					<h:outputText value="#{ph.amostra.produto.descricao}" />
+					priority="1" width="18%">
+					<h:outputText value="#{ph.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{ph.amostra.tipoProduto}"
@@ -98,7 +98,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 

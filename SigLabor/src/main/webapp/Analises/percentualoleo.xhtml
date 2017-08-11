@@ -31,23 +31,24 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{percentualOleo.amostra.produto}" headerText="Produto"
+				<p:column filterBy="#{percentualOleo.amostra.tipoProduto.produto}" headerText="Produto"
 					priority="1" filterMatchMode="exact" width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaOleo').filter()">
+						<p:selectOneMenu  onchange="PF('tabelaOleo').filter()" value="#{tipoProdutoBean.produto}" converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+						<p:ajax process="@this" listener="#{tipoProdutoBean.popular}" update="tipo"/>
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{percentualOleo.amostra.produto.descricao}" />
+					<h:outputText value="#{percentualOleo.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{percentualOleo.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaOleo').filter()">
+						<p:selectOneMenu id="tipo" onchange="PF('tabelaOleo').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -120,7 +121,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 
@@ -169,7 +170,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />

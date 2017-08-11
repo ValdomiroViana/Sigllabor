@@ -75,7 +75,7 @@ public class AcidezBean implements Serializable{
 			//criar uma nova acidez
 			acidez = new Acidez();
 			acidezes = acidezDAO.listarOrdenadoPorData("c.dataCheckList");
-			Messages.addGlobalInfo("Acidez salva comsucesso!");
+			Messages.addGlobalInfo("Acidez salva com sucesso!");
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a acidez.");
 			erro.printStackTrace();

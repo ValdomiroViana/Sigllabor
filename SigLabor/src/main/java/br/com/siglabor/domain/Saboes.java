@@ -12,17 +12,17 @@ public class Saboes extends GenericDomain{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(length = 4, nullable = false)
+	@Column(length = 4, nullable = false )
 	private String identificacao;
 	
-	@Column(nullable = false, precision = 7, scale = 4)
+	@Column(nullable = false, precision = 7, scale = 1)
 	private BigDecimal pa;
 	
-	@Column( precision = 7, scale = 4)
+	@Column( precision = 7, scale = 1)
 	private BigDecimal valorGasto;
 	
 	
-	@Column( precision = 7, scale = 4)
+	@Column( precision = 7, scale = 2)
 	private BigDecimal sabao;
 	
 	@ManyToOne

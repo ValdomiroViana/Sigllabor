@@ -21,10 +21,6 @@ public class Amostra extends GenericDomain {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Produto produto;
-
-	@ManyToOne
-	@JoinColumn(nullable = false)
 	private TipoProduto tipoProduto;
 
 	@OneToOne
@@ -49,14 +45,6 @@ public class Amostra extends GenericDomain {
 
 	public void setDataColeta(Date dataColeta) {
 		this.dataColeta = dataColeta;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
 	}
 
 	public TipoProduto getTipoProduto() {
