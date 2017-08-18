@@ -19,13 +19,13 @@ public class ProteinaTotal extends GenericDomain{
 	@Column(nullable = false, precision = 7, scale = 4)
 	private BigDecimal pa;
 	
-	@Column(nullable = false, precision = 7, scale = 2)
+	@Column(precision = 7, scale = 2)
 	private BigDecimal valorBranco;
 	
-	@Column(nullable = false, precision = 7, scale = 2)
+	@Column(precision = 7, scale = 2)
 	private BigDecimal valorGastoAmostra;
 	
-	@Column(nullable = false, precision = 7, scale = 2)
+	@Column( precision = 7, scale = 2)
 	private BigDecimal proteinaTotal;
 	
 
@@ -34,7 +34,7 @@ public class ProteinaTotal extends GenericDomain{
 	private Amostra amostra;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn
 	private FatorSolucao fatorSolucao;
 
 

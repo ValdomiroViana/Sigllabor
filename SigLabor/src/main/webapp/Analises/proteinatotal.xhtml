@@ -6,37 +6,36 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
-		<h1 class="aw-page-title">Pesquisa de Umidades</h1>
+		<h1 class="aw-page-title">Pesquisa de Proteínas Totais</h1>
 		<p:growl id="growl" showSummary="true" life="5000" />
 
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{umidadeBean.umidades}" rows="5"
+			<p:dataTable id="tabela" value="#{proteinaTotalBean.proteinasTotais}" rows="5"
 				paginator="true" paginatorPosition="bottom"
 				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaUmidade"
-				var="umidade" reflow="true" style="margin-top: 20px"
-				rowStyleClass="#{umidade.umidade > 12.50 ? 'umidade' : null}">
+				paginatorAlwaysVisible="false" widgetVar="tabelaProteinaTotal"
+				var="proteinaTotal" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{proteinaTotalBean.novo}" update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
-					<h:outputText value="#{umidade.identificacao}" />
+					<h:outputText value="#{proteinaTotal.identificacao}" />
 				</p:column>
 				<p:column headerText="Data Check List">
-					<h:outputText value="#{umidade.amostra.checkList.dataCheckList}">
+					<h:outputText value="#{proteinaTotal.amostra.checkList.dataCheckList}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{umidade.amostra.tipoProduto.produto}"
+				<p:column filterBy="#{proteinaTotal.amostra.tipoProduto.produto}"
 					headerText="Produto" priority="1" filterMatchMode="exact"
 					width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaUmidade').filter()"
+						<p:selectOneMenu onchange="PF('tabelaProteinaTotal').filter()"
 							value="#{tipoProdutoBean.produto}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
@@ -48,13 +47,13 @@
 						</p:selectOneMenu>
 					</f:facet>
 					<h:outputText
-						value="#{umidade.amostra.tipoProduto.produto.descricao}" />
+						value="#{proteinaTotal.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
-				<p:column filterBy="#{umidade.amostra.tipoProduto}"
+				<p:column filterBy="#{proteinaTotal.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu id="tipo" onchange="PF('tabelaUmidade').filter()">
+						<p:selectOneMenu id="tipo" onchange="PF('tabelaProteinaTotal').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -62,43 +61,40 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{umidade.amostra.tipoProduto.descricaoTipo}">
+					<h:outputText value="#{proteinaTotal.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Tipo" priority="6">
-					<h:outputText value="#{umidade.tipoFormatado}"/>
-				</p:column>
 				<p:column headerText="Pa" priority="1">
-					<h:outputText value="#{umidade.pa}" />
+					<h:outputText value="#{proteinaTotal.pa}" />
 				</p:column>
-				<p:column headerText="Pa + b" priority="1">
-					<h:outputText value="#{umidade.pa_Mais_b}" />
+				<p:column headerText="Vg Bco" priority="1">
+					<h:outputText value="#{proteinaTotal.valorBranco}" />
 				</p:column>
-				<p:column headerText="Pf" priority="1">
-					<h:outputText value="#{umidade.pf}" />
+				<p:column headerText="Vg Amostra" priority="1">
+					<h:outputText value="#{proteinaTotal.valorGastoAmostra}" />
 				</p:column>
-				<p:column headerText="Umidade" priority="1" width="10%">
-					<h:outputText value="#{umidade.umidade}">
+				<p:column headerText="Proteína" priority="1" width="10%">
+					<h:outputText value="#{proteinaTotal.proteinaTotal}">
 						<f:convertNumber locale="en_US" pattern="#0.00" />
 					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{umidadeBean.editar}"
+						actionListener="#{proteinaTotalBean.editar}"
 						update=":formCadastroEditar:painelEditar"
 						oncomplete="PF('dialogoEditar').show();">
-						<f:setPropertyActionListener target="#{umidadeBean.umidade}"
-							value="#{umidade}" />
+						<f:setPropertyActionListener target="#{proteinaTotalBean.proteinaTotal}"
+							value="#{proteinaTotal}" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"
 						icon="ui-icon-trash" actionListener="#{umidadeBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
 						<p:confirm header="Confirmação"
-							message="Deseja realmente Excluir a umidade?"
+							message="Deseja realmente Excluir a proteína?"
 							icon="ui-icon-alert" />
-						<f:attribute name="umidadeSelecionada" value="#{umidade}" />
+						<f:attribute name="proteinaSelecionada" value="#{proteinaTotal}" />
 
 					</p:commandButton>
 				</p:column>
@@ -112,7 +108,7 @@
 
 		</h:form>
 
-		<p:dialog header="Cadastro de Umidade" widgetVar="dialogo"
+		<p:dialog header="Cadastro de Proteína Total" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
 			responsive="true">
 			<h:form id="formCadastro">
@@ -124,7 +120,7 @@
 						<p:outputLabel value="Amostra" />
 						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
-							value="#{umidadeBean.umidade.amostra}"
+							value="#{proteinaTotalBean.proteinaTotal.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
@@ -133,32 +129,20 @@
 								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
-						<p:outputLabel value="Tipo:" for="tipo" />
-						<p:selectOneRadio id="tipo" value="#{umidadeBean.umidade.tipo}"
-							required="true" requiredMessage="O campo Tipo é obrigatório">
-							<f:selectItem itemValue="p" itemLabel="Primeira Umidade" />
-							<f:selectItem itemValue="s" itemLabel="Segunda Umidade" />
-						</p:selectOneRadio>
-
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.identificacao}" />
+							value="#{proteinaTotalBean.proteinaTotal.identificacao}"  />
 
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
-
-						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
-						<p:inputText id="pa_mais_b" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa_Mais_b}" styleClass="peso2" />
+							value="#{proteinaTotalBean.proteinaTotal.pa}" styleClass="peso2" />
 
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{umidadeBean.salvar}"
+							actionListener="#{proteinaTotalBean.salvar}"
 							update=":growl :formCadastro:painel formListagem:tabela"
 							oncomplete="PF('dialogo').hide();" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
@@ -167,7 +151,7 @@
 				</h:panelGroup>
 			</h:form>
 		</p:dialog>
-		<p:dialog header="Cadastro de Umidade" widgetVar="dialogoEditar"
+		<p:dialog header="Cadastro de Proteína Total" widgetVar="dialogoEditar"
 			draggable="false" resizable="false" modal="true" closable="false"
 			responsive="true">
 			<h:form id="formCadastroEditar">
@@ -179,7 +163,7 @@
 						<p:outputLabel value="Amostra" for="amostra" />
 						<p:selectOneMenu id="amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
-							value="#{umidadeBean.umidade.amostra}"
+							value="#{proteinaTotalBean.proteinaTotal.amostra}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
@@ -188,48 +172,51 @@
 								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
-						<p:outputLabel value="Tipo:" for="tipo" />
-						<p:selectOneRadio id="tipo" value="#{umidadeBean.umidade.tipo}"
-							required="true" requiredMessage="O campo Tipo é obrigatório">
-							<f:selectItem itemValue="p" itemLabel="Primeira Umidade" />
-							<f:selectItem itemValue="s" itemLabel="Segunda Umidade" />
-						</p:selectOneRadio>
-
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.identificacao}" />
+							value="#{proteinaTotalBean.proteinaTotal.identificacao}" />
 
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
+							value="#{proteinaTotalBean.proteinaTotal.pa}" styleClass="peso2" />
 
-						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
-						<p:inputText id="pa_mais_b" maxlength="8" size="10"
+						<p:outputLabel value="Vg Bco:" for="bco" />
+						<p:inputText id="bco" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pa_Mais_b}" styleClass="peso2" />
+							value="#{proteinaTotalBean.proteinaTotal.valorBranco}" styleClass="peso7" />
 
-						<p:outputLabel value="Peso final:" for="pf" />
-						<p:inputText id="pf" maxlength="8" size="10" required="true"
+						<p:outputLabel value="Vg Amostra:" for="vg_am" />
+						<p:inputText id="vg_am" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.pf}" styleClass="peso2" />
+							value="#{proteinaTotalBean.proteinaTotal.valorGastoAmostra}" styleClass="peso7" />
 						<p:outputLabel value="" />
+						<p:outputLabel value=""/>
+						<p:outputLabel value="Fator" for="fator"/>
+						<p:selectOneMenu id="fator" value="#{proteinaTotalBean.proteinaTotal.fatorSolucao}" 
+						converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+							<f:selectItems value="#{fatorSolucaoBean.fatoresSolucao}" var="fatoresSolucao"
+							itemValue="#{fatoresSolucao}"
+							itemLabel="#{fatoresSolucao.dataFatoracao}"/>
+						</p:selectOneMenu>
+						<p:outputLabel value=""/>
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
-							actionListener="#{umidadeBean.calcularUmidade}"
+							actionListener="#{proteinaTotalBean.calcularProteina}"
 							update=":formCadastroEditar:painelEditar">
 						</p:commandButton>
 
-						<p:outputLabel value="Umidade:" for="umidade" />
-						<p:inputText id="umidade" maxlength="8" size="10" required="false"
+						<p:outputLabel value="Proteína:" for="proteina" />
+						<p:inputText id="proteina" maxlength="8" size="10" required="false"
 							requiredMessage="Campo obrigatório"
-							value="#{umidadeBean.umidade.umidade}">
+							value="#{proteinaTotalBean.proteinaTotal.proteinaTotal}">
 							<f:convertNumber locale="en_US" pattern="#0.00" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{umidadeBean.salvar}"
+							actionListener="#{proteinaTotalBean.salvar}"
 							update=":growl :formCadastroEditar:painelEditar formListagem:tabela"
 							oncomplete="PF('dialogoEditar').hide();" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"

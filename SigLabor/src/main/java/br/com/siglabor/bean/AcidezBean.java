@@ -123,6 +123,7 @@ public class AcidezBean implements Serializable{
 				Messages.addGlobalInfo("Acidez excluída com sucesso!");
 			}catch(RuntimeException erro){
 				Messages.addGlobalError("Erro ao tentar excluir a acidez.");
+				erro.printStackTrace();
 			}
 		}
 		

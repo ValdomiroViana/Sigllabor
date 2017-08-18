@@ -1,5 +1,6 @@
 package br.com.siglabor.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,6 +31,9 @@ public class Amostra extends GenericDomain {
 	@OneToOne
 	@JoinColumn(nullable = false)
 	private Turno turnoColeta;
+	
+	@Column (nullable = true, precision = 7, scale = 6)
+	private BigDecimal fatorCorrecao;
 
 	public Turno getTurnoColeta() {
 		return turnoColeta;
@@ -62,5 +66,15 @@ public class Amostra extends GenericDomain {
 	public void setCheckList(CheckList checkList) {
 		this.checkList = checkList;
 	}
+
+	public BigDecimal getFatorCorrecao() {
+		return fatorCorrecao;
+	}
+
+	public void setFatorCorrecao(BigDecimal fatorCorrecao) {
+		this.fatorCorrecao = fatorCorrecao;
+	}
+	
+	
 
 }

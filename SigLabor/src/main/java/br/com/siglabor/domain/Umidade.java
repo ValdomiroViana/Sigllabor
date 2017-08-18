@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Umidade extends GenericDomain{
@@ -88,6 +89,20 @@ public class Umidade extends GenericDomain{
 	public void setAmostra(Amostra amostra) {
 		this.amostra = amostra;
 	}
+	
+	
+	@Transient
+	public String getTipoFormatado(){
+		String tipoFormatado = null;
+		
+		if(tipo == 'p') {
+			tipoFormatado = "Primeira";
+		}else if(tipo == 's') {
+			tipoFormatado = "Segunda";
+		}
+		return tipoFormatado;
+	}
+	
 	
 	
 
