@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-
 import br.com.siglabor.util.HibernateUtil;
 
 public class GenericDAO<Entidade> {
@@ -72,7 +71,7 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Entidade> listarOrdenadoPorData(String campoOrdenacao) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
@@ -89,7 +88,7 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Entidade> listarOrdenadoPorDataAmostra(String campoOrdenacao) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
@@ -105,9 +104,6 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
-
-
-
 
 	@SuppressWarnings("unchecked")
 	public Entidade buscar(Long codigo) {

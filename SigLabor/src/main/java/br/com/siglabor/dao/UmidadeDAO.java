@@ -1,8 +1,15 @@
 package br.com.siglabor.dao;
-
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import br.com.siglabor.domain.Umidade;
+import br.com.siglabor.util.HibernateUtil;
+
 
 public class UmidadeDAO extends GenericDAO<Umidade> {
 
@@ -17,6 +24,21 @@ public class UmidadeDAO extends GenericDAO<Umidade> {
 		return umidade;
 
 	}
-	
+	@SuppressWarnings("unchecked")
+	public List<Umidade> buscarPorAmostra(Long amostraCodigo) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try{
+			Criteria consulta = sessao.createCriteria(Umidade.class);
+			consulta.add(Restrictions.eq("amostra.codigo", amostraCodigo));
+			List<Umidade> resultado = consulta.list();
+			return resultado;
+		}catch(RuntimeException erro){
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+		
+
+	}
 
 }

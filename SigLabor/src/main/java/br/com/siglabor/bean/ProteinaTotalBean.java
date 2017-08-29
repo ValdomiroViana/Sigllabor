@@ -2,14 +2,11 @@ package br.com.siglabor.bean;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import org.omnifaces.util.Messages;
-
 import br.com.siglabor.dao.AmostraDAO;
 import br.com.siglabor.dao.ProteinaTotalDAO;
 import br.com.siglabor.domain.Amostra;
@@ -24,8 +21,29 @@ public class ProteinaTotalBean implements Serializable {
 	private Amostra amostra;
 	private List<ProteinaTotal> proteinasTotais;
 	private List<Amostra> amostras;
-	private Umidade umidade;
+	private Umidade p_umidade;
+	private Umidade s_umidade;
 	private List<Umidade> umidades;
+
+	public Umidade getP_umidade() {
+		return p_umidade;
+	}
+
+	public void setP_umidade(Umidade p_umidade) {
+		this.p_umidade = p_umidade;
+	}
+
+	public Umidade getS_umidade() {
+		return s_umidade;
+	}
+
+	public void setS_umidade(Umidade s_umidade) {
+		this.s_umidade = s_umidade;
+	}
+
+	public void setUmidades(List<Umidade> umidades) {
+		this.umidades = umidades;
+	}
 
 	public ProteinaTotal getProteinaTotal() {
 		return proteinaTotal;
@@ -60,7 +78,7 @@ public class ProteinaTotalBean implements Serializable {
 	}
 
 	public Umidade getUmidade() {
-		return umidade;
+		return p_umidade;
 	}
 
 	public List<Umidade> getUmidades() {
@@ -126,25 +144,24 @@ public class ProteinaTotalBean implements Serializable {
 			runtimeException.printStackTrace();
 		}
 	}
-	
-	//método excluir
-	public void excluir(ActionEvent evento){
-		try{
+
+	// método excluir
+	public void excluir(ActionEvent evento) {
+		try {
 			proteinaTotal = (ProteinaTotal) evento.getComponent().getAttributes().get("proteinaTotalSelecionada");
 			ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
 			proteinaTotalDAO.excluir(proteinaTotal);
 			proteinasTotais = proteinaTotalDAO.listarOrdenadoPorData("c.dataCheckList");
 			Messages.addGlobalInfo("Proteína total excluída com sucesso!");
-		}catch(RuntimeException erro){
+		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Erro ao tentar excluir a proteína.");
 			erro.printStackTrace();
 		}
 	}
-	
-	public void calcularProteina(){
+
+	public void calcularProteina() {
 		ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
 		proteinaTotalDAO.calcularProteina(proteinaTotal);
 	}
-
 
 }

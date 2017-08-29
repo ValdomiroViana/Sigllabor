@@ -37,18 +37,20 @@
 				<p:panelGrid>
 					<p:menubar styleClass="menu-sistema js-menu-sistema">
 						<p:submenu label="Farelo">
-							<p:menuitem value="Umidade" />
-							<p:menuitem value="% de óleo" />
-							<p:menuitem value="Proteína Total" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml" />
+							<p:menuitem value="% de óleo"
+								url="/Analises/percentualoleo.xhtml" />
+							<p:menuitem value="Proteína Total"
+								url="/Analises/proteinatotal.xhtml" />
 							<p:menuitem value="Proteína Solúvel" />
-							<p:menuitem value="Urease" />
+							<p:menuitem value="Urease" url="/Analises/urease.xhtml" />
 							<p:menuitem value="Fibras" />
 							<p:menuitem value="Cinzas" />
 							<p:menuitem value="Silica" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Óleo">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml" />
 							<p:menuitem value="Acidez" />
 							<p:menuitem value="Clorofila" />
 							<p:menuitem value="Sabões" />
@@ -56,33 +58,38 @@
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Soja">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml" />
 							<p:menuitem value="% de óleo" />
 							<p:menuitem value="Acidez" />
 							<p:menuitem value="Proteína" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Lex">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml" />
 							<p:menuitem value="% de óleo" />
 							<p:menuitem value="Retenção" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Goma">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml" />
 							<p:menuitem value="% de óleo" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Cavaco">
-							<p:menuitem value="Umidade" />
+							<p:submenu label="Recebido" styleClass="sub-menu">
+								<p:menuitem value="Umidade" />
+							</p:submenu>
+							<p:submenu label="Produção" styleClass="sub-menu">
+								<p:menuitem value="Umidade" url="/Analises/umidade.xhtml"/>
+							</p:submenu>
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Banhos">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml"/>
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Médias">
-							<p:menuitem value="Umidade" />
+							<p:menuitem value="Umidade" url="/Analises/umidade.xhtml"/>
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Água">
@@ -103,7 +110,7 @@
 	<aside class="aw-sidebar js-sidebar">
 		<nav class="aw-menu">
 			<ul>
-				<li><h:link > 
+				<li><h:link>
 						<i class="fa  fa-fw  fa-home"></i>Dashboard</h:link></li>
 				<li><h:link outcome="/Amostra/amostra">
 						<i class="fa  fa-fw  fa-circle-thin"></i>Amostras</h:link></li>
@@ -142,7 +149,7 @@
 			$('.peso3').mask("#.#", {
 				reverse : true
 			});
-			
+
 			$('.peso4').mask("#.###", {
 				reverse : true
 			});
@@ -150,11 +157,11 @@
 			$('.peso5').mask("##.#", {
 				reverse : true
 			});
-			
+
 			$('.peso6').mask("#.######", {
 				reverse : true
 			});
-			
+
 			$('.peso7').mask("##.##", {
 				reverse : true
 			});

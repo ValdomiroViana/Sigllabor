@@ -49,6 +49,7 @@
 		<mapping class="br.com.siglabor.domain.FatorSolucao" />
 		<mapping class="br.com.siglabor.domain.ProteinaTotal" />
 		<mapping class="br.com.siglabor.domain.ProteinaSoluvel" />
+		<mapping class="br.com.siglabor.domain.FatorUmidade" />
 		
 
 

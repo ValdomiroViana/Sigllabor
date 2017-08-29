@@ -16,8 +16,7 @@
 				paginator="true" paginatorPosition="bottom"
 				emptyMessage="Nenhum registro encontrado!"
 				paginatorAlwaysVisible="false" widgetVar="tabelaUmidade"
-				var="umidade" reflow="true" style="margin-top: 20px"
-				rowStyleClass="#{umidade.umidade > 12.50 ? 'umidade' : null}">
+				var="umidade" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -66,7 +65,7 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Tipo" priority="6">
-					<h:outputText value="#{umidade.tipoFormatado}"/>
+					<h:outputText value="#{umidade.tipoFormatado}" />
 				</p:column>
 				<p:column headerText="Pa" priority="1">
 					<h:outputText value="#{umidade.pa}" />
@@ -130,7 +129,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Tipo:" for="tipo" />
@@ -185,7 +184,7 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Tipo:" for="tipo" />

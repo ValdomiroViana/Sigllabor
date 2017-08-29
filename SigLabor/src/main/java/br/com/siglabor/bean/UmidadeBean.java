@@ -1,6 +1,7 @@
 package br.com.siglabor.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -144,4 +145,29 @@ public class UmidadeBean implements Serializable {
 		}
 
 	}
+	
+	//Método popular para carregar o combo em fator de correção de umidade
+		public void popular(){
+			try{
+				if(amostra != null){
+					UmidadeDAO umidadeDAO = new UmidadeDAO();
+					umidades = umidadeDAO.buscarPorAmostra(amostra.getCodigo());
+					System.out.println("Produto ID: " + amostra.getCodigo());
+					for(Umidade umidade : umidades) {
+						System.out.println("Umidade: " + umidade.getUmidade() + "-" + umidade.getTipoFormatado());
+					}
+					
+				}else{
+					umidades= new ArrayList<>();
+				}
+				for(Umidade umidade : umidades){
+					System.out.println("Umidade: " + umidade.getUmidade() + "-" + umidade.getTipoFormatado());
+				}
+			}catch(RuntimeException erro){
+				Messages.addGlobalInfo("Erro ao tentar listar as umidades");
+				erro.printStackTrace();
+			}
+		}
+
+	
 }

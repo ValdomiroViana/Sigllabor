@@ -12,21 +12,23 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{proteinaTotalBean.proteinasTotais}" rows="5"
-				paginator="true" paginatorPosition="bottom"
+			<p:dataTable id="tabela" value="#{proteinaTotalBean.proteinasTotais}"
+				rows="5" paginator="true" paginatorPosition="bottom"
 				emptyMessage="Nenhum registro encontrado!"
 				paginatorAlwaysVisible="false" widgetVar="tabelaProteinaTotal"
 				var="proteinaTotal" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{proteinaTotalBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{proteinaTotalBean.novo}"
+						update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{proteinaTotal.identificacao}" />
 				</p:column>
 				<p:column headerText="Data Check List">
-					<h:outputText value="#{proteinaTotal.amostra.checkList.dataCheckList}">
+					<h:outputText
+						value="#{proteinaTotal.amostra.checkList.dataCheckList}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
@@ -53,7 +55,8 @@
 				<p:column filterBy="#{proteinaTotal.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu id="tipo" onchange="PF('tabelaProteinaTotal').filter()">
+						<p:selectOneMenu id="tipo"
+							onchange="PF('tabelaProteinaTotal').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -61,7 +64,8 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{proteinaTotal.amostra.tipoProduto.descricaoTipo}">
+					<h:outputText
+						value="#{proteinaTotal.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Pa" priority="1">
@@ -84,7 +88,8 @@
 						actionListener="#{proteinaTotalBean.editar}"
 						update=":formCadastroEditar:painelEditar"
 						oncomplete="PF('dialogoEditar').show();">
-						<f:setPropertyActionListener target="#{proteinaTotalBean.proteinaTotal}"
+						<f:setPropertyActionListener
+							target="#{proteinaTotalBean.proteinaTotal}"
 							value="#{proteinaTotal}" />
 					</p:commandButton>
 
@@ -126,13 +131,13 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
-							value="#{proteinaTotalBean.proteinaTotal.identificacao}"  />
+							value="#{proteinaTotalBean.proteinaTotal.identificacao}" />
 
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
@@ -151,9 +156,9 @@
 				</h:panelGroup>
 			</h:form>
 		</p:dialog>
-		<p:dialog header="Cadastro de Proteína Total" widgetVar="dialogoEditar"
-			draggable="false" resizable="false" modal="true" closable="false"
-			responsive="true">
+		<p:dialog header="Cadastro de Proteína Total"
+			widgetVar="dialogoEditar" draggable="false" resizable="false"
+			modal="true" closable="false" responsive="true">
 			<h:form id="formCadastroEditar">
 				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
@@ -169,47 +174,51 @@
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}" />
+								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
 							value="#{proteinaTotalBean.proteinaTotal.identificacao}" />
-
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
 							value="#{proteinaTotalBean.proteinaTotal.pa}" styleClass="peso2" />
 
 						<p:outputLabel value="Vg Bco:" for="bco" />
-						<p:inputText id="bco" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
-							value="#{proteinaTotalBean.proteinaTotal.valorBranco}" styleClass="peso7" />
+						<p:inputText id="bco" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{proteinaTotalBean.proteinaTotal.valorBranco}"
+							styleClass="peso7" />
 
 						<p:outputLabel value="Vg Amostra:" for="vg_am" />
 						<p:inputText id="vg_am" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{proteinaTotalBean.proteinaTotal.valorGastoAmostra}" styleClass="peso7" />
+							value="#{proteinaTotalBean.proteinaTotal.valorGastoAmostra}"
+							styleClass="peso7">
+						</p:inputText>
 						<p:outputLabel value="" />
-						<p:outputLabel value=""/>
-						<p:outputLabel value="Fator" for="fator"/>
-						<p:selectOneMenu id="fator" value="#{proteinaTotalBean.proteinaTotal.fatorSolucao}" 
-						converter="omnifaces.SelectItemsConverter">
-							<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
-							<f:selectItems value="#{fatorSolucaoBean.fatoresSolucao}" var="fatoresSolucao"
-							itemValue="#{fatoresSolucao}"
-							itemLabel="#{fatoresSolucao.dataFatoracao}"/>
+						<p:outputLabel value="" />
+						<p:outputLabel value="Fator" for="fator" />
+						<p:selectOneMenu id="fator"
+							value="#{proteinaTotalBean.proteinaTotal.fatorSolucao}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{fatorSolucaoBean.fatoresSolucao}"
+								var="fatoresSolucao" itemValue="#{fatoresSolucao}"
+								itemLabel="#{fatoresSolucao.dataFatoracao}" />
 						</p:selectOneMenu>
-						<p:outputLabel value=""/>
+
+						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{proteinaTotalBean.calcularProteina}"
 							update=":formCadastroEditar:painelEditar">
 						</p:commandButton>
 
 						<p:outputLabel value="Proteína:" for="proteina" />
-						<p:inputText id="proteina" maxlength="8" size="10" required="false"
-							requiredMessage="Campo obrigatório"
+						<p:inputText id="proteina" maxlength="8" size="10"
+							required="false" requiredMessage="Campo obrigatório"
 							value="#{proteinaTotalBean.proteinaTotal.proteinaTotal}">
 							<f:convertNumber locale="en_US" pattern="#0.00" />
 						</p:inputText>

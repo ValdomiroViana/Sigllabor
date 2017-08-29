@@ -1,0 +1,134 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de fatores de umidade</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela" value="#{fatorUmidadeBean.fatoresUmidade}"
+				rows="5" paginator="true" paginatorPosition="bottom"
+				paginatorAlwaysVisible="false" widgetVar="tabelaFatoresUmidade"
+				var="fatorUmidade" reflow="true" style="margin-top: 20px"
+				emptyMessage="Nenhum registro encontrado!">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{fatorUmidadeBean.novo}"
+						update=":formCadastro:painel" />
+				</f:facet>
+				<p:column headerText="Data">
+						<h:outputText value="#{fatorUmidade.p_umidade.amostra.dataColeta}">
+						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Amostra">
+					<h:outputText
+						value=" #{fatorUmidade.p_umidade.amostra.tipoProduto.produto.descricao} - #{fatorUmidade.p_umidade.amostra.tipoProduto.descricaoTipo} - #{fatorUmidade.p_umidade.amostra.turnoColeta.descricao}" />
+				</p:column>
+
+				<p:column headerText="1ª Umidade">
+					<h:outputText value="#{fatorUmidade.p_umidade.umidade}" />
+				</p:column>
+
+
+				<p:column headerText="2ª Umidade" priority="1">
+					<h:outputText value="#{fatorUmidade.s_umidade.umidade}">
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fator" priority="1">
+					<h:outputText value="#{fatorUmidade.fatorUmidade}">
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{fatorUmidadeBean.editar}"
+						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+						<f:attribute name="fatorSelecionado" value="#{fatorUmidade}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de Fator de Umidade" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+
+						<p:outputLabel value="Amostra" for="amostra" />
+						<p:selectOneMenu id="amostra" required="true"
+							style="width: 200px;" requiredMessage="Selecione Uma amostra"
+							value="#{umidadeBean.amostra}"
+							converter="omnifaces.SelectItemsConverter" >
+							<f:selectItem itemLabel="Selecione uma amostra"
+								noSelectionOption="true" />
+							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
+								itemValue="#{amostras}" itemLabel="#{amostras.dataColeta}- #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo} - #{amostras.turnoColeta.descricao} "/>
+						<p:ajax listener="#{umidadeBean.popular}" update="s_umidade, p_umidade"/>
+							
+						</p:selectOneMenu>
+
+						<p:outputLabel value="2ª Umidade: " for="s_umidade" />
+						<p:selectOneMenu id="s_umidade" required="true"
+							style="width: 200px;" requiredMessage="Selecione"
+							value="#{fatorUmidadeBean.fatorUmidade.s_umidade}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{umidadeBean.umidades}" var="umidades"
+								itemValue="#{umidades}"
+								itemLabel="#{umidades.tipoFormatado} - #{umidades.umidade}" />
+
+						</p:selectOneMenu>
+						<p:outputLabel value="1ª Umidade: " for="p_umidade" />
+						<p:selectOneMenu id="p_umidade" required="true"
+							style="width: 200px;" requiredMessage="Selecione"
+							value="#{fatorUmidadeBean.fatorUmidade.p_umidade}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{umidadeBean.umidades}" var="umidades"
+								itemValue="#{umidades}"
+								itemLabel="#{umidades.tipoFormatado} - #{umidades.umidade}" />
+
+						</p:selectOneMenu>
+						<p:outputLabel value="" />
+						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
+							actionListener="#{fatorUmidadeBean.calculaFator}"
+							update=":formCadastro:painel">
+						</p:commandButton>
+
+						<p:outputLabel value="Fator:" for="fator" />
+						<p:inputText id="fator" maxlength="8" size="10" required="false"
+							requiredMessage="Campo obrigatório"
+							value="#{fatorUmidadeBean.fatorUmidade.fatorUmidade}">
+							<f:convertNumber locale="en_US" pattern="#0.000000" />
+						</p:inputText>
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{fatorUmidadeBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela" />
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

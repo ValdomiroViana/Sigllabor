@@ -13,6 +13,7 @@ public class ProteinaTotalDAO extends GenericDAO<ProteinaTotal> {
 								.multiply(proteinaTotal.getFatorSolucao().getFatorAcido()))
 										.multiply(proteinaTotal.getFatorSolucao().getFatorHidroxido()));
 		System.out.println("Proteína total: " + proteinaTotal.getProteinaTotal());
+		System.out.println("Umidade" + proteinaTotal.getP_umidade());
 		return proteinaTotal;
 
 	}
