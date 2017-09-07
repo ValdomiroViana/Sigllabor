@@ -11,9 +11,8 @@ public class ProteinaTotalDAO extends GenericDAO<ProteinaTotal> {
 				.setProteinaTotal((((((proteinaTotal.getValorBranco().subtract(proteinaTotal.getValorGastoAmostra()))
 						.multiply(new BigDecimal("0.8755"))).divide(proteinaTotal.getPa(), MathContext.DECIMAL128)))
 								.multiply(proteinaTotal.getFatorSolucao().getFatorAcido()))
-										.multiply(proteinaTotal.getFatorSolucao().getFatorHidroxido()));
+										.multiply(proteinaTotal.getFatorSolucao().getFatorHidroxido()).multiply(proteinaTotal.getFatorUmidade().getFatorUmidade()));
 		System.out.println("Proteína total: " + proteinaTotal.getProteinaTotal());
-		System.out.println("Umidade" + proteinaTotal.getP_umidade());
 		return proteinaTotal;
 
 	}

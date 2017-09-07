@@ -33,6 +33,9 @@
 		<property name="hbm2ddl.auto">validate</property>
 
 		<!-- Mapeamento das entidades -->
+		<mapping class="br.com.siglabor.domain.Estado" />
+		<mapping class="br.com.siglabor.domain.Cidade" />
+		<mapping class="br.com.siglabor.domain.FornecedorCliente" />
 		<mapping class="br.com.siglabor.domain.Analista" />
 		<mapping class="br.com.siglabor.domain.Produto" />
 		<mapping class="br.com.siglabor.domain.Turno" />
@@ -50,7 +53,7 @@
 		<mapping class="br.com.siglabor.domain.ProteinaTotal" />
 		<mapping class="br.com.siglabor.domain.ProteinaSoluvel" />
 		<mapping class="br.com.siglabor.domain.FatorUmidade" />
-		
+
 
 
 

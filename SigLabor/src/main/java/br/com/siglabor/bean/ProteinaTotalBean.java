@@ -21,25 +21,7 @@ public class ProteinaTotalBean implements Serializable {
 	private Amostra amostra;
 	private List<ProteinaTotal> proteinasTotais;
 	private List<Amostra> amostras;
-	private Umidade p_umidade;
-	private Umidade s_umidade;
 	private List<Umidade> umidades;
-
-	public Umidade getP_umidade() {
-		return p_umidade;
-	}
-
-	public void setP_umidade(Umidade p_umidade) {
-		this.p_umidade = p_umidade;
-	}
-
-	public Umidade getS_umidade() {
-		return s_umidade;
-	}
-
-	public void setS_umidade(Umidade s_umidade) {
-		this.s_umidade = s_umidade;
-	}
 
 	public void setUmidades(List<Umidade> umidades) {
 		this.umidades = umidades;
@@ -75,10 +57,6 @@ public class ProteinaTotalBean implements Serializable {
 
 	public void setAmostras(List<Amostra> amostras) {
 		this.amostras = amostras;
-	}
-
-	public Umidade getUmidade() {
-		return p_umidade;
 	}
 
 	public List<Umidade> getUmidades() {

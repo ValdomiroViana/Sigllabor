@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Pesquisa de Fornecedores/Clientes</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:dataTable id="tabela"
+				value="#{fornecedorClienteBean.fornecedoresClientes}" rows="5" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+				var="fornecedorCliente" reflow="true" style="margin-top: 20px"
+				emptyMessage="Nenhum registro encontrado!"
+				widgetVar="tabelaFornecedorCliente">
+				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{fornecedorClienteBean.novo}"
+						update=":formCadastro:painel" />
+				</f:facet>
+				<p:column headerText="Nome" priority="1">
+					<h:outputText value="#{fornecedorCliente.descricao}" />
+				</p:column>
+				<p:column headerText="Tipo" filterBy="#{fornecedorCliente.tipo}"
+					filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu id="tipo"
+							onchange="PF('tabelaFornecedorCliente').filter()">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItem itemValue="c" itemLabel="Cliente" />
+							<f:selectItem itemValue="f" itemLabel="Fornecedor" />
+
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{fornecedorCliente.tipoFormatado}" />
+				</p:column>
+				<p:column headerText="Cidade" priority="3">
+					<h:outputText value="#{fornecedorCliente.cidade.nome}" />
+				</p:column>
+				<p:column headerText="Estado" priority="6">
+					<h:outputText
+						value="#{fornecedorCliente.cidade.estado.nome} - #{fornecedorCliente.cidade.estado.sigla}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{fornecedorClienteBean.editar}"
+						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
+						<f:attribute name="fornecedorClienteSelecionado"
+							value="#{fornecedorCliente}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog header="Cadastro de Fornecedor/Cliente" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			responsive="true">
+			<h:form id="formCadastro">
+				<h:panelGroup id="novoEnderecoPanel" layout="block"
+					styleClass="ui-fluid">
+					<h:panelGrid id="painel" columns="2" layout="grid"
+						styleClass="panelgrid-noborder"
+						columnClasses="ui-grid-col-4, ui-grid-col-8">
+
+						<p:outputLabel value="Nome:" />
+						<p:inputText maxlength="50" size="30"
+							value="#{fornecedorClienteBean.fornecedorCliente.descricao}"
+							required="true" />
+
+
+						<p:outputLabel value="Estado" for="estado" />
+						<p:selectOneMenu id="estado" style="width: 250px;"
+							value="#{cidadeBean.estado}"
+							converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Selecione o estado"
+								noSelectionOption="true" />
+							<f:selectItems value="#{estadoBean.estados}" var="estados"
+								itemValue="#{estados}"
+								itemLabel="#{estados.nome}  -  #{estados.sigla}" />
+							<p:ajax listener="#{cidadeBean.popular}" update="cidade" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Cidade" for="cidade" />
+						<p:selectOneMenu id="cidade" style="width: 250px;"
+							value="#{fornecedorClienteBean.fornecedorCliente.cidade}"
+							converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Selecione a cidade"
+								noSelectionOption="true" />
+							<f:selectItems value="#{cidadeBean.cidades}" var="cidades"
+								itemValue="#{cidades}" itemLabel="#{cidades.nome}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Tipo:" for="tipo" />
+						<p:selectOneRadio id="tipo"
+							value="#{fornecedorClienteBean.fornecedorCliente.tipo}"
+							required="true" requiredMessage="O campo Tipo é obrigatório">
+							<f:selectItem itemValue="c" itemLabel="Cliente" />
+							<f:selectItem itemValue="f" itemLabel="Fornecedor" />
+						</p:selectOneRadio>
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="float:right; padding: 10px;">
+						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
+							actionListener="#{fornecedorClienteBean.salvar}"
+							update=":growl :formCadastro:painel formListagem:tabela" 
+							oncomplete="PF('dialogo').hide();"/>
+						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
+							oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

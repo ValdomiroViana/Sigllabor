@@ -200,7 +200,7 @@
 						</p:inputText>
 						<p:outputLabel value="" />
 						<p:outputLabel value="" />
-						<p:outputLabel value="Fator" for="fator" />
+						<p:outputLabel value="Fator solução" for="fator" />
 						<p:selectOneMenu id="fator"
 							value="#{proteinaTotalBean.proteinaTotal.fatorSolucao}"
 							converter="omnifaces.SelectItemsConverter">
@@ -208,6 +208,15 @@
 							<f:selectItems value="#{fatorSolucaoBean.fatoresSolucao}"
 								var="fatoresSolucao" itemValue="#{fatoresSolucao}"
 								itemLabel="#{fatoresSolucao.dataFatoracao}" />
+						</p:selectOneMenu>
+								<p:outputLabel value="Fator umidade" for="fatorUmidade" />
+						<p:selectOneMenu id="fatorUmidade"
+							value="#{proteinaTotalBean.proteinaTotal.fatorUmidade}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{fatorUmidadeBean.fatoresUmidade}"
+								var="fatoresUmidade" itemValue="#{fatoresUmidade}"
+								itemLabel="#{fatoresUmidade.fatorUmidade} - #{fatoresUmidade.p_umidade.amostra.codigo} - #{fatoresUmidade.p_umidade.amostra.tipoProduto.produto.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="" />

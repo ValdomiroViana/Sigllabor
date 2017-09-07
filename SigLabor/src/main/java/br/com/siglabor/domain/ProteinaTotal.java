@@ -39,27 +39,16 @@ public class ProteinaTotal extends GenericDomain{
 	private FatorSolucao fatorSolucao;
 	
 	@Transient
-	private Umidade p_umidade;
-	@Transient
-	private Umidade s_umidade;
+	private FatorUmidade fatorUmidade;
 
-	public Umidade getP_umidade() {
-		return p_umidade;
+
+	public FatorUmidade getFatorUmidade() {
+		return fatorUmidade;
 	}
 
 
-	public void setP_umidade(Umidade p_umidade) {
-		this.p_umidade = p_umidade;
-	}
-
-
-	public Umidade getS_umidade() {
-		return s_umidade;
-	}
-
-
-	public void setS_umidade(Umidade s_umidade) {
-		this.s_umidade = s_umidade;
+	public void setFatorUmidade(FatorUmidade fatorUmidade) {
+		this.fatorUmidade = fatorUmidade;
 	}
 
 
