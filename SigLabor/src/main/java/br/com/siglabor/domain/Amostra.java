@@ -11,10 +11,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+
 @Entity
 public class Amostra extends GenericDomain {
 
 	private static final long serialVersionUID = 1L;
+	//Cria um código auto-incremento para cada amostra cadastrada
+	@Column(columnDefinition="serial")
+	@Generated(GenerationTime.INSERT)
+	private Long codigoAmostra;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
@@ -35,6 +42,8 @@ public class Amostra extends GenericDomain {
 	@Column (nullable = true, precision = 7, scale = 6)
 	private BigDecimal fatorCorrecao;
 
+	@OneToOne (mappedBy="amostra")
+	private RecEmbarcado recembarcado;
 	public Turno getTurnoColeta() {
 		return turnoColeta;
 	}
@@ -74,6 +83,23 @@ public class Amostra extends GenericDomain {
 	public void setFatorCorrecao(BigDecimal fatorCorrecao) {
 		this.fatorCorrecao = fatorCorrecao;
 	}
+
+	public Long getCodigoAmostra() {
+		return codigoAmostra;
+	}
+
+	public void setCodigoAmostra(Long codigoAmostra) {
+		this.codigoAmostra = codigoAmostra;
+	}
+
+	public RecEmbarcado getRecembarcado() {
+		return recembarcado;
+	}
+
+	public void setRecembarcado(RecEmbarcado recembarcado) {
+		this.recembarcado = recembarcado;
+	}
+	
 	
 	
 

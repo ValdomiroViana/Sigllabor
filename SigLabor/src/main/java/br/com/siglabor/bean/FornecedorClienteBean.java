@@ -55,7 +55,7 @@ public class FornecedorClienteBean implements Serializable {
 
 	}
 
-	// Mpetodo salvar
+	// Metodo salvar
 	public void salvar() {
 		try {
 			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();

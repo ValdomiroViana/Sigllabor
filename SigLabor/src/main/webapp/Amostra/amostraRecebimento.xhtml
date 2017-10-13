@@ -22,7 +22,8 @@
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{amostraBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{recEmbarcadoBean.novo}"
+						update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Código" priority="1"
 					filterMatchMode="startsWith" filterBy="#{amostra.codigoAmostra}">
@@ -57,6 +58,9 @@
 					</f:facet>
 					<h:outputText value="#{amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
+				</p:column>
+				<p:column headerText="Fornecedor">
+					<h:outputText value=" #{amostra.recembarcado.fornecedorCliente.descricao} - #{amostra.recembarcado.placa}"/>
 				</p:column>
 				<p:column filterBy="#{amostra.dataColeta}" headerText="Data"
 					priority="1" filterMatchMode="exact">
@@ -148,10 +152,27 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 
+						<p:separator />
+						<p:outputLabel value="" />
+						<p:outputLabel value="Fornecedor:" for="fornecedor" />
+						<p:selectOneMenu id="fornecedor" required="true"
+							style="width: 200px;" requiredMessage="Selecione Um Fornecedor"
+							value="#{amostraBean.recEmbarcado.fornecedorCliente}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems
+								value="#{fornecedorClienteBean.fornecedoresClientes}"
+								var="fornecedoresClientes" itemValue="#{fornecedoresClientes}"
+								itemLabel="#{fornecedoresClientes.descricao} - #{fornecedoresClientes.cidade.nome}" />
+						</p:selectOneMenu>
+						<p:outputLabel value="Placa:" for="placa"/>
+						<p:inputMask id="placa" mask="AAA-9999" required="true" value="#{amostraBean.recEmbarcado.placa}"/>
+						<p:outputLabel value="Nf:" for="nf"/>
+						<p:inputText id="nf" value="#{amostraBean.recEmbarcado.nf}"/>
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
-							actionListener="#{amostraBean.salvar}"
+							actionListener="#{amostraBean.salvarFornCliente}"
 							update=":growl :formCadastro:painel formListagem:tabela" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
 							oncomplete="PF('dialogo').hide();" />

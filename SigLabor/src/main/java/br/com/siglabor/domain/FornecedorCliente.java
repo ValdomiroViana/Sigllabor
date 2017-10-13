@@ -5,17 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-
 @SuppressWarnings ("serial")
 @Entity
 public class FornecedorCliente extends GenericDomain{
-
-	@Column(columnDefinition="serial")
-	@Generated(GenerationTime.INSERT)
-	private Long codigoFornecedor;
 	
 	@Column (length = 50, nullable = false)
 	private String descricao;

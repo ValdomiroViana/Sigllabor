@@ -12,11 +12,13 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{saboesBean.saboes}" rows="5"
-				paginator="true" paginatorPosition="bottom"
-				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaSaboes" var="sabao"
-				reflow="true" style="margin-top: 20px">
+			<p:dataTable id="tabela" value="#{saboesBean.saboes}"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5"
+				emptyMessage="Nenhum registro encontrado!" widgetVar="tabelaSaboes"
+				var="sabao" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -31,10 +33,10 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="Produto"
-					priority="1" width="18%">
-						
-					<h:outputText value="#{sabao.amostra.tipoProduto.produto.descricao}" />
+				<p:column headerText="Produto" priority="1" width="18%">
+
+					<h:outputText
+						value="#{sabao.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{sabao.amostra.tipoProduto}" headerText="Tipo"
@@ -79,7 +81,8 @@
 						icon="ui-icon-trash" actionListener="#{saboesBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
 						<p:confirm header="Confirmação"
-							message="Deseja realmente Excluir a análise de sabões?" icon="ui-icon-alert" />
+							message="Deseja realmente Excluir a análise de sabões?"
+							icon="ui-icon-alert" />
 						<f:attribute name="saboesSelecionada" value="#{sabao}" />
 
 					</p:commandButton>
@@ -96,7 +99,7 @@
 
 		<p:dialog header="Cadastro de sabões" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
-			responsive="true" >
+			responsive="true">
 			<h:form id="formCadastro">
 				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
@@ -104,15 +107,16 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8" style="width: 300px;">
 						<p:outputLabel value="Amostra" />
-						<p:selectOneMenu id="Amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{saboesBean.sabao.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -149,12 +153,13 @@
 						<p:selectOneMenu id="amostra" required="true"
 							style="width: 200px;" requiredMessage="Selecione Uma amostra"
 							value="#{saboesBean.sabao.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />

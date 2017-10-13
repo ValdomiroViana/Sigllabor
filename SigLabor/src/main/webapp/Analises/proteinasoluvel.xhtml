@@ -12,11 +12,14 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{proteinaSoluvelBean.proteinasSoluveis}"
-				rows="5" paginator="true" paginatorPosition="bottom"
+			<p:dataTable id="tabela"
+				value="#{proteinaSoluvelBean.proteinasSoluveis}" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5"
 				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaProteinaSoluvel"
-				var="proteinaSoluvel" reflow="true" style="margin-top: 20px">
+				widgetVar="tabelaProteinaSoluvel" var="proteinaSoluvel"
+				reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -94,12 +97,14 @@
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"
-						icon="ui-icon-trash" actionListener="#{proteinaSoluvelBean.excluir}"
+						icon="ui-icon-trash"
+						actionListener="#{proteinaSoluvelBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
 						<p:confirm header="Confirmação"
 							message="Deseja realmente Excluir a proteína?"
 							icon="ui-icon-alert" />
-						<f:attribute name="proteinaSoluvelSelecionada" value="#{proteinaSoluvel}" />
+						<f:attribute name="proteinaSoluvelSelecionada"
+							value="#{proteinaSoluvel}" />
 
 					</p:commandButton>
 				</p:column>
@@ -126,12 +131,13 @@
 						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
 							value="#{proteinaSoluvelBean.proteinaSoluvel.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -142,7 +148,8 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{proteinaSoluvelBean.proteinaSoluvel.pa}" styleClass="peso2" />
+							value="#{proteinaSoluvelBean.proteinaSoluvel.pa}"
+							styleClass="peso2" />
 
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
@@ -169,12 +176,13 @@
 						<p:selectOneMenu id="amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
 							value="#{proteinaSoluvelBean.proteinaSoluvel.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -184,7 +192,8 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{proteinaSoluvelBean.proteinaSoluvel.pa}" styleClass="peso2" />
+							value="#{proteinaSoluvelBean.proteinaSoluvel.pa}"
+							styleClass="peso2" />
 
 						<p:outputLabel value="Vg Bco:" for="bco" />
 						<p:inputText id="bco" maxlength="8" size="10" required="true"
@@ -209,24 +218,26 @@
 								var="fatoresSolucao" itemValue="#{fatoresSolucao}"
 								itemLabel="#{fatoresSolucao.status} - #{fatoresSolucao.dataFatoracao}" />
 						</p:selectOneMenu>
-								<p:outputLabel value="Fator umidade" for="fatorUmidade" />
+						<p:outputLabel value="Fator umidade" for="fatorUmidade" />
 						<p:selectOneMenu id="fatorUmidade"
 							value="#{proteinaSoluvelBean.proteinaSoluvel.fatorUmidade}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 							<f:selectItems value="#{fatorUmidadeBean.fatoresUmidade}"
 								var="fatoresUmidade" itemValue="#{fatoresUmidade}"
-								itemLabel="#{fatoresUmidade.fatorUmidade} - #{fatoresUmidade.p_umidade.amostra.codigo} - #{fatoresUmidade.p_umidade.amostra.tipoProduto.produto.descricao}" />
+								itemLabel="#{fatoresUmidade.p_umidade.amostra.codigoAmostra} - #{fatoresUmidade.fatorUmidade} - #{fatoresUmidade.p_umidade.amostra.codigo} - #{fatoresUmidade.p_umidade.amostra.tipoProduto.produto.descricao}" />
 						</p:selectOneMenu>
-						
-									<p:outputLabel value="Proteína Total" for="proteinaTotal" />
+
+						<p:outputLabel value="Proteína Total" for="proteinaTotal" />
 						<p:selectOneMenu id="proteinaTotal"
 							value="#{proteinaSoluvelBean.proteinaSoluvel.proteinaTotal}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 							<f:selectItems value="#{proteinaTotalBean.proteinasTotais}"
 								var="proteinasTotais" itemValue="#{proteinasTotais}"
-								itemLabel="#{proteinasTotais.proteinaTotal} - #{proteinasTotais.amostra.dataColeta} - #{proteinasTotais.amostra.tipoProduto.descricaoTipo} - #{proteinasTotais.amostra.tipoProduto.produto.descricao}" />
+								itemLabel="#{proteinasTotais.amostra.codigoAmostra} - #{proteinasTotais.proteinaTotal} - #{proteinasTotais.amostra.dataColeta} - #{proteinasTotais.amostra.tipoProduto.descricaoTipo} - #{proteinasTotais.amostra.tipoProduto.produto.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="" />

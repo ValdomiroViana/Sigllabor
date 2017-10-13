@@ -13,8 +13,10 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela" value="#{fatorUmidadeBean.fatoresUmidade}"
-				rows="5" paginator="true" paginatorPosition="bottom"
-				paginatorAlwaysVisible="false" widgetVar="tabelaFatoresUmidade"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5" widgetVar="tabelaFatoresUmidade"
 				var="fatorUmidade" reflow="true" style="margin-top: 20px"
 				emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
@@ -24,14 +26,14 @@
 						update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Data">
-						<h:outputText value="#{fatorUmidade.p_umidade.amostra.dataColeta}">
+					<h:outputText value="#{fatorUmidade.p_umidade.amostra.dataColeta}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Amostra">
 					<h:outputText
-						value=" #{fatorUmidade.p_umidade.amostra.tipoProduto.produto.descricao} - #{fatorUmidade.p_umidade.amostra.tipoProduto.descricaoTipo} - #{fatorUmidade.p_umidade.amostra.turnoColeta.descricao}" />
+						value="#{fatorUmidade.p_umidade.amostra.tipoProduto.produto.descricao} - #{fatorUmidade.p_umidade.amostra.tipoProduto.descricaoTipo} - #{fatorUmidade.p_umidade.amostra.turnoColeta.descricao}" />
 				</p:column>
 
 				<p:column headerText="1ª Umidade">
@@ -74,13 +76,16 @@
 						<p:selectOneMenu id="amostra" required="true"
 							style="width: 200px;" requiredMessage="Selecione Uma amostra"
 							value="#{umidadeBean.amostra}"
-							converter="omnifaces.SelectItemsConverter" >
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
-								itemValue="#{amostras}" itemLabel="#{amostras.dataColeta}- #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo} - #{amostras.turnoColeta.descricao} "/>
-						<p:ajax listener="#{umidadeBean.popular}" update="s_umidade, p_umidade"/>
-							
+								itemValue="#{amostras}"
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta}- #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo} - #{amostras.turnoColeta.descricao} " />
+							<p:ajax listener="#{umidadeBean.popular}"
+								update="s_umidade, p_umidade" />
+
 						</p:selectOneMenu>
 
 						<p:outputLabel value="2ª Umidade: " for="s_umidade" />

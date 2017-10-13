@@ -12,15 +12,19 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{clorofilaBean.clorofilas}" rows="5"
-				paginator="true" paginatorPosition="bottom"
+			<p:dataTable id="tabela" value="#{clorofilaBean.clorofilas}"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5"
 				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaClorofila"
-				var="clorofila" reflow="true" style="margin-top: 20px">
+				widgetVar="tabelaClorofila" var="clorofila" reflow="true"
+				style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Nova" oncomplete="PF('dialogo').show();"
-						actionListener="#{clorofilaBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{clorofilaBean.novo}"
+						update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Data Check List">
 					<h:outputText value="#{clorofila.amostra.checkList.dataCheckList}">
@@ -28,9 +32,9 @@
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column  headerText="Produto"
-					priority="1" width="18%">
-					<h:outputText value="#{clorofila.amostra.tipoProduto.produto.descricao}" />
+				<p:column headerText="Produto" priority="1" width="18%">
+					<h:outputText
+						value="#{clorofila.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{clorofila.amostra.tipoProduto}"
@@ -44,7 +48,8 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{clorofila.amostra.tipoProduto.descricaoTipo}">
+					<h:outputText
+						value="#{clorofila.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
 				<p:column headerText="630 nm" priority="1">
@@ -65,8 +70,7 @@
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{clorofilaBean.editar}"
-						update=":formCadastro:painel"
-						oncomplete="PF('dialogo').show();">
+						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:setPropertyActionListener target="#{clorofilaBean.clorofila}"
 							value="#{clorofila}" />
 					</p:commandButton>
@@ -101,15 +105,16 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" />
-						<p:selectOneMenu id="Amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{clorofilaBean.clorofila.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 
@@ -119,25 +124,25 @@
 							value="#{clorofilaBean.clorofila.nm630}" styleClass="peso4" />
 
 						<p:outputLabel value="670 nm:" for="nmm" />
-						<p:inputText id="nmm" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
+						<p:inputText id="nmm" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
 							value="#{clorofilaBean.clorofila.nm670}" styleClass="peso4" />
-						
-						
+
+
 						<p:outputLabel value="710 nm:" for="nmn" />
-						<p:inputText id="nmn" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
+						<p:inputText id="nmn" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
 							value="#{clorofilaBean.clorofila.nm710}" styleClass="peso4" />
-							
-							<p:outputLabel value="" />
+
+						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{clorofilaBean.calcularClorofila}"
 							update=":formCadastro:painel">
 						</p:commandButton>
-						
+
 						<p:outputLabel value="Clorofila:" for="clorofila" />
-						<p:inputText id="clorofila" maxlength="8" size="10" required="false"
-							requiredMessage="Campo obrigatório"
+						<p:inputText id="clorofila" maxlength="8" size="10"
+							required="false" requiredMessage="Campo obrigatório"
 							value="#{clorofilaBean.clorofila.clorofila}">
 							<f:convertNumber locale="en_US" pattern="#0.00" />
 						</p:inputText>

@@ -13,8 +13,12 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela"
-				value="#{fornecedorClienteBean.fornecedoresClientes}" rows="5" paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
-				var="fornecedorCliente" reflow="true" style="margin-top: 20px"
+				value="#{fornecedorClienteBean.fornecedoresClientes}"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5" var="fornecedorCliente"
+				reflow="true" style="margin-top: 20px"
 				emptyMessage="Nenhum registro encontrado!"
 				widgetVar="tabelaFornecedorCliente">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
@@ -78,7 +82,8 @@
 						<p:outputLabel value="Estado" for="estado" />
 						<p:selectOneMenu id="estado" style="width: 250px;"
 							value="#{cidadeBean.estado}"
-							converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith">
 							<f:selectItem itemLabel="Selecione o estado"
 								noSelectionOption="true" />
 							<f:selectItems value="#{estadoBean.estados}" var="estados"
@@ -90,7 +95,8 @@
 						<p:outputLabel value="Cidade" for="cidade" />
 						<p:selectOneMenu id="cidade" style="width: 250px;"
 							value="#{fornecedorClienteBean.fornecedorCliente.cidade}"
-							converter="omnifaces.SelectItemsConverter" filter="true" filterMatchMode="startsWith">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith">
 							<f:selectItem itemLabel="Selecione a cidade"
 								noSelectionOption="true" />
 							<f:selectItems value="#{cidadeBean.cidades}" var="cidades"
@@ -109,8 +115,8 @@
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
 							actionListener="#{fornecedorClienteBean.salvar}"
-							update=":growl :formCadastro:painel formListagem:tabela" 
-							oncomplete="PF('dialogo').hide();"/>
+							update=":growl :formCadastro:painel formListagem:tabela"
+							oncomplete="PF('dialogo').hide();" />
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
 							oncomplete="PF('dialogo').hide();" />
 					</h:panelGrid>

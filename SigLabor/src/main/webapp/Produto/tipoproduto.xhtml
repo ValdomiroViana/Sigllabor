@@ -12,8 +12,13 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{tipoProdutoBean.tiposProduto}" widgetVar="tabelaTipo"
-				var="tipoProduto" reflow="true" style="margin-top: 20px" emptyMessage="Nenhum registro encontrado!">
+			<p:dataTable id="tabela" value="#{tipoProdutoBean.tiposProduto}"
+				widgetVar="tabelaTipo" var="tipoProduto" rows="5"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" reflow="true" style="margin-top: 20px"
+				emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -23,14 +28,16 @@
 				<p:column headerText="Descrição do tipo" priority="1">
 					<h:outputText value="#{tipoProduto.descricaoTipo}" />
 				</p:column>
-				<p:column filterBy="#{tipoProduto.produto}" headerText="Produto" priority="1"  filterMatchMode="exact">
-				  <f:facet name="filter">
-                <p:selectOneMenu onchange="PF('tabelaTipo').filter()" >
-                    <f:selectItem itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
-                    <f:selectItems value="#{produtoBean.produtos}"  var="produtos"
-								itemValue="#{produto}" itemLabel="#{produtos.descricao}"/>
-                </p:selectOneMenu>
-            </f:facet>
+				<p:column filterBy="#{tipoProduto.produto}" headerText="Produto"
+					priority="1" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('tabelaTipo').filter()">
+							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+						</p:selectOneMenu>
+					</f:facet>
 					<h:outputText value="#{tipoProduto.produto.descricao}" />
 				</p:column>
 				<p:column headerText="Opções">
@@ -55,7 +62,8 @@
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 
 						<p:outputLabel value="Produto" for="produto" />
-						<p:selectOneMenu id="produto" required="true" requiredMessage="Selecione Um produto"
+						<p:selectOneMenu id="produto" required="true"
+							requiredMessage="Selecione Um produto"
 							value="#{tipoProdutoBean.tipoProduto.produto}"
 							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione um produto"
@@ -66,7 +74,8 @@
 						<p:outputLabel value="Descrição do tipo:" />
 						<p:inputText maxlength="50" size="30"
 							value="#{tipoProdutoBean.tipoProduto.descricaoTipo}"
-							required="true" requiredMessage="Preencha com a descrição do tipo"/>
+							required="true"
+							requiredMessage="Preencha com a descrição do tipo" />
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"

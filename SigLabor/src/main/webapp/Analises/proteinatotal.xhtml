@@ -13,10 +13,13 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela" value="#{proteinaTotalBean.proteinasTotais}"
-				rows="5" paginator="true" paginatorPosition="bottom"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5"
 				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaProteinaTotal"
-				var="proteinaTotal" reflow="true" style="margin-top: 20px">
+				widgetVar="tabelaProteinaTotal" var="proteinaTotal" reflow="true"
+				style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
@@ -126,12 +129,13 @@
 						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
 							value="#{proteinaTotalBean.proteinaTotal.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -169,12 +173,13 @@
 						<p:selectOneMenu id="amostra" required="true" style="width: 100%;"
 							requiredMessage="Selecione Uma amostra"
 							value="#{proteinaTotalBean.proteinaTotal.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -209,14 +214,15 @@
 								var="fatoresSolucao" itemValue="#{fatoresSolucao}"
 								itemLabel="#{fatoresSolucao.dataFatoracao}" />
 						</p:selectOneMenu>
-								<p:outputLabel value="Fator umidade" for="fatorUmidade" />
+						<p:outputLabel value="Fator umidade" for="fatorUmidade" />
 						<p:selectOneMenu id="fatorUmidade"
 							value="#{proteinaTotalBean.proteinaTotal.fatorUmidade}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 							<f:selectItems value="#{fatorUmidadeBean.fatoresUmidade}"
 								var="fatoresUmidade" itemValue="#{fatoresUmidade}"
-								itemLabel="#{fatoresUmidade.fatorUmidade} - #{fatoresUmidade.p_umidade.amostra.codigo} - #{fatoresUmidade.p_umidade.amostra.tipoProduto.produto.descricao}" />
+								itemLabel="#{fatoresUmidade.p_umidade.amostra.codigoAmostra} #{fatoresUmidade.fatorUmidade} - #{fatoresUmidade.p_umidade.amostra.tipoProduto.produto.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="" />

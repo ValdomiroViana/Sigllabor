@@ -12,37 +12,46 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{percentualOleoBean.percentuaisOleo}" rows="5"
-				paginator="true" paginatorPosition="bottom"
-				emptyMessage="Nenhum registro encontrado!"
-				paginatorAlwaysVisible="false" widgetVar="tabelaOleo"
+			<p:dataTable id="tabela"
+				value="#{percentualOleoBean.percentuaisOleo}" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5"
+				emptyMessage="Nenhum registro encontrado!" widgetVar="tabelaOleo"
 				var="percentualOleo" reflow="true" style="margin-top: 20px">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{percentualOleoBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{percentualOleoBean.novo}"
+						update=":formCadastro:painel" />
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{percentualOleo.identificacao}" />
 				</p:column>
 				<p:column headerText="Data Check List">
-					<h:outputText value="#{percentualOleo.amostra.checkList.dataCheckList}">
+					<h:outputText
+						value="#{percentualOleo.amostra.checkList.dataCheckList}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{percentualOleo.amostra.tipoProduto.produto}" headerText="Produto"
-					priority="1" filterMatchMode="exact" width="18%">
+				<p:column filterBy="#{percentualOleo.amostra.tipoProduto.produto}"
+					headerText="Produto" priority="1" filterMatchMode="exact"
+					width="18%">
 					<f:facet name="filter">
-						<p:selectOneMenu  onchange="PF('tabelaOleo').filter()" value="#{tipoProdutoBean.produto}" converter="omnifaces.SelectItemsConverter">
+						<p:selectOneMenu onchange="PF('tabelaOleo').filter()"
+							value="#{tipoProdutoBean.produto}"
+							converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
-						<p:ajax process="@this" listener="#{tipoProdutoBean.popular}" update="tipo"/>
+							<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+								update="tipo" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{percentualOleo.amostra.tipoProduto.produto.descricao}" />
+					<h:outputText
+						value="#{percentualOleo.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
 
 				<p:column filterBy="#{percentualOleo.amostra.tipoProduto}"
@@ -56,7 +65,8 @@
 								itemLabel="#{tiposProduto.descricaoTipo}" />
 						</p:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{percentualOleo.amostra.tipoProduto.descricaoTipo}">
+					<h:outputText
+						value="#{percentualOleo.amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Pa" priority="1">
@@ -79,17 +89,20 @@
 						actionListener="#{percentualOleoBean.editar}"
 						update=":formCadastroEditar:painelEditar"
 						oncomplete="PF('dialogoEditar').show();">
-						<f:setPropertyActionListener target="#{percentualOleoBean.percentualOleo}"
+						<f:setPropertyActionListener
+							target="#{percentualOleoBean.percentualOleo}"
 							value="#{percentualOleo}" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"
-						icon="ui-icon-trash" actionListener="#{percentualOleoBean.excluir}"
+						icon="ui-icon-trash"
+						actionListener="#{percentualOleoBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
 						<p:confirm header="Confirmação"
 							message="Deseja realmente Excluir o percentual de óleo?"
 							icon="ui-icon-alert" />
-						<f:attribute name="percentualOleoSelecionado" value="#{percentualOleo}" />
+						<f:attribute name="percentualOleoSelecionado"
+							value="#{percentualOleo}" />
 
 					</p:commandButton>
 				</p:column>
@@ -113,15 +126,16 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" />
-						<p:selectOneMenu id="Amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="Amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{percentualOleoBean.percentualOleo.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 
@@ -133,12 +147,14 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{percentualOleoBean.percentualOleo.pa}" styleClass="peso2" />
+							value="#{percentualOleoBean.percentualOleo.pa}"
+							styleClass="peso2" />
 
 						<p:outputLabel value="Pb:" for="pb" />
-						<p:inputText id="pb" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
-							value="#{percentualOleoBean.percentualOleo.pb}" styleClass="peso2" />
+						<p:inputText id="pb" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{percentualOleoBean.percentualOleo.pb}"
+							styleClass="peso2" />
 
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
@@ -152,9 +168,9 @@
 				</h:panelGroup>
 			</h:form>
 		</p:dialog>
-		<p:dialog header="Cadastro de Percentual de óleo" widgetVar="dialogoEditar"
-			draggable="false" resizable="false" modal="true" closable="false"
-			responsive="true">
+		<p:dialog header="Cadastro de Percentual de óleo"
+			widgetVar="dialogoEditar" draggable="false" resizable="false"
+			modal="true" closable="false" responsive="true">
 			<h:form id="formCadastroEditar">
 				<h:panelGroup id="novoEnderecoPanel" layout="block"
 					styleClass="ui-fluid">
@@ -162,15 +178,16 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 						<p:outputLabel value="Amostra" for="amostra" />
-						<p:selectOneMenu id="amostra" required="true"
-							style="width: 100%;" requiredMessage="Selecione Uma amostra"
+						<p:selectOneMenu id="amostra" required="true" style="width: 100%;"
+							requiredMessage="Selecione Uma amostra"
 							value="#{percentualOleoBean.percentualOleo.amostra}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o código">
 							<f:selectItem itemLabel="Selecione uma amostra"
 								noSelectionOption="true" />
 							<f:selectItems value="#{amostraBean.amostras}" var="amostras"
 								itemValue="#{amostras}"
-								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
+								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Número:" for="num" />
@@ -181,17 +198,20 @@
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{percentualOleoBean.percentualOleo.pa}" styleClass="peso2" />
+							value="#{percentualOleoBean.percentualOleo.pa}"
+							styleClass="peso2" />
 
 						<p:outputLabel value="Pb:" for="pb" />
-						<p:inputText id="pb" maxlength="8" size="10"
-							required="true" requiredMessage="Campo obrigatório"
-							value="#{percentualOleoBean.percentualOleo.pb}" styleClass="peso2" />
+						<p:inputText id="pb" maxlength="8" size="10" required="true"
+							requiredMessage="Campo obrigatório"
+							value="#{percentualOleoBean.percentualOleo.pb}"
+							styleClass="peso2" />
 
 						<p:outputLabel value="Peso final:" for="pf" />
 						<p:inputText id="pf" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
-							value="#{percentualOleoBean.percentualOleo.pf}" styleClass="peso2" />
+							value="#{percentualOleoBean.percentualOleo.pf}"
+							styleClass="peso2" />
 						<p:outputLabel value="" />
 						<p:commandButton value="Calcular" icon="fa fa-w fa-calculator"
 							actionListener="#{percentualOleoBean.calcularPercentualOleo}"

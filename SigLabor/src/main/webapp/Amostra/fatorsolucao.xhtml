@@ -12,34 +12,37 @@
 
 		<h:form id="formListagem">
 
-			<p:dataTable id="tabela" value="#{fatorSolucaoBean.fatoresSolucao}" rows="5"
-				paginator="true" paginatorPosition="bottom"
-				paginatorAlwaysVisible="false" widgetVar="tabelaFatores"
+			<p:dataTable id="tabela" value="#{fatorSolucaoBean.fatoresSolucao}"
+				paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10" rows="5" widgetVar="tabelaFatores"
 				var="fatorSolucao" reflow="true" style="margin-top: 20px"
 				emptyMessage="Nenhum registro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{fatorSolucaoBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{fatorSolucaoBean.novo}"
+						update=":formCadastro:painel" />
 				</f:facet>
-				<p:column  headerText="Data Fatoração">
-				
+				<p:column headerText="Data Fatoração">
+
 					<h:outputText value="#{fatorSolucao.dataFatoracao}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
 					</h:outputText>
 				</p:column>
-				<p:column  headerText="Ácido - H2SO4">
+				<p:column headerText="Ácido - H2SO4">
 					<h:outputText value="#{fatorSolucao.fatorAcido}" />
 				</p:column>
 
-				
+
 				<p:column headerText="Hidróxido - NaOH" priority="1">
 					<h:outputText value="#{fatorSolucao.fatorHidroxido}">
 					</h:outputText>
 				</p:column>
-				
-					<p:column headerText="Situação" priority="1">
+
+				<p:column headerText="Situação" priority="1">
 					<h:outputText value="#{fatorSolucao.status}">
 					</h:outputText>
 				</p:column>
@@ -68,24 +71,27 @@
 						<p:calendar id="data" size="10" placeholder="Dia/Mês/Ano"
 							mask="true" pattern="dd/MM/yyyy"
 							value="#{fatorSolucaoBean.fatorSolucao.dataFatoracao}" />
-							
-					<p:outputLabel value="Fator ácido:" for="fatorAcido" />
-						<p:inputText id="fatorAcido" maxlength="8" size="10" required="true"
-							requiredMessage="Campo obrigatório"
-							value="#{fatorSolucaoBean.fatorSolucao.fatorAcido}" styleClass="peso6" />
-							
-					<p:outputLabel value="Fator Hidróxido:" for="fatorHidroxido" />
-						<p:inputText id="fatorHidroxido" maxlength="8" size="10" required="true"
-							requiredMessage="Campo obrigatório"
-							value="#{fatorSolucaoBean.fatorSolucao.fatorHidroxido}" styleClass="peso6" />
-							
+
+						<p:outputLabel value="Fator ácido:" for="fatorAcido" />
+						<p:inputText id="fatorAcido" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{fatorSolucaoBean.fatorSolucao.fatorAcido}"
+							styleClass="peso6" />
+
+						<p:outputLabel value="Fator Hidróxido:" for="fatorHidroxido" />
+						<p:inputText id="fatorHidroxido" maxlength="8" size="10"
+							required="true" requiredMessage="Campo obrigatório"
+							value="#{fatorSolucaoBean.fatorSolucao.fatorHidroxido}"
+							styleClass="peso6" />
+
 						<p:outputLabel value="Situação:" for="situacao" />
-						<p:selectOneRadio id="situacao" value="#{fatorSolucaoBean.fatorSolucao.status}"
-							required="true" requiredMessage="O campo situação é obrigatório">
+						<p:selectOneRadio id="situacao"
+							value="#{fatorSolucaoBean.fatorSolucao.status}" required="true"
+							requiredMessage="O campo situação é obrigatório">
 							<f:selectItem itemValue="Em uso" itemLabel="Em uso" />
 							<f:selectItem itemValue="Inativo" itemLabel="Inativo" />
-						</p:selectOneRadio>	
-			
+						</p:selectOneRadio>
+
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
