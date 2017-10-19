@@ -37,9 +37,11 @@
 				<p:panelGrid>
 					<p:menubar styleClass="menu-sistema js-menu-sistema">
 						<p:submenu label="Amostras">
-							<p:menuitem value="Produção" url="/Amostra/amostra.xhtml"/>
-							<p:menuitem value="Embarcado" url="/Amostra/amostraEmbarcado.xhtml"/>
-							<p:menuitem value="Recebido" url="/Amostra/amostraRecebimento.xhtml"/>
+							<p:menuitem value="Produção" url="/Amostra/amostra.xhtml" />
+							<p:menuitem value="Embarcado"
+								url="/Amostra/amostraEmbarcado.xhtml" />
+							<p:menuitem value="Recebido"
+								url="/Amostra/amostraRecebimento.xhtml" />
 						</p:submenu>
 						<p:submenu label="Umidade">
 							<p:menuitem value="Umidades" url="/Analises/umidade.xhtml" />
@@ -65,16 +67,11 @@
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Grupo F">
 							<p:menuitem value="Urease" url="/Analises/urease.xhtml" />
-							<p:menuitem value="Retenção" />
-							<p:menuitem value="Fibras" />
-							<p:menuitem value="Cinzas" />
-							<p:menuitem value="Silica" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Grupo O">
 							<p:menuitem value="Clorofila" url="/Analises/clorofila.xhtml" />
 							<p:menuitem value="Sabões" url="/Analises/saboes.xhtml" />
-							<p:menuitem value="Ins. em Acetona" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
 						<p:submenu label="Outros">
@@ -94,7 +91,7 @@
 	<aside class="aw-sidebar js-sidebar">
 		<nav class="aw-menu">
 			<ul>
-				<li><h:link>
+				<li><h:link outcome="/resultados/dashboard">
 						<i class="fa  fa-fw  fa-home"></i>Dashboard</h:link></li>
 
 

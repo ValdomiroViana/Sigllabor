@@ -23,7 +23,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{checkListBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column filterBy="#{checkList.dataCheckList}" headerText="Data"
 					priority="1" filterMatchMode="exact">
@@ -71,6 +74,8 @@
 						actionListener="#{checkListBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="checkListSelecionado" value="#{checkList}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>

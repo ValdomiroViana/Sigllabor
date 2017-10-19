@@ -23,7 +23,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{recEmbarcadoBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Código" priority="1"
 					filterMatchMode="startsWith" filterBy="#{amostra.codigoAmostra}">
@@ -60,7 +63,8 @@
 					</h:outputText>
 				</p:column>
 				<p:column headerText="Fornecedor">
-					<h:outputText value=" #{amostra.recembarcado.fornecedorCliente.descricao} - #{amostra.recembarcado.placa}"/>
+					<h:outputText
+						value=" #{amostra.recembarcado.fornecedorCliente.descricao} - #{amostra.recembarcado.placa}" />
 				</p:column>
 				<p:column filterBy="#{amostra.dataColeta}" headerText="Data"
 					priority="1" filterMatchMode="exact">
@@ -87,6 +91,8 @@
 						actionListener="#{amostraBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="amostraSelecionada" value="#{amostra}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -165,10 +171,11 @@
 								var="fornecedoresClientes" itemValue="#{fornecedoresClientes}"
 								itemLabel="#{fornecedoresClientes.descricao} - #{fornecedoresClientes.cidade.nome}" />
 						</p:selectOneMenu>
-						<p:outputLabel value="Placa:" for="placa"/>
-						<p:inputMask id="placa" mask="AAA-9999" required="true" value="#{amostraBean.recEmbarcado.placa}"/>
-						<p:outputLabel value="Nf:" for="nf"/>
-						<p:inputText id="nf" value="#{amostraBean.recEmbarcado.nf}"/>
+						<p:outputLabel value="Placa:" for="placa" />
+						<p:inputMask id="placa" mask="AAA-9999" required="true"
+							value="#{amostraBean.recEmbarcado.placa}" />
+						<p:outputLabel value="Nf:" for="nf" />
+						<p:inputText id="nf" value="#{amostraBean.recEmbarcado.nf}" />
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"

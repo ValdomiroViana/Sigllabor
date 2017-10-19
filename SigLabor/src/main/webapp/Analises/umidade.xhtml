@@ -22,8 +22,12 @@
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel" >
+					<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+					</p:commandButton>
+						
 				</f:facet>
+				
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{umidade.identificacao}" />
 				</p:column>
@@ -91,6 +95,7 @@
 						oncomplete="PF('dialogoEditar').show();">
 						<f:setPropertyActionListener target="#{umidadeBean.umidade}"
 							value="#{umidade}" />
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"

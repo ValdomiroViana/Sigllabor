@@ -23,7 +23,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{percentualOleoBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{percentualOleo.identificacao}" />
@@ -92,6 +95,9 @@
 						<f:setPropertyActionListener
 							target="#{percentualOleoBean.percentualOleo}"
 							value="#{percentualOleo}" />
+
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"

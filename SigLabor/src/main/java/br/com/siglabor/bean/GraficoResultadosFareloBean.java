@@ -1,173 +1,89 @@
 package br.com.siglabor.bean;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
-
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import org.omnifaces.util.Messages;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.CategoryAxis;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
 
+import br.com.siglabor.dao.PercentualOleoDAO;
+import br.com.siglabor.dao.ProteinaTotalDAO;
 import br.com.siglabor.dao.UmidadeDAO;
-import br.com.siglabor.domain.Amostra;
+import br.com.siglabor.domain.PercentualOleo;
 import br.com.siglabor.domain.ProteinaTotal;
 import br.com.siglabor.domain.Umidade;
 
-import org.primefaces.model.chart.ChartSeries;
-
 @ManagedBean
-@RequestScoped
 public class GraficoResultadosFareloBean implements Serializable {
 
+	private static DateFormat dataFormatada = new SimpleDateFormat("dd/MM");
+
 	private static final long serialVersionUID = 1L;
-	private Amostra amostra;
-	private Umidade umidade;
-	private List<Umidade> umidades;
+	private LineChartModel lineModel1;
 
-	private List<ProteinaTotal> proteinasTotais;
-
-	private CartesianChartModel model;
-
-	public void geraRelatorioUmidades() {
-		System.out.println("Chamando.....");
-		criaModeloBarras();
+	@PostConstruct
+	public void init() {
+		createLineModels();
 	}
 
-	private void criaModeloBarras() {
-		model = new CartesianChartModel();
-		
+	public CartesianChartModel getLineModel1() {
+		return lineModel1;
+	}
+
+	private void createLineModels() {
+		lineModel1 = initLinearModel();
+		lineModel1.setTitle("Resultados Farelo Média Produção");
+		lineModel1.setLegendPosition("e");
+		lineModel1.setShowPointLabels(true);
+		lineModel1.getAxes().put(AxisType.X, new CategoryAxis("Data"));
+		Axis yAxis = lineModel1.getAxis(AxisType.Y);
+		yAxis.setLabel("");
+		yAxis.setMin(00.01);
+		yAxis.setMax(50.01);
+
+	}
+
+	private LineChartModel initLinearModel() {
+		LineChartModel model = new LineChartModel();
+
 		UmidadeDAO umidadeDAO = new UmidadeDAO();
-		
-		List<Umidade> umidades = umidadeDAO.listar();
-		
-		ChartSeries umidadeGrafico;
-		for (Umidade umidade : umidades) {
-			System.out.println("Umidade: " + umidade.getUmidade());
-			umidadeGrafico = new ChartSeries();
-			String label = String.valueOf(umidade.getCodigo());
-			String valorUmidade = String.valueOf(umidade.getUmidade());
-			if (valorUmidade != null) {
-				umidadeGrafico.setLabel(label);
-				umidadeGrafico.set(valorUmidade, null);
-				model.addSeries(umidadeGrafico);
-			}
-			
-			umidadeGrafico = null;
+		List<Umidade> umidades = umidadeDAO.listarOrdenadoPorData("c.dataCheckList");
+		ChartSeries series1 = new ChartSeries();
+		for (Umidade umdds : umidades) {
+			System.out.println("Umidades" + umdds.getUmidade() + "-" + umdds.getAmostra().getTipoProduto().getProduto().getDescricao());
+			series1.setLabel("Umidades");
+			series1.set(dataFormatada.format(umdds.getAmostra().getDataColeta()), umdds.getUmidade());
 		}
-		 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("model", this.model);
-
-	}
-
-	public CartesianChartModel getModel() {
-		 CartesianChartModel model = (CartesianChartModel) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("model");
-		  if (model != null)
-              return model;
-
-       return new CartesianChartModel();
+		ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
+		List<ProteinaTotal> proteinasTotais = proteinaTotalDAO.listarOrdenadoPorData("c.dataCheckList");
+		ChartSeries series2 = new ChartSeries();
+		for (ProteinaTotal protTts : proteinasTotais) {
+			series2.setLabel("Proteínas");
+			series2.set(dataFormatada.format(protTts.getAmostra().getDataColeta()), protTts.getProteinaTotal());
+		}
 		
-	}
+		PercentualOleoDAO percentualOleoDAO = new PercentualOleoDAO();
+		List<PercentualOleo> percentuaisOleo = percentualOleoDAO.listarOrdenadoPorData("c.dataCheckList");
+		ChartSeries series3 = new ChartSeries();
+		for(PercentualOleo percentOleo : percentuaisOleo){
+			series3.setLabel("% de Óleo");
+			series3.set(dataFormatada.format(percentOleo.getAmostra().getDataColeta()),percentOleo.getPercentualOleo());
+		}
 
-	public void setModel(CartesianChartModel model) {
-		this.model = model;
-	}
+		model.addSeries(series1);
+		model.addSeries(series2);
+		model.addSeries(series3);
 
-	public Amostra getAmostra() {
-		return amostra;
-	}
-
-	public void setAmostra(Amostra amostra) {
-		this.amostra = amostra;
-	}
-
-	public Umidade getUmidade() {
-		return umidade;
-	}
-
-	public void setUmidade(Umidade umidade) {
-		this.umidade = umidade;
-	}
-
-	public List<Umidade> getUmidades() {
-		return umidades;
-	}
-
-	public void setUmidades(List<Umidade> umidades) {
-		this.umidades = umidades;
-	}
-
-	public List<ProteinaTotal> getProteinasTotais() {
-		return proteinasTotais;
-	}
-
-	public void setProteinasTotais(List<ProteinaTotal> proteinasTotais) {
-		this.proteinasTotais = proteinasTotais;
-	}
+		return model;
+	} 
 	
-	
-	
-
-	/*
-	 * 
-	 * @PostConstruct public void init() { createLineModels();
-	 * buscarResultados(); }
-	 * 
-	 * public Amostra getAmostra() { return amostra; }
-	 * 
-	 * 
-	 * 
-	 * public Umidade getUmidade() { return umidade; }
-	 * 
-	 * public List<Umidade> getUmidades() { return umidades; }
-	 * 
-	 * public List<ProteinaTotal> getProteinasTotais() { return proteinasTotais;
-	 * }
-	 * 
-	 * public LineChartModel getLineModel2() { return lineModel2; }
-	 * 
-	 * private void createLineModels() {
-	 * 
-	 * lineModel2 = initCategoryModel(); lineModel2.setTitle("Category Chart");
-	 * lineModel2.setLegendPosition("e"); lineModel2.setShowPointLabels(true);
-	 * lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Data")); Axis
-	 * yAxis = lineModel2.getAxis(AxisType.Y); yAxis.setLabel("Resultados");
-	 * yAxis.setMin(0); yAxis.setMax(50); }
-	 * 
-	 * private LineChartModel initCategoryModel() { LineChartModel model = new
-	 * LineChartModel();
-	 * 
-	 * ChartSeries umidade = new ChartSeries(); umidade.setLabel("Umidade");
-	 * umidade.set("02/10", 12.12); umidade.set("03/10", 12.45);
-	 * umidade.set("04/10", 12.67); umidade.set("05/10", 11.10);
-	 * umidade.set("06/10", 11.90); umidade.set("07/10", 13.12);
-	 * 
-	 * ChartSeries oleo = new ChartSeries(); oleo.setLabel("% de Óleo");
-	 * oleo.set("02/10", 2.12); oleo.set("03/10", 1.92); oleo.set("04/10",
-	 * 1.70); oleo.set("05/10", 2.44); oleo.set("06/10", 2.00);
-	 * oleo.set("07/10", 1.65);
-	 * 
-	 * ChartSeries proteina = new ChartSeries();
-	 * proteina.setLabel("Proteína bruta"); proteina.set("02/10", 46.12);
-	 * proteina.set("03/10", 45.92); proteina.set("04/10", 46.70);
-	 * proteina.set("05/10", 46.44); proteina.set("06/10", 46.00);
-	 * proteina.set("07/10", 46.15);
-	 * 
-	 * model.addSeries(umidade); model.addSeries(oleo);
-	 * model.addSeries(proteina);
-	 * 
-	 * return model; }
-	 * 
-	 */
 
 }

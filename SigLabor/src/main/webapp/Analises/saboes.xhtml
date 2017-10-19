@@ -22,7 +22,10 @@
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{saboesBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{saboesBean.novo}" update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{sabao.identificacao}" />
@@ -75,6 +78,8 @@
 						oncomplete="PF('dialogoEditar').show();">
 						<f:setPropertyActionListener target="#{saboesBean.sabao}"
 							value="#{sabao}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"

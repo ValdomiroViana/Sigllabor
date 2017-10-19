@@ -22,7 +22,10 @@
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{amostraBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{amostraBean.novo}" update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Código" priority="1"
 					filterMatchMode="startsWith" filterBy="#{amostra.codigoAmostra}">
@@ -83,6 +86,8 @@
 						actionListener="#{amostraBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="amostraSelecionada" value="#{amostra}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>

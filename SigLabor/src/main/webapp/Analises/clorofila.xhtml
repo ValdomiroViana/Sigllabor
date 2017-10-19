@@ -24,7 +24,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Nova" oncomplete="PF('dialogo').show();"
 						actionListener="#{clorofilaBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Data Check List">
 					<h:outputText value="#{clorofila.amostra.checkList.dataCheckList}">
@@ -73,6 +76,8 @@
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:setPropertyActionListener target="#{clorofilaBean.clorofila}"
 							value="#{clorofila}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 
 					<p:commandButton style="background-color:red; float: right;"

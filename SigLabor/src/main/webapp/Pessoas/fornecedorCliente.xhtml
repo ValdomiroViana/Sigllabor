@@ -25,7 +25,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{fornecedorClienteBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Nome" priority="1">
 					<h:outputText value="#{fornecedorCliente.descricao}" />
@@ -57,6 +60,8 @@
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="fornecedorClienteSelecionado"
 							value="#{fornecedorCliente}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>

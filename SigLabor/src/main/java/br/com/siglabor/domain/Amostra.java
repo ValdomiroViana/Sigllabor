@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -44,6 +45,10 @@ public class Amostra extends GenericDomain {
 
 	@OneToOne (mappedBy="amostra")
 	private RecEmbarcado recembarcado;
+	
+	@Transient 
+	private Amostra amostraSelecionada;
+
 	public Turno getTurnoColeta() {
 		return turnoColeta;
 	}
@@ -98,6 +103,14 @@ public class Amostra extends GenericDomain {
 
 	public void setRecembarcado(RecEmbarcado recembarcado) {
 		this.recembarcado = recembarcado;
+	}
+
+	public Amostra getAmostraSelecionada() {
+		return amostraSelecionada;
+	}
+
+	public void setAmostraSelecionada(Amostra amostraSelecionada) {
+		this.amostraSelecionada = amostraSelecionada;
 	}
 	
 	

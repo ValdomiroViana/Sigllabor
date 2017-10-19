@@ -13,9 +13,8 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela" value="#{tipoProdutoBean.tiposProduto}"
-				widgetVar="tabelaTipo" var="tipoProduto" rows="5"
-				paginator="true" paginatorAlwaysVisible="false"
-				paginatorPosition="bottom"
+				widgetVar="tabelaTipo" var="tipoProduto" rows="5" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10" reflow="true" style="margin-top: 20px"
 				emptyMessage="Nenhum registro encontrado!">
@@ -23,7 +22,10 @@
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
 						actionListener="#{tipoProdutoBean.novo}"
-						update=":formCadastro:painel" />
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Descrição do tipo" priority="1">
 					<h:outputText value="#{tipoProduto.descricaoTipo}" />
@@ -45,6 +47,8 @@
 						actionListener="#{tipoProdutoBean.editar}"
 						update=":formCadastro:painel" oncomplete="PF('dialogo').show();">
 						<f:attribute name="tipoSelecionado" value="#{tipoProduto}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>

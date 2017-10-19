@@ -11,11 +11,15 @@
 		<h:form id="formListagem">
 
 			<p:dataTable id="tabela" value="#{turnoBean.turnos}" var="turno"
-				reflow="true" style="margin-top: 20px" emptyMessage="Nenhum regietro encontrado!">
+				reflow="true" style="margin-top: 20px"
+				emptyMessage="Nenhum regietro encontrado!">
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{turnoBean.novo}" update=":formCadastro:painel" />
+						actionListener="#{turnoBean.novo}" update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<p:column headerText="Descrição" priority="1">
 					<h:outputText value="#{turno.descricao}" />
@@ -37,6 +41,8 @@
 						actionListener="#{turnoBean.editar}" update=":formCadastro:painel"
 						oncomplete="PF('dialogo').show();">
 						<f:attribute name="turnoSelecionado" value="#{turno}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
