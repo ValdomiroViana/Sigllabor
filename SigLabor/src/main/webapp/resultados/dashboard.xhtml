@@ -8,13 +8,32 @@
 
 
 	<ui:define name="content">
-		 <h:form>
-   
-            <p:chart type="line" model="#{graficoResultadosFareloBean.lineModel1}"
-                  style="height:290px, widht=400px" />
-   
-       </h:form>
-       
+		<h:form>
+			<p:chart type="line"
+				model="#{graficoResultadosFareloBean.lineModel1}"
+				style="height:290px" responsive="true" />
+		</h:form>
+
+		<p:separator />
+
+		<h:form style="float:left">
+			<p:chart type="bar"
+				model="#{graficoResultadosFareloBean.barModelPercentOleo}"
+				style="height:290px;  width:350px;" responsive="true" />
+		</h:form>
+
+		<h:form style="float:left">
+			<p:chart type="bar" model="#{graficoResultadosFareloBean.barModel}"
+				style="height:290px;  width:350px; " responsive="true" />
+		</h:form>
+
+		<h:form style="float:left">
+			<p:chart type="bar"
+				model="#{graficoResultadosFareloBean.barModelProteina}"
+				style="height:290px;  width:350px;" responsive="true" />
+		</h:form>
+
+
 	</ui:define>
 
 </ui:composition>

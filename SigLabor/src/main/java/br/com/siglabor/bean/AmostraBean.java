@@ -13,6 +13,7 @@ import org.omnifaces.util.Messages;
 
 import br.com.siglabor.dao.AmostraDAO;
 import br.com.siglabor.dao.CheckListDAO;
+import br.com.siglabor.dao.FornecedorClienteDAO;
 import br.com.siglabor.dao.ProdutoDAO;
 import br.com.siglabor.dao.RecEmbarcadoDAO;
 import br.com.siglabor.domain.Amostra;
@@ -41,6 +42,7 @@ public class AmostraBean implements Serializable {
 	private RecEmbarcado recEmbarcado;
 	private List<RecEmbarcado> recEmbarcados;
 	private FornecedorCliente fornecedorCliente;
+	private List< FornecedorCliente> fornecedorClientes;
 
 	public AmostraBean() {
 		amostra = new Amostra();
@@ -120,6 +122,16 @@ public class AmostraBean implements Serializable {
 	public void setFornecedorCliente(FornecedorCliente fornecedorCliente) {
 		this.fornecedorCliente = fornecedorCliente;
 	}
+	
+	
+
+	public List<FornecedorCliente> getFornecedorClientes() {
+		return fornecedorClientes;
+	}
+
+	public void setFornecedorClientes(List<FornecedorCliente> fornecedorClientes) {
+		this.fornecedorClientes = fornecedorClientes;
+	}
 
 	// Método Novo
 	public void novo() {
@@ -154,13 +166,15 @@ public class AmostraBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listarOrdenado("descricao");
 			tiposProduto = new ArrayList<>();
-			Messages.addGlobalInfo("Amostra salva com sucesso!");
+			Messages.addGlobalInfo("Amostra salva com sucesso! ");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a amostra.");
 			erro.printStackTrace();
 		}
 	}
 
+	/*
+	
 	// Método salvar
 	public void salvarFornCliente() {
 		try {
@@ -188,6 +202,32 @@ public class AmostraBean implements Serializable {
 			erro.printStackTrace();
 		}
 	}
+	
+	*/
+	
+	public void adicionarFornecedor(){
+		try{
+			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
+			fornecedorClientes = fornecedorClienteDAO.listar();
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Erro ao listar os fornecedores");
+			erro.printStackTrace();
+		}
+	}
+	
+	// Método salvar
+	
+	public void salvarRecEmbarcado(){
+		try{
+			AmostraDAO amostraDAO = new AmostraDAO();
+			amostraDAO.salvar(amostra, recEmbarcado);
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar!");
+			erro.printStackTrace();
+		}
+	}
+
+	
 
 	// a anotation @post construct serve para carregar a
 	// listagem
@@ -215,6 +255,10 @@ public class AmostraBean implements Serializable {
 		try {
 			AmostraDAO amostraDAO = new AmostraDAO();
 			amostras = amostraDAO.listar();
+			CheckListDAO checkListDAO = new CheckListDAO();
+			checkLists = checkListDAO.listar();
+			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
+			fornecedorClientes = fornecedorClienteDAO.listar();
 		} catch (RuntimeException runtimeException) {
 
 			Messages.addGlobalError(runtimeException.getMessage());

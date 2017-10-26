@@ -71,6 +71,25 @@ public class GenericDAO<Entidade> {
 			sessao.close();
 		}
 	}
+	
+	// MÉTODO LISTAR ORDENADO
+	@SuppressWarnings("unchecked")
+	// recebe um parâmetro de ordenação que é o atributo que será utilizado para
+	// ordenar ex:nome
+	public List<Entidade> listarOrdenadoDesc(String campoOrdenacao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(classe);
+			// critério de ordenaçao criteria do Hibernate
+			consulta.addOrder(Order.desc(campoOrdenacao));
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Entidade> listarOrdenadoPorData(String campoOrdenacao) {

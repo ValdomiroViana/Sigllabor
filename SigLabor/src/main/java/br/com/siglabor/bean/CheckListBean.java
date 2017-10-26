@@ -121,7 +121,7 @@ public class CheckListBean implements Serializable {
 	public void listarOrdenado() {
 		try {
 			CheckListDAO checkListDAO = new CheckListDAO();
-			checkLists = checkListDAO.listarOrdenado("dataCheckList");
+			checkLists = checkListDAO.listarOrdenadoDesc("dataCheckList");
 ;		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar listar os checklists");
 			erro.printStackTrace();
@@ -140,7 +140,7 @@ public class CheckListBean implements Serializable {
 	public void iniciar() {
 		try {
 			CheckListDAO checkListDAO = new CheckListDAO();
-			checkLists = checkListDAO.listarOrdenado("dataCheckList");
+			checkLists = checkListDAO.listarOrdenadoDesc("dataCheckList");
 		} catch (RuntimeException runtimeException) {
 			Messages.addGlobalError(runtimeException.getMessage());
 

@@ -1,15 +1,16 @@
 package br.com.siglabor.dao;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.siglabor.domain.Umidade;
 import br.com.siglabor.util.HibernateUtil;
-
 
 public class UmidadeDAO extends GenericDAO<Umidade> {
 
@@ -24,43 +25,41 @@ public class UmidadeDAO extends GenericDAO<Umidade> {
 		return umidade;
 
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<Umidade> buscarPorAmostra(Long amostraCodigo) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		try{
+		try {
 			Criteria consulta = sessao.createCriteria(Umidade.class);
 			consulta.add(Restrictions.eq("amostra.codigo", amostraCodigo));
 			List<Umidade> resultado = consulta.list();
 			return resultado;
-		}catch(RuntimeException erro){
+		} catch (RuntimeException erro) {
 			throw erro;
 		} finally {
 			sessao.close();
 		}
-		
 
 	}
-	public List<Umidade> listarUmidadeFarelo() {
+
+	public List<Umidade> listarUmidadeFarelo(Character c, String campoOrdenacao) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-			try{
-				Criteria consulta = sessao.createCriteria(Umidade.class)
-						// fazemos uma associação (join) com amostra e nomeamos como "a"
-						.createAlias("amostra", "a")
-						// fazemos uma associação (join) com tipoProduto e nomeamos como "tp"
-						.createAlias("tipoProduto", "tp")
-						// fazemos uma associação (join) com produto e nomeamos como "p"
-						.createAlias("produto", "p");
-				
-				
-				List<Umidade> resultado = consulta.list();
-				return resultado;
-				
-			}catch(RuntimeException erro){
-				throw erro;
-			}finally{
-				sessao.close();
-			}
-		
+		try {
+			Criteria consulta = sessao.createCriteria(Umidade.class);
+			//consulta.add(Restrictions.eq("tipo", character));
+			consulta.add(Restrictions.eq("tipo", c));
+			consulta.createAlias("amostra", "a");
+			consulta.addOrder(Order.asc(campoOrdenacao));
+			@SuppressWarnings("unchecked")
+			List<Umidade> resultado = consulta.list();
+			return resultado;
+
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+
 	}
 
 }

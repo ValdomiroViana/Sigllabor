@@ -118,15 +118,17 @@
 								itemValue="#{turnos}" itemLabel="#{turnos.descricao}" />
 						</p:selectOneMenu>
 						<p:outputLabel value="Check List" for="checklist" />
-						<p:selectOneMenu id="checklist" required="true"
+						<p:selectOneMenu id="checklist" required="true" 
 							style="width: 200px;" requiredMessage="Selecione Um Check List"
 							value="#{amostraBean.amostra.checkList}"
-							converter="omnifaces.SelectItemsConverter">
+							converter="omnifaces.SelectItemsConverter" filter="true"
+							filterMatchMode="startsWith" title="Digite o turno">>
 							<f:selectItem itemLabel="Selecione um Check list"
 								noSelectionOption="true" />
-							<f:selectItems value="#{checkListBean.checkLists}"
+							<f:selectItems value="#{checkListBean.checkLists}" 
 								var="checkLists" itemValue="#{checkList}"
-								itemLabel="#{checkLists.dataCheckList} - #{checkLists.turno.descricao}" />
+								itemLabel="#{checkLists.turno.descricao} - #{checkLists.dataCheckList}" >
+								</f:selectItems>
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Produto" for="produto" />

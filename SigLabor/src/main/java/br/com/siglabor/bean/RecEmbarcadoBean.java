@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
 import br.com.siglabor.dao.AmostraDAO;
+import br.com.siglabor.dao.CheckListDAO;
+import br.com.siglabor.dao.FornecedorClienteDAO;
 import br.com.siglabor.dao.RecEmbarcadoDAO;
 import br.com.siglabor.domain.Amostra;
 import br.com.siglabor.domain.CheckList;
@@ -35,6 +39,8 @@ public class RecEmbarcadoBean implements Serializable {
 		amostra = new Amostra();
 		checkList = new CheckList();
 		checkLists = new ArrayList<>();
+		fornecedoresClientes = new ArrayList<>();
+		fornecedorCliente =new FornecedorCliente();
 
 	}
 
@@ -106,33 +112,50 @@ public class RecEmbarcadoBean implements Serializable {
 	public void novo() {
 		recEmbarcado = new RecEmbarcado();
 		amostra = new Amostra();
+
 	}
-
-	// Método salvar
-	public void salvar() {
+	
+	//Método listar
+	@PostConstruct
+	public void listar(){
+		
 		try {
-
-			AmostraDAO amostraDAO = new AmostraDAO();
-			amostraDAO.salvar(amostra);
-			// Chamada do método para buscar o último ID da amostra
-			// recém-inserida
-			Long codigo = amostraDAO.sqlMax(amostra);
-			System.out.println("Codigo: " + codigo);
-			// Buscar o código
-			Amostra amostra = amostraDAO.buscar(codigo);
-			// salvar na tabela recEmbarcado
-			RecEmbarcadoDAO recEmbarcadoDAO = new RecEmbarcadoDAO();
-			recEmbarcado.setAmostra(new Amostra());
-			recEmbarcado.setAmostra(amostra);
-			recEmbarcadoDAO.salvar(recEmbarcado);
-			recEmbarcado = new RecEmbarcado();
-			recEmbarcados = recEmbarcadoDAO.listarOrdenadoPorDataAmostra("dataColeta");
-			Messages.addGlobalInfo("Salvo com sucesso!");
-
+			CheckListDAO checkListDAO = new CheckListDAO();
+			checkLists = checkListDAO.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Erro ao tentar salvar.");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar os itens");
 			erro.printStackTrace();
 		}
 	}
+	
+	public void adicionarFornecedor(){
+		try{
+			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
+			fornecedoresClientes = fornecedorClienteDAO.listar();
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Erro ao listar os fornecedores");
+			erro.printStackTrace();
+		}
+	}
+
+	// Método salvar
+	
+	public void salvar(){
+		try{
+			AmostraDAO amostraDAO = new AmostraDAO();
+			amostraDAO.salvar(amostra, recEmbarcado);
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar!");
+			erro.printStackTrace();
+		}
+	}
+
+	
+	public void editar(ActionEvent evento){
+		recEmbarcado = (RecEmbarcado) evento.getComponent().getAttributes().get("amostraRecEmbarcadoSelecionada");
+				
+	}
+	
+	
 
 }
