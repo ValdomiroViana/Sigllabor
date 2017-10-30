@@ -46,7 +46,6 @@ public class UmidadeDAO extends GenericDAO<Umidade> {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
 			Criteria consulta = sessao.createCriteria(Umidade.class);
-			//consulta.add(Restrictions.eq("tipo", character));
 			consulta.add(Restrictions.eq("tipo", c));
 			consulta.createAlias("amostra", "a");
 			consulta.addOrder(Order.asc(campoOrdenacao));

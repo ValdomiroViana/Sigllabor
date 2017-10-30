@@ -30,7 +30,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">update</property>
 
 		<!-- Mapeamento das entidades -->
 		<mapping class="br.com.siglabor.domain.Estado" />
@@ -54,6 +54,7 @@
 		<mapping class="br.com.siglabor.domain.ProteinaSoluvel" />
 		<mapping class="br.com.siglabor.domain.FatorUmidade" />
 		<mapping class="br.com.siglabor.domain.RecEmbarcado" />
+		<mapping class="br.com.siglabor.domain.Usuario" />
 
 
 
