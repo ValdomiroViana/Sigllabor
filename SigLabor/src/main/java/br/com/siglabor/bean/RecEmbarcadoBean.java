@@ -120,30 +120,26 @@ public class RecEmbarcadoBean implements Serializable {
 	public void listar(){
 		
 		try {
-			CheckListDAO checkListDAO = new CheckListDAO();
-			checkLists = checkListDAO.listar();
+			RecEmbarcadoDAO recEmbarcadoDAO = new RecEmbarcadoDAO();
+			 recEmbarcados = recEmbarcadoDAO.listar();
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar os itens");
 			erro.printStackTrace();
 		}
 	}
 	
-	public void adicionarFornecedor(){
-		try{
-			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
-			fornecedoresClientes = fornecedorClienteDAO.listar();
-		}catch(RuntimeException erro){
-			Messages.addGlobalError("Erro ao listar os fornecedores");
-			erro.printStackTrace();
-		}
-	}
 
 	// Método salvar
 	
 	public void salvar(){
 		try{
-			AmostraDAO amostraDAO = new AmostraDAO();
-			amostraDAO.salvar(amostra, recEmbarcado);
+			RecEmbarcadoDAO recEmbarcadoDAO = new RecEmbarcadoDAO();
+			recEmbarcadoDAO.salvar(recEmbarcado);
+			//cria um novo para limpar os atributos
+			recEmbarcado = new RecEmbarcado();
+			recEmbarcados = recEmbarcadoDAO.listar();
+			
+			Messages.addGlobalInfo("Salvo com sucesso!");
 		}catch(RuntimeException erro){
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar!");
 			erro.printStackTrace();
@@ -154,6 +150,30 @@ public class RecEmbarcadoBean implements Serializable {
 	public void editar(ActionEvent evento){
 		recEmbarcado = (RecEmbarcado) evento.getComponent().getAttributes().get("amostraRecEmbarcadoSelecionada");
 				
+	}
+	
+
+	// método iniciar serve para preencher a lista quando for construída a
+	// página
+	@PostConstruct
+	public void iniciar() {
+		try {
+			RecEmbarcadoDAO recEmbarcadoDAO = new RecEmbarcadoDAO();
+			recEmbarcados = recEmbarcadoDAO.listar();
+			for(RecEmbarcado recEmbarcado : recEmbarcados){
+				System.out.println("Rec: " + recEmbarcado.getPlaca());
+			}
+			AmostraDAO amostraDAO = new AmostraDAO();
+			amostras = amostraDAO.listar();
+			CheckListDAO checkListDAO = new CheckListDAO();
+			checkLists = checkListDAO.listar();
+			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
+			fornecedoresClientes = fornecedorClienteDAO.listar();
+		} catch (RuntimeException runtimeException) {
+
+			Messages.addGlobalError(runtimeException.getMessage());
+
+		}
 	}
 	
 	

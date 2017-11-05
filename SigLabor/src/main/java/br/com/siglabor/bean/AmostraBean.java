@@ -15,7 +15,6 @@ import br.com.siglabor.dao.AmostraDAO;
 import br.com.siglabor.dao.CheckListDAO;
 import br.com.siglabor.dao.FornecedorClienteDAO;
 import br.com.siglabor.dao.ProdutoDAO;
-import br.com.siglabor.dao.RecEmbarcadoDAO;
 import br.com.siglabor.domain.Amostra;
 import br.com.siglabor.domain.CheckList;
 import br.com.siglabor.domain.FornecedorCliente;
@@ -166,67 +165,12 @@ public class AmostraBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listarOrdenado("descricao");
 			tiposProduto = new ArrayList<>();
-			Messages.addGlobalInfo("Amostra salva com sucesso! ");
+			Messages.addFlashGlobalInfo("Amostra salva Com sucesso!", amostra.getCodigoAmostra().toString());
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a amostra.");
 			erro.printStackTrace();
 		}
 	}
-
-	/*
-	
-	// Método salvar
-	public void salvarFornCliente() {
-		try {
-
-			AmostraDAO amostraDAO = new AmostraDAO();
-			amostraDAO.salvar(amostra);
-			// Chamada do método para buscar o último ID da amostra
-			// recém-inserida
-			Long codigo = amostraDAO.sqlMax(amostra);
-			System.out.println("Codigo: " + codigo);
-			// Buscar o código
-			Amostra amostra = amostraDAO.buscar(codigo);
-			System.out.println("Amostra:" + amostra.getCodigo());
-			// salvar na tabela recEmbarcado
-			RecEmbarcadoDAO recEmbarcadoDAO = new RecEmbarcadoDAO();
-			recEmbarcado.setAmostra(new Amostra());
-			recEmbarcado.setAmostra(amostra);
-			recEmbarcadoDAO.salvar(recEmbarcado);
-			amostra = new Amostra();
-			amostras = amostraDAO.listarOrdenadoPorDataAmostra("dataColeta");
-			Messages.addGlobalInfo("Salvo com sucesso!");
-
-		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Erro ao tentar salvar.");
-			erro.printStackTrace();
-		}
-	}
-	
-	*/
-	
-	public void adicionarFornecedor(){
-		try{
-			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
-			fornecedorClientes = fornecedorClienteDAO.listar();
-		}catch(RuntimeException erro){
-			Messages.addGlobalError("Erro ao listar os fornecedores");
-			erro.printStackTrace();
-		}
-	}
-	
-	// Método salvar
-	
-	public void salvarRecEmbarcado(){
-		try{
-			AmostraDAO amostraDAO = new AmostraDAO();
-			amostraDAO.salvar(amostra, recEmbarcado);
-		}catch(RuntimeException erro){
-			Messages.addGlobalError("Ocorreu um erro ao tentar salvar!");
-			erro.printStackTrace();
-		}
-	}
-
 	
 
 	// a anotation @post construct serve para carregar a

@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 @Entity
-public class Usuario extends GenericDomain{
 
+public class Usuario extends GenericDomain{
+	
 	private static final long serialVersionUID = 1L;
 	@Column(length = 50, nullable = false)
 	private String nomeDoUsuario;
@@ -75,6 +76,29 @@ public class Usuario extends GenericDomain{
 		this.ativo = ativo;
 	}
 	
+	@Transient
+	public String getTipoFormatado(){
+		String tipoFormatado = null;
+		if(tipo == 'S'){
+			tipoFormatado = "Supervisor";
+		}else if(tipo == 'A'){
+			tipoFormatado = "Analista";
+		}else if(tipo == 'V'){
+			tipoFormatado = "Visitante";
+		}
+		return tipoFormatado;
+		
+	}
 	
+	@Transient
+	public String getAtivoInativo(){
+		String ativo = null;
+		if(this.ativo = true){
+			ativo = "Ativo";
+		}else if(this.ativo != true){
+			ativo = "Inativo";
+		}
+		return ativo;
+	}
 	
 }
