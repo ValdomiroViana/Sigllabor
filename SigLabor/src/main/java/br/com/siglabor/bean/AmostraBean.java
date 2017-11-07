@@ -165,7 +165,7 @@ public class AmostraBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listarOrdenado("descricao");
 			tiposProduto = new ArrayList<>();
-			Messages.addFlashGlobalInfo("Amostra salva Com sucesso!", amostra.getCodigoAmostra().toString());
+			Messages.addFlashGlobalInfo("Amostra salva Com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a amostra.");
 			erro.printStackTrace();

@@ -5,6 +5,10 @@
 	version="3.1">
 
 	<display-name>SigLabor</display-name>
+	<!-- Tela de início -->
+	<welcome-file-list>
+		<welcome-file>login.xhtml</welcome-file>
+	</welcome-file-list>
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>

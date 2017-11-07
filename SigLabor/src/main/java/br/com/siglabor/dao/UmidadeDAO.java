@@ -60,5 +60,29 @@ public class UmidadeDAO extends GenericDAO<Umidade> {
 		}
 
 	}
+	
+	public List<Umidade> listarUmidadeFareloII(Character c, String campoOrdenacao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Umidade.class);
+			consulta.add(Restrictions.eq("tipo", c));
+			consulta.createAlias("amostra", "a");
+			//consulta.createAlias("umidade", "u");
+			//consulta.createAlias("u.a.tipoproduto", "p");
+			//consulta.add(Restrictions.like("p.descricao", "%orodu%"));
+			consulta.setMaxResults(4);
+			consulta.addOrder(Order.desc(campoOrdenacao));
+			
+			@SuppressWarnings("unchecked")
+			List<Umidade> resultado = consulta.list();
+			return resultado;
+
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+
+	}
 
 }

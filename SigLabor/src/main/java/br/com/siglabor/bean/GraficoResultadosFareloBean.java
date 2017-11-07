@@ -134,10 +134,10 @@ public class GraficoResultadosFareloBean implements Serializable {
 	private BarChartModel initBarModelUmidade() {
 		BarChartModel modelBarUmidade = new BarChartModel();
 		UmidadeDAO umidadeDAO = new UmidadeDAO();
-		List<Umidade> umidades = umidadeDAO.listarUmidadeFarelo('p', "a.dataColeta");
+		List<Umidade> umidades = umidadeDAO.listarUmidadeFareloII('p', "a.dataColeta");
 		ChartSeries serie = new ChartSeries();
 		for (Umidade umdds : umidades) {
-			System.out.println("Umidades" + umdds.getUmidade() + "-" + umdds.getAmostra().getTipoProduto().getProduto().getDescricao() +"-"+ umdds.getTipo());
+			System.out.println("Umidades GroupBy" + umdds.getUmidade() + "-" + umdds.getAmostra().getTipoProduto().getProduto().getDescricao() +"-"+ umdds.getTipo());
 			serie.setLabel("Umidades");
 			serie.set(dataFormatada.format(umdds.getAmostra().getDataColeta()), umdds.getUmidade());
 			
