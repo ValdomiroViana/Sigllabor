@@ -21,7 +21,7 @@
 </h:head >
 <p:growl id="growl" showSummary="true" autoUpdate="true" life="5000" />
 	<h:body style="background:  url(#{ resource [ 'images:tema_logo.PNG' ] } ) no-repeat;">
-		<p:dialog header="Autenticação" widgetVar="dialogo"
+		<p:dialog header="Entrar" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false" visible="true"
 			responsive="true">
 			<h:form id="formCadastro">
@@ -31,14 +31,14 @@
 						styleClass="panelgrid-noborder"
 						columnClasses="ui-grid-col-4, ui-grid-col-8">
 
-						<p:outputLabel value="E_mail:" />
+						<p:outputLabel value="Email:" />
 						<p:inputText maxlength="50" size="30"
 							value="#{autenticacaoBean.usuario.email}" required="true" requiredMessage="Digite o email"/>
 						<p:outputLabel value="Senha:" />
 						<p:password maxlength="50" size="30"
 							value="#{autenticacaoBean.usuario.senha}" required="true" requiredMessage="Digite a senha" />
-							
-							<p:commandButton value="Entrar" action="#{autenticacaoBean.autenticar}">
+							<h:outputLabel value=""/>
+							<p:commandButton style="width:50%; float:right; color:#006400;" value="Entrar" action="#{autenticacaoBean.autenticar}">
 							<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
