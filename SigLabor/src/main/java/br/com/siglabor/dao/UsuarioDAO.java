@@ -1,5 +1,8 @@
 package br.com.siglabor.dao;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

@@ -1,0 +1,566 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/templates/layout.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h1 class="aw-page-title">Todos os Resultados</h1>
+		<p:growl id="growl" showSummary="true" life="5000" />
+
+
+		<h:form id="formListagem">
+
+			<p:tabView>
+				<p:tab title="Umidades">
+					<p:dataTable id="tabUmidade" value="#{umidadeBean.umidades}"
+						paginator="true" paginatorAlwaysVisible="false"
+						paginatorPosition="bottom"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10" rows="5" var="umidade" reflow="true"
+						emptyMessage="Nenhum registro encontrado!"
+						widgetVar="tabelaUmidade" style="margin-top: 20px">
+						<p:column headerText="Data Check List">
+							<h:outputText value="#{umidade.amostra.checkList.dataCheckList}">
+								<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+									timeZone="America/Sao_Paulo" />
+							</h:outputText>
+						</p:column>
+						<p:column filterBy="#{umidade.amostra.tipoProduto.produto}"
+							headerText="Produto" priority="1" filterMatchMode="exact"
+							width="18%">
+							<f:facet name="filter">
+								<p:selectOneMenu onchange="PF('tabelaUmidade').filter()"
+									value="#{tipoProdutoBean.produto}"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+										itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+									<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+										update="tipo" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText
+								value="#{umidade.amostra.tipoProduto.produto.descricao}" />
+						</p:column>
+						<p:column filterBy="#{umidade.amostra.tipoProduto}"
+							headerText="Tipo Produto" priority="1" filterMatchMode="exact">
+							<f:facet name="filter">
+								<p:selectOneMenu id="tipo"
+									onchange="PF('tabelaUmidade').filter()">
+									<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+										var="tiposProduto" itemValue="#{tipoProduto}"
+										itemLabel="#{tiposProduto.descricaoTipo}" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText
+								value="#{umidade.amostra.tipoProduto.descricaoTipo}">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Tipo" priority="6"
+							filterBy="#{umidade.tipo}">
+							<f:facet name="filter">
+								<p:selectOneMenu id="umidadeTipo"
+									onchange="PF('tabelaUmidade').filter()">
+									<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+										noSelectionOption="true" />
+									<f:selectItem itemValue="p" itemLabel="Primeira" />
+									<f:selectItem itemValue="s" itemLabel="Segunda" />
+								</p:selectOneMenu>
+							</f:facet>
+							<h:outputText value="#{umidade.tipoFormatado}" />
+						</p:column>
+						<p:column headerText="Umidade" priority="1" width="10%" color="red">
+							<h:outputText value="#{umidade.umidade}" style="color:black;">
+								<f:convertNumber locale="en_US" pattern="#0.00" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{umidade.amostra.checkList.analista.nome} - #{umidade.amostra.checkList.turno.descricao}"/>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+
+				<p:tab title="% de Óleo">
+					<h:form id="formListagemOleo">
+
+						<p:dataTable id="tabela"
+							value="#{percentualOleoBean.percentuaisOleo}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!" widgetVar="tabelaOleo"
+							var="percentualOleo" reflow="true" style="margin-top: 20px">
+							<p:column headerText="Data Check List">
+								<h:outputText
+									value="#{percentualOleo.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column
+								filterBy="#{percentualOleo.amostra.tipoProduto.produto}"
+								headerText="Produto" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaOleo').filter()"
+										value="#{tipoProdutoBean.produto}"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+											itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+										<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+											update="tipoP" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{percentualOleo.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{percentualOleo.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu id="tipoP"
+										onchange="PF('tabelaOleo').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{percentualOleo.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="% de Óleo" priority="1" width="10%">
+								<h:outputText value="#{percentualOleo.percentualOleo}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{percentualOleo.amostra.checkList.analista.nome} - #{percentualOleo.amostra.checkList.turno.descricao}"/>
+						</p:column>
+
+						</p:dataTable>
+					</h:form>
+
+				</p:tab>
+				<p:tab title="Proteínas Totais">
+					<h:form id="formListagem">
+
+						<p:dataTable id="tabela"
+							value="#{proteinaTotalBean.proteinasTotais}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaProteinaTotal" var="proteinaTotal" reflow="true"
+							style="margin-top: 20px">
+							<p:column headerText="Data Check List">
+								<h:outputText
+									value="#{proteinaTotal.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column filterBy="#{proteinaTotal.amostra.tipoProduto.produto}"
+								headerText="Produto" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaProteinaTotal').filter()"
+										value="#{tipoProdutoBean.produto}"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+											itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+										<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+											update="tipo" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{proteinaTotal.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{proteinaTotal.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu id="tipo"
+										onchange="PF('tabelaProteinaTotal').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{proteinaTotal.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Proteína" priority="1" width="10%">
+								<h:outputText value="#{proteinaTotal.proteinaTotal}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{proteinaTotal.amostra.checkList.analista.nome} - #{proteinaTotal.amostra.checkList.turno.descricao}"/>
+						</p:column>
+						</p:dataTable>
+					</h:form>
+				</p:tab>
+				<p:tab title="Proteínas Solúveis">
+					<h:form id="formListagemS">
+
+
+
+						<p:dataTable id="tabela"
+							value="#{proteinaSoluvelBean.proteinasSoluveis}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaProteinaSoluvel" var="proteinaSoluvel"
+							reflow="true" style="margin-top: 20px">
+
+
+							<p:column headerText="Data Check List">
+								<h:outputText
+									value="#{proteinaSoluvel.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column
+								filterBy="#{proteinaSoluvel.amostra.tipoProduto.produto}"
+								headerText="Produto" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaProteinaTotal').filter()"
+										value="#{tipoProdutoBean.produto}"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+											itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+										<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+											update="tipo" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{proteinaSoluvel.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{proteinaSoluvel.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu id="tipo"
+										onchange="PF('tabelaProteinaSoluvel').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{proteinaSoluvel.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Proteína" priority="1" width="10%">
+								<h:outputText value="#{proteinaSoluvel.proteinaSoluvel}">
+									<f:convertNumber locale="en_US" pattern="#00.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{proteinaSoluvel.amostra.checkList.analista.nome} - #{proteinaSoluvel.amostra.checkList.turno.descricao}"/>
+						</p:column>
+						</p:dataTable>
+
+
+					</h:form>
+				</p:tab>
+
+				<p:tab title="Atividade Ureática">
+					<h:form id="formListagemUr">
+
+						<p:dataTable id="tabela" value="#{ureaseBean.ureases}"
+							paginator="true" paginatorAlwaysVisible="false"
+							paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaUrease" var="urease" reflow="true"
+							style="margin-top: 20px">
+							<p:column headerText="Data Check List">
+								<h:outputText value="#{urease.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Produto" priority="1" width="18%">
+								<h:outputText
+									value="#{urease.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{urease.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaUrease').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{urease.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Urease" priority="1" width="10%">
+								<h:outputText value="#{urease.urease}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{urease.amostra.checkList.analista.nome} - #{urease.amostra.checkList.turno.descricao}"/>
+						</p:column>
+						</p:dataTable>
+
+					</h:form>
+
+
+				</p:tab>
+				<p:tab title="Acidezes">
+					<h:form id="formListagemAC">
+
+						<p:dataTable id="tabela" value="#{acidezBean.acidezes}"
+							paginator="true" paginatorAlwaysVisible="false"
+							paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaAcidez" var="acidez" reflow="true"
+							style="margin-top: 20px">
+
+							<p:column headerText="Data Check List">
+								<h:outputText value="#{acidez.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column filterBy="#{acidez.amostra.tipoProduto.produto}"
+								headerText="Produto" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaAcidez').filter()"
+										value="#{tipoProdutoBean.produto}"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{produtoBean.produtos}" var="produtos"
+											itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+										<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+											update="tipo" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{acidez.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{acidez.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu id="tipo"
+										onchange="PF('tabelaAcidez').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{acidez.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Acidez" priority="1">
+								<h:outputText value="#{acidez.acidez}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{acidez.amostra.checkList.analista.nome} - #{acidez.amostra.checkList.turno.descricao}"/>
+						</p:column>
+
+
+						</p:dataTable>
+
+
+					</h:form>
+
+				</p:tab>
+				<p:tab title="Clorofilas">
+					<h:form id="formListagemCl">
+
+						<p:dataTable id="tabela" value="#{clorofilaBean.clorofilas}"
+							paginator="true" paginatorAlwaysVisible="false"
+							paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaClorofila" var="clorofila" reflow="true"
+							style="margin-top: 20px">
+							<p:column headerText="Data Check List">
+								<h:outputText
+									value="#{clorofila.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Produto" priority="1" width="18%">
+								<h:outputText
+									value="#{clorofila.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{clorofila.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaClorofila').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText
+									value="#{clorofila.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Clorofila" priority="1" width="10%">
+								<h:outputText value="#{clorofila.clorofila}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{clorofila.amostra.checkList.analista.nome} - #{clorofila.amostra.checkList.turno.descricao}"/>
+						</p:column>
+
+						</p:dataTable>
+					</h:form>
+
+				</p:tab>
+				<p:tab title="Sabões">
+					<h:form id="formListagemSab">
+
+						<p:dataTable id="tabela" value="#{saboesBean.saboes}"
+							paginator="true" paginatorAlwaysVisible="false"
+							paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!"
+							widgetVar="tabelaSaboes" var="sabao" reflow="true"
+							style="margin-top: 20px">
+
+							<p:column headerText="Data Check List">
+								<h:outputText value="#{sabao.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Produto" priority="1" width="18%">
+
+								<h:outputText
+									value="#{sabao.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{sabao.amostra.tipoProduto}"
+								headerText="Tipo" priority="1" filterMatchMode="exact"
+								width="18%">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaSaboes').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{sabao.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Índice de Sabões" priority="1">
+								<h:outputText value="#{sabao.sabao}">
+									<f:convertNumber locale="en_US" pattern="#0.00" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{sabao.amostra.checkList.analista.nome} - #{sabao.amostra.checkList.turno.descricao}"/>
+						</p:column>
+
+						</p:dataTable>
+
+					</h:form>
+
+				</p:tab>
+				<p:tab title="PH">
+					<h:form id="formListagemPh">
+
+						<p:dataTable id="tabela" value="#{phBean.phs}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom"
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10" rows="5"
+							emptyMessage="Nenhum registro encontrado!" widgetVar="tabelaPh"
+							var="ph" reflow="true" style="margin-top: 20px">
+
+							<p:column headerText="Data Check List">
+								<h:outputText value="#{ph.amostra.checkList.dataCheckList}">
+									<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
+										timeZone="America/Sao_Paulo" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Produto" priority="1" width="18%">
+								<h:outputText
+									value="#{ph.amostra.tipoProduto.produto.descricao}" />
+							</p:column>
+
+							<p:column filterBy="#{ph.amostra.tipoProduto}" headerText="Tipo"
+								priority="1" filterMatchMode="exact">
+								<f:facet name="filter">
+									<p:selectOneMenu onchange="PF('tabelaPh').filter()">
+										<f:selectItem itemLabel="Selecione" itemValue="#{null}"
+											noSelectionOption="true" />
+										<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
+											var="tiposProduto" itemValue="#{tipoProduto}"
+											itemLabel="#{tiposProduto.descricaoTipo}" />
+									</p:selectOneMenu>
+								</f:facet>
+								<h:outputText value="#{ph.amostra.tipoProduto.descricaoTipo}">
+								</h:outputText>
+							</p:column>
+							<p:column headerText="pH" priority="1">
+								<h:outputText value="#{ph.ph}" />
+								</p:column>
+								<p:column headerText="Analista/ turno" priority="6" whdth="10%">
+							<h:outputText value=" #{ph.amostra.checkList.analista.nome} - #{ph.amostra.checkList.turno.descricao}"/>
+						</p:column>
+						</p:dataTable>
+					</h:form>
+
+				</p:tab>
+
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

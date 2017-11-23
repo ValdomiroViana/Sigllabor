@@ -126,7 +126,7 @@ public class ProteinaTotalBean implements Serializable {
 	// método excluir
 	public void excluir(ActionEvent evento) {
 		try {
-			proteinaTotal = (ProteinaTotal) evento.getComponent().getAttributes().get("proteinaTotalSelecionada");
+			proteinaTotal = (ProteinaTotal) evento.getComponent().getAttributes().get("proteinaSelecionada");
 			ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
 			proteinaTotalDAO.excluir(proteinaTotal);
 			proteinasTotais = proteinaTotalDAO.listarOrdenadoPorData("c.dataCheckList");

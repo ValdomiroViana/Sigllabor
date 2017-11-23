@@ -20,30 +20,27 @@ public class HibernateUtil {
 	private static SessionFactory criarFabricaDeSessoes() {
 		try {
 			Configuration configuracao = new Configuration().configure();
-
-			ServiceRegistry registro = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
+			ServiceRegistry registro = new StandardServiceRegistryBuilder()
+					.applySettings(configuracao.getProperties())
 					.build();
-
 			SessionFactory fabrica = configuracao.buildSessionFactory(registro);
-
 			return fabrica;
 		} catch (Throwable ex) {
 			System.err.println("Não foi possível criar a fábrica de sessão." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
-
 	}
 
-	//Método para pegar uma conexão aberta para a geração dos relatórios
+	// Método para pegar uma conexão aberta para a geração dos relatórios
 	public static Connection getConexao() {
 		Session sessao = fabricaDeSessoes.openSession();
 		Connection conexao = sessao.doReturningWork(new ReturningWork<Connection>() {
 
-				@Override
-				public Connection execute(Connection conn) throws SQLException {
-					return conn;
-				}
-			});
+			@Override
+			public Connection execute(Connection conn) throws SQLException {
+				return conn;
+			}
+		});
 		return conexao;
 	}
 

@@ -37,11 +37,13 @@
 				<p:column filterBy="#{amostra.tipoProduto.produto}"
 					headerText="Produto" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()" value="#{tipoProdutoBean.produto}">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{produtoBean.produtos}" var="produtos"
 								itemValue="#{produto}" itemLabel="#{produtos.descricao}" />
+									<p:ajax process="@this" listener="#{tipoProdutoBean.popular}"
+								update="tipoP" />
 						</p:selectOneMenu>
 					</f:facet>
 					<h:outputText value="#{amostra.tipoProduto.produto.descricao}" />
@@ -50,7 +52,7 @@
 				<p:column filterBy="#{amostra.tipoProduto}" headerText="Tipo"
 					priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
+						<p:selectOneMenu id="tipoP" onchange="PF('tabelaAmostra').filter()">
 							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{tipoProdutoBean.tiposProduto}"
@@ -61,16 +63,8 @@
 					<h:outputText value="#{amostra.tipoProduto.descricaoTipo}">
 					</h:outputText>
 				</p:column>
-				<p:column filterBy="#{amostra.dataColeta}" headerText="Data"
-					priority="1" filterMatchMode="exact">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('tabelaAmostra').filter()">
-							<f:selectItem itemLabel="Selecione" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{amostra.dataColeta}" var="amostras"
-								itemValue="#{amostra}" itemLabel="#{amostra.dataColeta}" />
-						</p:selectOneMenu>
-					</f:facet>
+				<p:column  headerText="Data Coleta" priority="1" >
+
 					<h:outputText value="#{amostra.dataColeta}">
 						<f:convertDateTime pattern=" dd/MM/yyyy" locale="pt_BR"
 							timeZone="America/Sao_Paulo" />
@@ -159,7 +153,7 @@
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
 							actionListener="#{amostraBean.salvar}"
-							update=":growl :formCadastro:painel formListagem:tabela" />
+							update=":growl :formCadastro:painel formListagem:tabela"/>	
 						<p:commandButton value="Fechar" icon="fa fa-w fa-times-circle-o"
 							oncomplete="PF('dialogo').hide();" />
 					</h:panelGrid>

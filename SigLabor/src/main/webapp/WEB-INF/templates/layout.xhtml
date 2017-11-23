@@ -32,53 +32,57 @@
 		<a href="#" style="float: left;" class="aw-toggle js-toggle"><i
 			class="fa  fa-angle-double-left"></i></a>
 		<div class="menu-right">
-			<span class="span-usuario">Olá, seja bem-vindo !!</span>
+			<span class="span-usuario">Olá, <h:outputText
+					value="#{autenticacaoBean.usuarioLogado.nomeDoUsuario}" /> !!
+			</span>
 			<h:form styleClass="menu-form  js-menu-form">
 				<p:panelGrid>
-					<p:menubar styleClass="menu-sistema js-menu-sistema">
-						<p:submenu label="Amostras">
+					<p:menubar styleClass="menu-sistema js-menu-sistema" >
+						<p:submenu label="Amostras"  rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Produção" url="/Amostra/amostra.xhtml" />
 							<p:menuitem value="Embarcado"
 								url="/Amostra/amostraEmbarcado.xhtml" />
 							<p:menuitem value="Recebido"
 								url="/Amostra/amostraRecebimento.xhtml" />
 						</p:submenu>
-						<p:submenu label="Umidade">
+						<p:submenu label="Umidade"  rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Umidades" url="/Analises/umidade.xhtml" />
 							<p:menuitem value="Fator umidade"
 								url="/Amostra/fatorumidade.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Percentual de Óleo">
+						<p:submenu label="Percentual de Óleo"  rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Percentuais de óleo"
 								url="/Analises/percentualoleo.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Proteína">
+						<p:submenu label="Proteína"  rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Proteína Total"
 								url="/Analises/proteinatotal.xhtml" />
 							<p:menuitem value="Proteína Solúvel"
 								url="/Analises/proteinasoluvel.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Acidez">
-							<p:menuitem value="Acidezes" url="/Analises/acidez.xhtml" />
+						<p:submenu label="Acidez" rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
+							<p:menuitem value="Acidezes" url="/Analises/acidez.xhtml"  />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Grupo F">
+						<p:submenu label="Grupo F" rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Urease" url="/Analises/urease.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Grupo O">
+						<p:submenu label="Grupo O" rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="Clorofila" url="/Analises/clorofila.xhtml" />
 							<p:menuitem value="Sabões" url="/Analises/saboes.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:submenu label="Outros">
+						<p:submenu label="Outros" rendered="#{autenticacaoBean.temPermissoes(['A','S'])}">
 							<p:menuitem value="PH" url="/Analises/ph.xhtml" />
 						</p:submenu>
 						<p:separator styleClass="menu-separator js-menu-separator" />
-						<p:menuitem value="Sair" icon="ui-icon-close" action="#{autenticacaoBean.sairLogin}" title="Sair do sistema" />
+						<p:menuitem value="Sair" icon="ui-icon-close"
+							action="#{autenticacaoBean.sairLogin}" title="Sair do sistema" >
+							</p:menuitem>
 					</p:menubar>
 				</p:panelGrid>
 
@@ -93,24 +97,33 @@
 			<ul>
 				<li><h:link outcome="/resultados/dashboard">
 						<i class="fa  fa-fw  fa-home"></i>Dashboard</h:link></li>
-
-
+							
+				<li><h:link outcome="/resultados/resultados">
+						<i class="fa  fa-fw  fa-area-chart"></i>Resultados</h:link></li>
+				
+				<li><h:link outcome="/Relatorios/relatorioFarelo">
+						<i class="fa  fa-fw  fa-file-text"></i>Relatórios</h:link></li>
 				<li><h:link outcome="/CheckList/checklist">
 						<i class="fa  fa-fw  fa-list-alt"></i>Check List</h:link></li>
 
 				<li><h:link outcome="/Amostra/fatorsolucao">
 						<i class="fa  fa-fw  fa-flask"></i>Fator Solução</h:link></li>
-				<li><h:link>
-						<i class="fa  fa-fw  fa-file-text"></i>Relatórios</h:link></li>
+			
 				<li><h:link outcome="/Produto/produto">
+	
+	
 						<i class="fa  fa-fw  fa-cube"></i>Produto</h:link></li>
 				<li><h:link outcome="/Produto/tipoproduto">
 						<i class="fa  fa-fw  fa-cubes"></i>Tipo Produto</h:link></li>
-				<li><h:link outcome="/Pessoas/analista">
+				<li><h:link outcome="/Pessoas/fornecedorCliente">
+						<i class="fa  fa-fw  fa-suitcase"></i>Fornecedor/ Cliente</h:link></li>
+			
+				<li><h:link outcome="/Pessoas/analista"  >
 						<i class="fa  fa-fw  fa-user"></i>Analista</h:link></li>
+					
 				<li><h:link outcome="/Turno/turno">
 						<i class="fa  fa-fw fa-suitcase"></i>Turno</h:link></li>
-				<li><h:link>
+				<li><h:link outcome="/Pessoas/usuario">
 						<i class="fa  fa-fw  fa-users"></i>Usuários</h:link></li>
 			</ul>
 		</nav>

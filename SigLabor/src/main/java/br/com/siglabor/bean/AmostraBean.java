@@ -8,13 +8,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import org.omnifaces.util.Messages;
 
 import br.com.siglabor.dao.AmostraDAO;
 import br.com.siglabor.dao.CheckListDAO;
 import br.com.siglabor.dao.FornecedorClienteDAO;
 import br.com.siglabor.dao.ProdutoDAO;
+import br.com.siglabor.dao.TipoProdutoDAO;
 import br.com.siglabor.domain.Amostra;
 import br.com.siglabor.domain.CheckList;
 import br.com.siglabor.domain.FornecedorCliente;
@@ -28,6 +28,8 @@ import br.com.siglabor.domain.TipoProduto;
 public class AmostraBean implements Serializable {
 	// instanciar um novo
 	private Amostra amostra;
+	private Amostra ulimaAmostra;
+	private Produto produto;
 	// criar uma lista de amostras
 	private List<Amostra> amostras;
 	// instanciar um checklist
@@ -131,6 +133,15 @@ public class AmostraBean implements Serializable {
 	public void setFornecedorClientes(List<FornecedorCliente> fornecedorClientes) {
 		this.fornecedorClientes = fornecedorClientes;
 	}
+	
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
 
 	// Método Novo
 	public void novo() {
@@ -162,10 +173,13 @@ public class AmostraBean implements Serializable {
 			// criar uma nova amostra
 			amostra = new Amostra();
 			amostras = amostraDAO.listar();
+			Long ultima = amostraDAO.sqlMax(amostra);
+			//Amostra ultimaAmostra = amostraDAO.buscar(ultima);
+			System.out.println("Código amostra: " + ultima);
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listarOrdenado("descricao");
 			tiposProduto = new ArrayList<>();
-			Messages.addFlashGlobalInfo("Amostra salva Com sucesso!");
+			Messages.addGlobalInfo("Amostra salva com sucesso!");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a amostra.");
 			erro.printStackTrace();
@@ -188,8 +202,17 @@ public class AmostraBean implements Serializable {
 
 	// edição de amostra
 	public void editar(ActionEvent evento) {
+		try{
 		amostra = (Amostra) evento.getComponent().getAttributes().get("amostraSelecionada");
-
+		produto = amostra.getTipoProduto().getProduto();
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		produtos = produtoDAO.listar();
+		
+		TipoProdutoDAO tipoProdutoDAO = new TipoProdutoDAO();
+		tiposProduto = tipoProdutoDAO.buscarPorProduto(produto.getCodigo());
+		}catch(RuntimeException erro){
+			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar uma amostra");
+		}
 	}
 
 	// método iniciar serve para preencher a lista quando for construída a
@@ -198,7 +221,7 @@ public class AmostraBean implements Serializable {
 	public void iniciar() {
 		try {
 			AmostraDAO amostraDAO = new AmostraDAO();
-			amostras = amostraDAO.listar();
+			amostras = amostraDAO.listarOrdenadoDesc("codigoAmostra");
 			CheckListDAO checkListDAO = new CheckListDAO();
 			checkLists = checkListDAO.listar();
 			FornecedorClienteDAO fornecedorClienteDAO = new FornecedorClienteDAO();
@@ -208,6 +231,14 @@ public class AmostraBean implements Serializable {
 			Messages.addGlobalError(runtimeException.getMessage());
 
 		}
+	}
+
+	public Amostra getUlimaAmostra() {
+		return ulimaAmostra;
+	}
+
+	public void setUlimaAmostra(Amostra ulimaAmostra) {
+		this.ulimaAmostra = ulimaAmostra;
 	}
 
 }

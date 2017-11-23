@@ -153,7 +153,7 @@ public class GraficoResultadosFareloBean implements Serializable {
 	private BarChartModel initBarModelProteina() {
 		BarChartModel modelBarProteina = new BarChartModel();
 		ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
-		List<ProteinaTotal> proteinas = proteinaTotalDAO.listar();
+		List<ProteinaTotal> proteinas = proteinaTotalDAO.listaProteinaFareloII("a.dataColeta");
 		ChartSeries serieProteina = new ChartSeries();
 		for (ProteinaTotal pts : proteinas) {
 			System.out.println("Umidades" + pts.getProteinaTotal());
@@ -170,11 +170,11 @@ public class GraficoResultadosFareloBean implements Serializable {
 	private BarChartModel initBarModelPercentOleo() {
 		BarChartModel modelBarPercentOleo = new BarChartModel();
 		PercentualOleoDAO percentualOleoDAO = new PercentualOleoDAO();
-		List<PercentualOleo> percentualOleos = percentualOleoDAO.listar();
+		List<PercentualOleo> percentualOleos = percentualOleoDAO.listarPercentualOleoFareloII("a.dataColeta");
 		ChartSeries serieOleo = new ChartSeries();
 		for (PercentualOleo percentOleos : percentualOleos) {
 			System.out.println("Óleos" + percentOleos.getPercentualOleo());
-			serieOleo.setLabel("% de óleos");
+			serieOleo.setLabel("% de óleo");
 			serieOleo.set(dataFormatada.format(percentOleos.getAmostra().getDataColeta()), percentOleos.getPercentualOleo());
 			
 		}
@@ -197,7 +197,7 @@ public class GraficoResultadosFareloBean implements Serializable {
 		}
 		
 		ProteinaTotalDAO proteinaTotalDAO = new ProteinaTotalDAO();
-		List<ProteinaTotal> proteinasTotais = proteinaTotalDAO.listarOrdenadoPorData("c.dataCheckList");
+		List<ProteinaTotal> proteinasTotais = proteinaTotalDAO.listarProteinaFarelo("a.dataColeta");
 		ChartSeries series2 = new ChartSeries();
 		for (ProteinaTotal protTts : proteinasTotais) {
 			series2.setLabel("Proteínas");
@@ -205,7 +205,7 @@ public class GraficoResultadosFareloBean implements Serializable {
 		}
 		
 		PercentualOleoDAO percentualOleoDAO = new PercentualOleoDAO();
-		List<PercentualOleo> percentuaisOleo = percentualOleoDAO.listarOrdenadoPorData("c.dataCheckList");
+		List<PercentualOleo> percentuaisOleo = percentualOleoDAO.listarPercentualOleoFarelo("a.dataColeta");
 		ChartSeries series3 = new ChartSeries();
 		for(PercentualOleo percentOleo : percentuaisOleo){
 			series3.setLabel("% de Óleo");

@@ -11,7 +11,6 @@
 
 
 		<h:form id="formListagem">
-
 			<p:dataTable id="tabela" value="#{umidadeBean.umidades}"
 				paginator="true" paginatorAlwaysVisible="false"
 				paginatorPosition="bottom"
@@ -22,12 +21,11 @@
 				<!-- nomeia-se footer para ficar no rodapé da página ou header no cabeçalho -->
 				<f:facet name="footer">
 					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
-						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel" >
-					<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+						actionListener="#{umidadeBean.novo}" update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
-						
 				</f:facet>
-				
 				<p:column headerText="Nº" priority="1" width="5%">
 					<h:outputText value="#{umidade.identificacao}" />
 				</p:column>
@@ -55,7 +53,6 @@
 					<h:outputText
 						value="#{umidade.amostra.tipoProduto.produto.descricao}" />
 				</p:column>
-
 				<p:column filterBy="#{umidade.amostra.tipoProduto}"
 					headerText="Tipo" priority="1" filterMatchMode="exact">
 					<f:facet name="filter">
@@ -87,7 +84,6 @@
 						<f:convertNumber locale="en_US" pattern="#0.00" />
 					</h:outputText>
 				</p:column>
-
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-pencil"
 						actionListener="#{umidadeBean.editar}"
@@ -95,9 +91,9 @@
 						oncomplete="PF('dialogoEditar').show();">
 						<f:setPropertyActionListener target="#{umidadeBean.umidade}"
 							value="#{umidade}" />
-						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"/>
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
-
 					<p:commandButton style="background-color:red; float: right;"
 						icon="ui-icon-trash" actionListener="#{umidadeBean.excluir}"
 						update=":growl :formCadastro:painel formListagem:tabela">
@@ -105,7 +101,6 @@
 							message="Deseja realmente Excluir a umidade?"
 							icon="ui-icon-alert" />
 						<f:attribute name="umidadeSelecionada" value="#{umidade}" />
-
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
@@ -115,9 +110,7 @@
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-
 		</h:form>
-
 		<p:dialog header="Cadastro de Umidade" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false"
 			responsive="true">
@@ -139,29 +132,24 @@
 								itemValue="#{amostras}"
 								itemLabel="#{amostras.codigoAmostra} - #{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
-
 						<p:outputLabel value="Tipo:" for="tipo" />
 						<p:selectOneRadio id="tipo" value="#{umidadeBean.umidade.tipo}"
 							required="true" requiredMessage="O campo Tipo é obrigatório">
 							<f:selectItem itemValue="p" itemLabel="Primeira Umidade" />
 							<f:selectItem itemValue="s" itemLabel="Segunda Umidade" />
 						</p:selectOneRadio>
-
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.identificacao}" />
-
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
-
 						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
 						<p:inputText id="pa_mais_b" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.pa_Mais_b}" styleClass="peso2" />
-
 					</h:panelGrid>
 					<h:panelGrid columns="2" style="float:right; padding: 10px;">
 						<p:commandButton value="Salvar" icon="fa fa-w fa-save"
@@ -194,29 +182,24 @@
 								itemValue="#{amostras}"
 								itemLabel="#{amostras.dataColeta} - #{amostras.tipoProduto.produto.descricao} - #{amostras.tipoProduto.descricaoTipo}  - #{amostras.turnoColeta.descricao}" />
 						</p:selectOneMenu>
-
 						<p:outputLabel value="Tipo:" for="tipo" />
 						<p:selectOneRadio id="tipo" value="#{umidadeBean.umidade.tipo}"
 							required="true" requiredMessage="O campo Tipo é obrigatório">
 							<f:selectItem itemValue="p" itemLabel="Primeira Umidade" />
 							<f:selectItem itemValue="s" itemLabel="Segunda Umidade" />
 						</p:selectOneRadio>
-
 						<p:outputLabel value="Número:" for="num" />
 						<p:inputText style="width:100px;" id="num" maxlength="4" size="10"
 							required="true" requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.identificacao}" />
-
 						<p:outputLabel value="Peso Amostra:" for="pa" />
 						<p:inputText id="pa" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.pa}" styleClass="peso2" />
-
 						<p:outputLabel value="Pa + b:" for="pa_mais_b" />
 						<p:inputText id="pa_mais_b" maxlength="8" size="10"
 							required="true" requiredMessage="Campo obrigatório"
 							value="#{umidadeBean.umidade.pa_Mais_b}" styleClass="peso2" />
-
 						<p:outputLabel value="Peso final:" for="pf" />
 						<p:inputText id="pf" maxlength="8" size="10" required="true"
 							requiredMessage="Campo obrigatório"
@@ -226,7 +209,6 @@
 							actionListener="#{umidadeBean.calcularUmidade}"
 							update=":formCadastroEditar:painelEditar">
 						</p:commandButton>
-
 						<p:outputLabel value="Umidade:" for="umidade" />
 						<p:inputText id="umidade" maxlength="8" size="10" required="false"
 							requiredMessage="Campo obrigatório"
@@ -246,5 +228,4 @@
 			</h:form>
 		</p:dialog>
 	</ui:define>
-
 </ui:composition>

@@ -14,7 +14,7 @@ public class AmostraDAO extends GenericDAO<Amostra>{
 	public Long sqlMax(Amostra amostra) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Criteria criteria = sessao.createCriteria(amostra.getClass())
-				.setProjection(Projections.max("codigo"));
+				.setProjection(Projections.max("codigoAmostra"));
 		Long maxId = (Long) criteria.uniqueResult();
 
 		return maxId;
@@ -43,5 +43,7 @@ public class AmostraDAO extends GenericDAO<Amostra>{
 			}
 		
 	}
+
+
 
 }
